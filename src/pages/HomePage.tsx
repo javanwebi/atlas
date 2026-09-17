@@ -18,6 +18,7 @@ import {
   FileText,
   Calculator,
   Flame,
+  Phone,
   CheckCircle2,
 } from 'lucide-react';
 import { STORE_ASSETS } from '../assets/images';
@@ -693,45 +694,73 @@ export const HomePage: React.FC = () => {
         </section>
 
         {/* ========================================================================= */}
-        {/* 7. CTA QUOTE BANNER (نیاز به مشاوره تخصصی خط تولید دارید؟)                 */}
+        {/* 7. CTA CONSULTATION & INQUIRY BANNER (مشاوره تخصصی و استعلام قیمت)        */}
         {/* ========================================================================= */}
-        <section className="relative overflow-hidden rounded-3xl bg-[#090F1C] text-white border border-slate-800 p-6 sm:p-8 shadow-xl">
-          {/* Diagonal Industrial Accent Stripes on Left */}
-          <div className="absolute left-0 top-0 bottom-0 w-36 bg-[repeating-linear-gradient(45deg,#F97316_0,#F97316_10px,transparent_10px,transparent_20px)] opacity-10 pointer-events-none" />
-          <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-orange-600/20 to-transparent pointer-events-none" />
+        <section
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-[#C2410C] via-[#EA580C] to-[#F97316] text-white shadow-xl border border-orange-400/40"
+          dir="rtl"
+        >
+          {/* Subtle Ambient Industrial Waves / Geometric Glow */}
+          <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
+            <svg className="w-full h-full" viewBox="0 0 1200 240" preserveAspectRatio="none" fill="none">
+              <path d="M0,80 C300,10 600,160 900,70 C1050,30 1150,110 1200,80 L1200,240 L0,240 Z" fill="white" opacity="0.4" />
+              <path d="M0,120 C250,50 500,190 800,110 C1000,60 1100,170 1200,130 L1200,240 L0,240 Z" fill="white" opacity="0.25" />
+            </svg>
+          </div>
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
-            {/* Text Info (Right in RTL) */}
-            <div className="space-y-1.5 text-right w-full lg:w-auto">
-              <h3 className="text-lg sm:text-2xl font-black text-white">
-                نیاز به مشاوره فنی یا قطعه فوری خط تولید دارید؟
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-300">
-                مهندسان هایپر صنعت و کارشناسان فنی کارخانجات اطلس آماده پاسخگویی و تأمین قطعات مورد نیاز خط تولید شما هستند.
-              </p>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center">
+            
+            {/* RIGHT: Text and Action Buttons (کاملاً راست‌چین طبق تصویر) */}
+            <div className="lg:col-span-7 xl:col-span-7 p-6 sm:p-8 lg:p-10 space-y-4 text-right">
+              <div className="space-y-2">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
+                  مشاوره تخصصی و استعلام قیمت
+                </h3>
+                <p className="text-xs sm:text-sm text-orange-50/90 font-medium leading-relaxed max-w-xl">
+                  تیم کارشناسان ما، آماده پاسخگویی به سوالات شما و ارائه بهترین راهکارهاست
+                </p>
+              </div>
+
+              {/* Action Buttons Row */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                {/* Dark Navy Button: درخواست مشاوره */}
+                <button
+                  type="button"
+                  onClick={() => setIsConsultOpen(true)}
+                  className="h-11 px-6 bg-[#18253A] hover:bg-[#0F172A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md hover:shadow-black/30 transition-all flex items-center gap-2 cursor-pointer group shrink-0"
+                >
+                  <ChevronLeft className="w-4 h-4 text-orange-400 group-hover:-translate-x-0.5 transition-transform" />
+                  <span>درخواست مشاوره</span>
+                </button>
+
+                {/* Orange Phone Call Button */}
+                <a
+                  href="tel:02142772340"
+                  className="h-11 px-5 bg-orange-700/60 hover:bg-orange-700 border border-white/40 hover:border-white text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center gap-2.5 backdrop-blur-xs cursor-pointer shrink-0"
+                  dir="ltr"
+                >
+                  <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0">
+                    <Phone className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="font-mono tracking-wider font-extrabold text-white text-sm sm:text-base">
+                    ۰۲۱-۴۲۷۷۲۳۴۰
+                  </span>
+                </a>
+              </div>
             </div>
 
-            {/* Buttons (Left in RTL) */}
-            <div className="flex flex-wrap items-center gap-3.5 w-full lg:w-auto justify-start lg:justify-end">
-              {/* Orange Button: درخواست مشاوره */}
-              <button
-                type="button"
-                onClick={() => setIsConsultOpen(true)}
-                className="h-11 px-7 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md hover:shadow-orange-500/20 transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <span>درخواست مشاوره خط تولید</span>
-              </button>
-
-              {/* Dark Outline Button: استعلام قیمت */}
-              <Link
-                to="/cart"
-                className="h-11 px-6 bg-black/50 hover:bg-black/80 text-white border border-slate-700 hover:border-slate-500 font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <Calculator className="w-4 h-4 text-slate-300" />
-                <span>استعلام آنلاین قیمت قطعات</span>
-                <ArrowLeft className="w-3.5 h-3.5 text-slate-400" />
-              </Link>
+            {/* LEFT: Industrial Table with Yellow Hard Hat & Machinery (فید نرم به پس‌زمینه نارنجی) */}
+            <div className="lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-64 overflow-hidden">
+              <img
+                src={STORE_ASSETS.ctaConsultBanner}
+                alt="مشاوره تخصصی و استعلام قیمت قطعات خط تولید"
+                className="w-full h-full object-cover object-center"
+              />
+              {/* Gradient masks blending smoothly from image to orange banner */}
+              <div className="absolute inset-0 bg-gradient-to-l from-[#EA580C] via-[#EA580C]/40 to-transparent hidden lg:block pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#EA580C] via-[#EA580C]/30 to-transparent lg:hidden pointer-events-none" />
             </div>
+
           </div>
         </section>
       </div>

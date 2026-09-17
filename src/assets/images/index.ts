@@ -22,6 +22,7 @@ import indCementPlantImg from './ind_cement_plant_1789379772744.jpg';
 import aiConsultRobotImg from './ai_consult_robot_1789379706342.jpg';
 import aiSearchMobileImg from './ai_search_mobile_1789379723502.jpg';
 import engineerWhyAtlasImg from './engineer_why_atlas_1789379790899.jpg';
+import ctaConsultBannerImg from './cta_consult_banner_1789637852056.jpg';
 
 import prodCerPartsImg from './prod_cer_parts_1789373001819.jpg';
 import prodAluPulleyImg from './prod_alu_pulley_1789373016576.jpg';
@@ -38,6 +39,7 @@ export const STORE_ASSETS = {
   aiConsultRobot: aiConsultRobotImg,
   aiSearchMobile: aiSearchMobileImg,
   engineerWhyAtlas: engineerWhyAtlasImg,
+  ctaConsultBanner: ctaConsultBannerImg,
   categories: {
     belts: catBeltsImg,
     pulleys: catPulleysImg,
