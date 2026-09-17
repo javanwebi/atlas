@@ -1,0 +1,8 @@
+{
+  "name": "هایپر صنعت",
+  "description": "فروشگاه تخصصی آنلاین قطعات خطوط تولید صنعتی و سیستم‌های انتقال قدرت با پشتوانه کارخانجات و بازرگانی اطلس",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
