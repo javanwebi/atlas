@@ -158,7 +158,7 @@ export const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="w-full text-right font-sans pb-12 overflow-x-hidden">
+    <div className="w-full text-right font-sans overflow-x-hidden">
       {/* ========================================================================= */}
       {/* 1. HERO SECTION - 100% FULL WIDTH (تمام صفحه و لبه‌به‌لبه عین تصویر)           */}
       {/* ========================================================================= */}
@@ -692,26 +692,28 @@ export const HomePage: React.FC = () => {
 
           </div>
         </section>
+      </div>
 
-        {/* ========================================================================= */}
-        {/* 7. CTA CONSULTATION & INQUIRY BANNER (مشاوره تخصصی و استعلام قیمت)        */}
-        {/* ========================================================================= */}
-        <section
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-[#C2410C] via-[#EA580C] to-[#F97316] text-white shadow-xl border border-orange-400/40"
-          dir="rtl"
-        >
-          {/* Subtle Ambient Industrial Waves / Geometric Glow */}
-          <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
-            <svg className="w-full h-full" viewBox="0 0 1200 240" preserveAspectRatio="none" fill="none">
-              <path d="M0,80 C300,10 600,160 900,70 C1050,30 1150,110 1200,80 L1200,240 L0,240 Z" fill="white" opacity="0.4" />
-              <path d="M0,120 C250,50 500,190 800,110 C1000,60 1100,170 1200,130 L1200,240 L0,240 Z" fill="white" opacity="0.25" />
-            </svg>
-          </div>
+      {/* ========================================================================= */}
+      {/* 7. CTA CONSULTATION & INQUIRY BANNER (مشاوره تخصصی و استعلام قیمت)        */}
+      {/* ========================================================================= */}
+      <section
+        className="relative overflow-hidden w-full bg-gradient-to-l from-[#C2410C] via-[#EA580C] to-[#F97316] text-white border-t border-orange-400/40"
+        dir="rtl"
+      >
+        {/* Subtle Ambient Industrial Waves / Geometric Glow */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
+          <svg className="w-full h-full" viewBox="0 0 1200 240" preserveAspectRatio="none" fill="none">
+            <path d="M0,80 C300,10 600,160 900,70 C1050,30 1150,110 1200,80 L1200,240 L0,240 Z" fill="white" opacity="0.4" />
+            <path d="M0,120 C250,50 500,190 800,110 C1000,60 1100,170 1200,130 L1200,240 L0,240 Z" fill="white" opacity="0.25" />
+          </svg>
+        </div>
 
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center">
             
             {/* RIGHT: Text and Action Buttons (کاملاً راست‌چین طبق تصویر) */}
-            <div className="lg:col-span-7 xl:col-span-7 p-6 sm:p-8 lg:p-10 space-y-4 text-right">
+            <div className="lg:col-span-7 xl:col-span-7 py-8 sm:py-10 lg:py-12 lg:pl-10 space-y-4 text-right">
               <div className="space-y-2">
                 <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
                   مشاوره تخصصی و استعلام قیمت
@@ -750,7 +752,7 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* LEFT: Industrial Table with Yellow Hard Hat & Machinery (فید نرم به پس‌زمینه نارنجی) */}
-            <div className="lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-64 overflow-hidden">
+            <div className="lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-72 w-full overflow-hidden">
               <img
                 src={STORE_ASSETS.ctaConsultBanner}
                 alt="مشاوره تخصصی و استعلام قیمت قطعات خط تولید"
@@ -762,8 +764,8 @@ export const HomePage: React.FC = () => {
             </div>
 
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       {/* Global Modals for interactive AI features */}
       <AiVisualPartSearchModal
