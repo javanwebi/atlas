@@ -68,6 +68,117 @@ export const HomePage: React.FC = () => {
     return () => window.removeEventListener('scroll', handleWindowScroll);
   }, []);
 
+  // ---------------------------------------------------------------------------
+  // Hero Carousel Data & Automatic 5s Slide Switching
+  // ---------------------------------------------------------------------------
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0);
+
+  interface HeroSlideItem {
+    id: number;
+    image: string;
+    eyebrow: string;
+    titlePart1: string;
+    titlePart2: string;
+    description: string;
+    primaryBtn: {
+      text: string;
+      link?: string;
+      action?: 'visualSearch' | 'consult';
+    };
+    secondaryBtn: {
+      text: string;
+      link?: string;
+      action?: 'visualSearch' | 'consult';
+    };
+    badge: {
+      title: string;
+      subtitle: string;
+    };
+  }
+
+  const heroSlides: HeroSlideItem[] = [
+    {
+      id: 1,
+      image: STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley,
+      eyebrow: 'تأمین قطعات صنعتی با کیفیت، قیمت رقابتی، برای آینده‌ای مطمئن',
+      titlePart1: 'همراه صنعتگران',
+      titlePart2: 'در مسیر رشد و پیشرفت',
+      description:
+        'ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.',
+      primaryBtn: {
+        text: 'مشاهده محصولات',
+        link: '/category/industrial-belts',
+      },
+      secondaryBtn: {
+        text: 'معرفی شرکت',
+        action: 'consult',
+      },
+      badge: {
+        title: 'تجربه‌ی موفق همکاری با صنایع پیشرو',
+        subtitle: 'کیفیت، سرعت، اعتماد',
+      },
+    },
+    {
+      id: 2,
+      image: STORE_ASSETS.heroPulley,
+      eyebrow: 'نمایندگی رسمی و انحصاری برترین برندهای اروپایی',
+      titlePart1: 'سیستم‌های انتقال قدرت',
+      titlePart2: 'با استاندارد FORZA و SWR',
+      description:
+        'تأمین مستقیم انواع پولی‌های صنعتی، فلکه چدنی، تسمه‌های دنده‌ای و شیاردار با بالاترین بازدهی گشتاور و طول عمر مکانیکی تضمین‌شده.',
+      primaryBtn: {
+        text: 'مشاهده قطعات FORZA و SWR',
+        link: '/category/swr-forza-exclusive',
+      },
+      secondaryBtn: {
+        text: 'استعلام فوری قیمت و موجودی',
+        action: 'consult',
+      },
+      badge: {
+        title: 'تضمین اصالت قطعات و گارانتی تعویض',
+        subtitle: 'استاندارد DIN آلمان و اروپا',
+      },
+    },
+    {
+      id: 3,
+      image: STORE_ASSETS.heroBanner,
+      eyebrow: 'سامانه مکانیزه هوشمند شناسایی و تأمین قطعات فوری',
+      titlePart1: 'توقف خط تولید، هرگز!',
+      titlePart2: 'تأمین فوری قطعات کارخانجات',
+      description:
+        'تنها با ارسال تصویر یا پلاک قطعه مستهلک، قطعه فابریک استاندارد را از انبار مرکزی هایپر صنعت اطلس یزد با ارسال اکسپرس دریافت کنید.',
+      primaryBtn: {
+        text: 'ارسال تصویر قطعه با هوش مصنوعی',
+        action: 'visualSearch',
+      },
+      secondaryBtn: {
+        text: 'شروع مشاوره فنی آنلاین',
+        action: 'consult',
+      },
+      badge: {
+        title: 'ارسال فوری و اکسپرس به سراسر کشور',
+        subtitle: 'پشتیبانی ۲۴ ساعته خطوط تولید',
+      },
+    },
+  ];
+
+  // 5-second automatic slide interval
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlideIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
+  const handleNextSlide = () => {
+    setHeroSlideIndex((prev) => (prev + 1) % heroSlides.length);
+  };
+
+  const handlePrevSlide = () => {
+    setHeroSlideIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
   // Industries carousel scroll tracking
   const industriesScrollRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -255,17 +366,25 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION - FULL VIEWPORT FIT ON DESKTOP WITH PARALLAX & ANIMATIONS */}
+      {/* 1. HERO SECTION - 5-SECOND DYNAMIC CAROUSEL WITH PARALLAX & ANIMATIONS    */}
       {/* ========================================================================= */}
       <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[520px] sm:min-h-[580px] lg:min-h-[calc(100vh-155px)] flex flex-col justify-between">
-        {/* Background Factory Image with Smooth Parallax Movement on Scroll */}
-        <div
-          className="absolute -top-10 -bottom-10 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
-          style={{
-            backgroundImage: `url(${STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley})`,
-            transform: `translateY(${Math.min(120, scrollY * 0.26)}px) scale(1.04)`,
-          }}
-        />
+        {/* Background Factory Images with Smooth Cross-Fade & Parallax */}
+        {heroSlides.map((slide, idx) => {
+          const isActive = idx === heroSlideIndex;
+          return (
+            <div
+              key={slide.id}
+              className={`absolute -top-10 -bottom-10 inset-x-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out will-change-transform ${
+                isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10'
+              }`}
+              style={{
+                backgroundImage: `url(${slide.image})`,
+                transform: `translateY(${Math.min(120, scrollY * 0.26)}px) scale(1.04)`,
+              }}
+            />
+          );
+        })}
 
         {/* Cinematic Factory Vignette Overlay: Deep contrast on right for headline, warm orange reflections on floor */}
         <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/75 to-[#060A14]/35 pointer-events-none" />
@@ -275,17 +394,19 @@ export const HomePage: React.FC = () => {
 
         {/* Top & Middle Content Container - Standard max-w-7xl matching the header perfectly */}
         <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 flex-1 flex flex-col justify-center">
-          <div className="max-w-xl lg:max-w-2xl space-y-4 sm:space-y-5">
-            
-            {/* Top Eyebrow Tag: تأمین قطعات صنعتی با کیفیت، با گارانتی و پشتوانه مطمئن */}
+          <div
+            key={heroSlideIndex}
+            className="max-w-xl lg:max-w-2xl space-y-4 sm:space-y-5 transition-all duration-500 ease-out animate-in fade-in slide-in-from-right-3"
+          >
+            {/* Top Eyebrow Tag */}
             <div className="flex items-center gap-2 justify-start">
               <span className="w-8 h-[2px] bg-[#F97316]" />
-              <span className="text-xs sm:text-[13px] font-bold text-orange-400/90 tracking-wide">
-                تأمین قطعات صنعتی با کیفیت، قیمت رقابتی، برای آینده‌ای مطمئن
+              <span className="text-xs sm:text-[13px] font-bold text-orange-400/90 tracking-wide line-clamp-1">
+                {heroSlides[heroSlideIndex].eyebrow}
               </span>
             </div>
 
-            {/* Main Headline: همراه صنعتگران در مسیر رشد و پیشرفت (With Fade & Shift to Right on Scroll) */}
+            {/* Main Headline (With Fade & Shift to Right on Scroll) */}
             <div
               className="transition-all duration-100 ease-out will-change-transform"
               style={{
@@ -294,40 +415,123 @@ export const HomePage: React.FC = () => {
               }}
             >
               <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
-                <span>همراه صنعتگران</span>
-                <span className="block text-[#F97316] pt-1">در مسیر رشد و پیشرفت</span>
+                <span>{heroSlides[heroSlideIndex].titlePart1}</span>
+                <span className="block text-[#F97316] pt-1">{heroSlides[heroSlideIndex].titlePart2}</span>
               </h1>
             </div>
 
             {/* Action Buttons & Subtitle */}
             <div className="pt-2 sm:pt-3 space-y-4">
               {/* Subtitle Description */}
-              <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl font-normal">
-                ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.
+              <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl font-normal min-h-[44px]">
+                {heroSlides[heroSlideIndex].description}
               </p>
 
               {/* Action Buttons Row */}
               <div className="pt-1.5 flex flex-wrap items-center gap-3.5">
-                {/* Primary Luminous Orange Button: مشاهده محصولات */}
-                <Link
-                  to="/category/industrial-belts"
-                  className="h-11 sm:h-12 px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
-                >
-                  <span>مشاهده محصولات</span>
-                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-white" />
-                </Link>
+                {/* Primary Button */}
+                {heroSlides[heroSlideIndex].primaryBtn.link ? (
+                  <Link
+                    to={heroSlides[heroSlideIndex].primaryBtn.link!}
+                    className="h-11 sm:h-12 px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
+                  >
+                    <span>{heroSlides[heroSlideIndex].primaryBtn.text}</span>
+                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-white" />
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (heroSlides[heroSlideIndex].primaryBtn.action === 'visualSearch') {
+                        setIsVisualSearchOpen(true);
+                      } else if (heroSlides[heroSlideIndex].primaryBtn.action === 'consult') {
+                        setIsConsultOpen(true);
+                      }
+                    }}
+                    className="h-11 sm:h-12 px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
+                  >
+                    <Camera className="w-4 h-4 text-white" />
+                    <span>{heroSlides[heroSlideIndex].primaryBtn.text}</span>
+                  </button>
+                )}
 
-                {/* Secondary Video/Company Intro Outline Button: معرفی شرکت */}
+                {/* Secondary Button */}
+                {heroSlides[heroSlideIndex].secondaryBtn.action === 'consult' ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsConsultOpen(true)}
+                    className="h-11 sm:h-12 px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2.5 cursor-pointer group shadow-md"
+                  >
+                    <span className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
+                      <Play className="w-3 h-3 fill-[#F97316] text-[#F97316] ml-0.5" />
+                    </span>
+                    <span>{heroSlides[heroSlideIndex].secondaryBtn.text}</span>
+                    <ArrowLeft className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setIsVisualSearchOpen(true)}
+                    className="h-11 sm:h-12 px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2.5 cursor-pointer group shadow-md"
+                  >
+                    <span>{heroSlides[heroSlideIndex].secondaryBtn.text}</span>
+                    <ArrowLeft className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Slide Navigation Dots with 5-Second Timer Progress Bar & Controls */}
+            <div className="pt-3 flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                {heroSlides.map((slide, idx) => {
+                  const isActive = idx === heroSlideIndex;
+                  return (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      onClick={() => setHeroSlideIndex(idx)}
+                      className={`relative h-2 rounded-full transition-all duration-300 overflow-hidden cursor-pointer ${
+                        isActive ? 'w-8 bg-orange-500/30' : 'w-2 bg-white/30 hover:bg-white/50'
+                      }`}
+                      aria-label={`اسلاید ${idx + 1}`}
+                    >
+                      {isActive && (
+                        <div
+                          key={`progress-${idx}-${heroSlideIndex}`}
+                          className="absolute inset-0 bg-[#F97316] rounded-full"
+                          style={{
+                            animation: 'heroProgress 5s linear forwards',
+                          }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Slide Counter (01 / 03) */}
+              <span className="text-[11px] font-mono font-bold text-slate-300">
+                0{heroSlideIndex + 1} / 0{heroSlides.length}
+              </span>
+
+              {/* Prev / Next Arrows */}
+              <div className="flex items-center gap-1">
                 <button
                   type="button"
-                  onClick={() => setIsConsultOpen(true)}
-                  className="h-11 sm:h-12 px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2.5 cursor-pointer group shadow-md"
+                  onClick={handlePrevSlide}
+                  className="w-7 h-7 rounded-full bg-black/40 hover:bg-[#F97316] border border-white/15 hover:border-[#F97316] text-white flex items-center justify-center transition-all cursor-pointer"
+                  aria-label="اسلاید قبلی"
                 >
-                  <span className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
-                    <Play className="w-3 h-3 fill-[#F97316] text-[#F97316] ml-0.5" />
-                  </span>
-                  <span>معرفی شرکت</span>
-                  <ArrowLeft className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextSlide}
+                  className="w-7 h-7 rounded-full bg-black/40 hover:bg-[#F97316] border border-white/15 hover:border-[#F97316] text-white flex items-center justify-center transition-all cursor-pointer"
+                  aria-label="اسلاید بعدی"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -353,12 +557,15 @@ export const HomePage: React.FC = () => {
           </span>
         </div>
 
-        {/* Bottom Left Badge: تجربه‌ی موفق همکاری با صنایع پیشرو */}
-        <div className="absolute left-4 sm:left-8 bottom-4 z-20 hidden lg:flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/15 shadow-md">
+        {/* Bottom Left Badge: بر اساس اسلاید جاری */}
+        <div
+          key={`badge-${heroSlideIndex}`}
+          className="absolute left-4 sm:left-8 bottom-4 z-20 hidden lg:flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/15 shadow-md transition-all duration-500 animate-in fade-in"
+        >
           <div className="w-1.5 h-5 bg-[#F97316] rounded-full" />
           <div className="text-right">
-            <div className="text-[11px] font-bold text-white">تجربه‌ی موفق همکاری با صنایع پیشرو</div>
-            <div className="text-[9px] text-slate-400 font-medium">کیفیت، سرعت، اعتماد</div>
+            <div className="text-[11px] font-bold text-white">{heroSlides[heroSlideIndex].badge.title}</div>
+            <div className="text-[9px] text-slate-400 font-medium">{heroSlides[heroSlideIndex].badge.subtitle}</div>
           </div>
           <ArrowLeft className="w-3 h-3 text-orange-400 mr-1" />
         </div>
