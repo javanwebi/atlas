@@ -256,195 +256,197 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION - COMPACT & FRAMED CONTAINER (جمع‌تر و مشخص‌تر با عرض کمتر)  */}
+      {/* 1. HERO SECTION - COMPACT & BALANCED WITH PARALLAX & ANIMATIONS          */}
       {/* ========================================================================= */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-        <section className="relative w-full overflow-hidden rounded-3xl bg-[#060A14] text-white border border-slate-700/60 shadow-2xl min-h-[460px] sm:min-h-[500px] lg:min-h-[530px] flex flex-col justify-between">
-          {/* Background Factory Image with Smooth Parallax Movement on Scroll */}
-          <div
-            className="absolute -top-8 -bottom-8 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
-            style={{
-              backgroundImage: `url(${STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley})`,
-              transform: `translateY(${Math.min(90, scrollY * 0.22)}px) scale(1.03)`,
-            }}
-          />
+      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[420px] sm:min-h-[470px] lg:min-h-[510px] flex flex-col justify-between">
+        {/* Background Factory Image with Smooth Parallax Movement on Scroll */}
+        <div
+          className="absolute -top-8 -bottom-8 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
+          style={{
+            backgroundImage: `url(${STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley})`,
+            transform: `translateY(${Math.min(100, scrollY * 0.25)}px) scale(1.04)`,
+          }}
+        />
 
-          {/* Cinematic Factory Vignette Overlay: Deep contrast on right for headline, warm orange reflections on floor */}
-          <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/75 to-[#060A14]/30 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060A14] via-transparent to-black/35 pointer-events-none" />
-          {/* Warm Golden Flare on Factory floor */}
-          <div className="absolute bottom-0 left-1/4 w-[450px] h-[150px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
+        {/* Cinematic Factory Vignette Overlay: Deep contrast on right for headline, warm orange reflections on floor */}
+        <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/75 to-[#060A14]/35 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#060A14] via-transparent to-black/40 pointer-events-none" />
+        {/* Warm Golden Flare on Factory floor */}
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[160px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
-          {/* Top & Middle Content Container */}
-          <div className="relative z-10 w-full px-5 sm:px-8 lg:px-10 pt-8 sm:pt-10 pb-5 flex-1 flex flex-col justify-center">
-            <div className="max-w-lg lg:max-w-xl space-y-3.5 sm:space-y-4">
-              
-              {/* Top Eyebrow Tag: تأمین قطعات صنعتی با کیفیت، با گارانتی و پشتوانه مطمئن */}
-              <div className="flex items-center gap-2 justify-start">
-                <span className="w-6 h-[2px] bg-[#F97316]" />
-                <span className="text-[11px] sm:text-xs font-bold text-orange-400/90 tracking-wide">
-                  تأمین قطعات صنعتی با کیفیت، قیمت رقابتی، برای آینده‌ای مطمئن
-                </span>
-              </div>
-
-              {/* Main Headline: همراه صنعتگران در مسیر رشد و پیشرفت (With Fade & Shift to Right on Scroll) */}
-              <div
-                className="transition-all duration-100 ease-out will-change-transform"
-                style={{
-                  opacity: Math.max(0, 1 - scrollY / 320),
-                  transform: `translateX(${Math.min(60, scrollY * 0.18)}px)`,
-                }}
-              >
-                <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
-                  <span>همراه صنعتگران</span>
-                  <span className="block text-[#F97316] pt-1">در مسیر رشد و پیشرفت</span>
-                </h1>
-              </div>
-
-              {/* Action Buttons & Subtitle */}
-              <div className="pt-2 space-y-3">
-                {/* Subtitle Description */}
-                <p className="text-[11px] sm:text-xs lg:text-[13px] text-slate-200/90 leading-relaxed font-normal max-w-md">
-                  ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.
-                </p>
-
-                {/* Action Buttons Row */}
-                <div className="pt-1 flex flex-wrap items-center gap-3">
-                  {/* Primary Luminous Orange Button: مشاهده محصولات */}
-                  <Link
-                    to="/category/industrial-belts"
-                    className="h-10 sm:h-11 px-6 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_16px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_20px_rgba(249,115,22,0.55)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
-                  >
-                    <span>مشاهده محصولات</span>
-                    <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform text-white" />
-                  </Link>
-
-                  {/* Secondary Video/Company Intro Outline Button: معرفی شرکت */}
-                  <button
-                    type="button"
-                    onClick={() => setIsConsultOpen(true)}
-                    className="h-10 sm:h-11 px-5 bg-black/40 hover:bg-black/70 text-white font-bold text-xs rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer group shadow-md"
-                  >
-                    <span className="w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
-                      <Play className="w-2.5 h-2.5 fill-[#F97316] text-[#F97316] ml-0.5" />
-                    </span>
-                    <span>معرفی شرکت</span>
-                    <ArrowLeft className="w-3 h-3 text-slate-400 group-hover:text-white transition-colors" />
-                  </button>
-                </div>
-              </div>
-
+        {/* Top & Middle Content Container - Standard max-w-7xl matching the header perfectly */}
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-7 sm:pt-9 pb-4 flex-1 flex flex-col justify-center">
+          <div className="max-w-xl lg:max-w-2xl space-y-3 sm:space-y-4">
+            
+            {/* Top Eyebrow Tag: تأمین قطعات صنعتی با کیفیت، با گارانتی و پشتوانه مطمئن */}
+            <div className="flex items-center gap-2 justify-start">
+              <span className="w-7 h-[2px] bg-[#F97316]" />
+              <span className="text-xs sm:text-[13px] font-bold text-orange-400/90 tracking-wide">
+                تأمین قطعات صنعتی با کیفیت، قیمت رقابتی، برای آینده‌ای مطمئن
+              </span>
             </div>
+
+            {/* Main Headline: همراه صنعتگران در مسیر رشد و پیشرفت (With Fade & Shift to Right on Scroll) */}
+            <div
+              className="transition-all duration-100 ease-out will-change-transform"
+              style={{
+                opacity: Math.max(0, 1 - scrollY / 300),
+                transform: `translateX(${Math.min(60, scrollY * 0.18)}px)`,
+              }}
+            >
+              <h1 className="text-2xl sm:text-4xl lg:text-[46px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
+                <span>همراه صنعتگران</span>
+                <span className="block text-[#F97316] pt-0.5">در مسیر رشد و پیشرفت</span>
+              </h1>
+            </div>
+
+            {/* Action Buttons & Subtitle */}
+            <div className="pt-2 sm:pt-2.5 space-y-3">
+              {/* Subtitle Description */}
+              <p className="text-xs sm:text-[13px] text-slate-200/90 leading-relaxed max-w-lg font-normal">
+                ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.
+              </p>
+
+              {/* Action Buttons Row */}
+              <div className="pt-1 flex flex-wrap items-center gap-3">
+                {/* Primary Luminous Orange Button: مشاهده محصولات */}
+                <Link
+                  to="/category/industrial-belts"
+                  className="h-10 sm:h-11 px-6 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
+                >
+                  <span>مشاهده محصولات</span>
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-white" />
+                </Link>
+
+                {/* Secondary Video/Company Intro Outline Button: معرفی شرکت */}
+                <button
+                  type="button"
+                  onClick={() => setIsConsultOpen(true)}
+                  className="h-10 sm:h-11 px-5 bg-black/40 hover:bg-black/70 text-white font-bold text-xs rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer group shadow-md"
+                >
+                  <span className="w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
+                    <Play className="w-2.5 h-2.5 fill-[#F97316] text-[#F97316] ml-0.5" />
+                  </span>
+                  <span>معرفی شرکت</span>
+                  <ArrowLeft className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Far Left Vertical Scroll Visual Indicator (آیکون ماوس اسکرول + نشانگر) */}
+        <div className="absolute left-6 lg:left-8 bottom-16 z-20 hidden md:flex flex-col items-center gap-2 text-slate-400">
+          <div className="flex flex-col items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+            <span className="w-1.5 h-3.5 rounded-full bg-[#F97316] shadow-[0_0_6px_#F97316]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
           </div>
 
-          {/* Far Left Vertical Scroll Visual Indicator (آیکون ماوس اسکرول + نشانگر) */}
-          <div className="absolute left-4 lg:left-6 bottom-16 z-20 hidden md:flex flex-col items-center gap-2 text-slate-400">
-            <div className="flex flex-col items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-              <span className="w-1.5 h-3.5 rounded-full bg-[#F97316] shadow-[0_0_6px_#F97316]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-            </div>
-
-            <div className="w-4 h-7 rounded-full border border-white/35 flex items-start justify-center pt-1">
-              <span className="w-1 h-1.5 rounded-full bg-white/80 animate-bounce" />
-            </div>
-            <span className="text-[8px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase rotate-180 [writing-mode:vertical-lr]">
-              SCROLL
-            </span>
+          <div className="w-5 h-7 rounded-full border-2 border-white/35 flex items-start justify-center pt-1">
+            <span className="w-1 h-1.5 rounded-full bg-white/80 animate-bounce" />
           </div>
+          <span className="text-[8px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase rotate-180 [writing-mode:vertical-lr]">
+            SCROLL
+          </span>
+        </div>
 
-          {/* Bottom Left Badge: تجربه‌ی موفق همکاری با صنایع پیشرو */}
-          <div className="absolute left-4 sm:left-6 bottom-4 z-20 hidden lg:flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15 shadow-md">
-            <div className="w-1.5 h-5 bg-[#F97316] rounded-full" />
-            <div className="text-right">
-              <div className="text-[10px] font-bold text-white">تجربه‌ی موفق همکاری با صنایع پیشرو</div>
-              <div className="text-[8px] text-slate-400 font-medium">کیفیت، سرعت، اعتماد</div>
-            </div>
-            <ArrowLeft className="w-3 h-3 text-orange-400 mr-1" />
+        {/* Bottom Left Badge: تجربه‌ی موفق همکاری با صنایع پیشرو */}
+        <div className="absolute left-4 sm:left-8 bottom-4 z-20 hidden lg:flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/15 shadow-md">
+          <div className="w-1.5 h-5 bg-[#F97316] rounded-full" />
+          <div className="text-right">
+            <div className="text-[11px] font-bold text-white">تجربه‌ی موفق همکاری با صنایع پیشرو</div>
+            <div className="text-[9px] text-slate-400 font-medium">کیفیت، سرعت، اعتماد</div>
           </div>
+          <ArrowLeft className="w-3 h-3 text-orange-400 mr-1" />
+        </div>
 
-          {/* ========================================================================= */}
-          {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - جمع و یکپارچه)   */}
-          {/* ========================================================================= */}
-          <div
-            className="relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-3 px-4 sm:px-6 transition-all duration-150 ease-out"
-            style={{
-              opacity: Math.max(0, 1 - scrollY / 380),
-              transform: `translateY(${Math.min(30, scrollY * 0.1)}px)`,
-              pointerEvents: scrollY > 360 ? 'none' : 'auto',
-            }}
-          >
-            <div className="w-full flex flex-wrap items-center justify-between gap-3">
-              
-              {/* 4 Advantages Items */}
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 lg:gap-8">
-                {/* Item 1: کیفیت تضمینی */}
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[11px] font-bold text-white">کیفیت تضمینی</div>
-                    <div className="text-[9px] text-slate-400">اصالت و گارانتی</div>
-                  </div>
+        {/* ========================================================================= */}
+        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - استاندارد max-w-7xl) */}
+        {/* ========================================================================= */}
+        <div
+          className="relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-3 sm:py-3.5 transition-all duration-150 ease-out"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 350),
+            transform: `translateY(${Math.min(25, scrollY * 0.08)}px)`,
+            pointerEvents: scrollY > 330 ? 'none' : 'auto',
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
+            
+            {/* 4 Advantages Items */}
+            <div className="flex flex-wrap items-center gap-5 sm:gap-8 lg:gap-10">
+              {/* Item 1: کیفیت تضمینی */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <ShieldCheck className="w-4 h-4" />
                 </div>
-
-                {/* Item 2: تحویل سریع */}
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                    <Truck className="w-3.5 h-3.5" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[11px] font-bold text-white">تحویل سریع</div>
-                    <div className="text-[9px] text-slate-400">به سراسر کشور</div>
-                  </div>
-                </div>
-
-                {/* Item 3: مشاوره تخصصی */}
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                    <Settings className="w-3.5 h-3.5" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[11px] font-bold text-white">مشاوره تخصصی</div>
-                    <div className="text-[9px] text-slate-400">تیم مهندسی</div>
-                  </div>
-                </div>
-
-                {/* Item 4: پشتیبانی واقعی */}
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                    <Headphones className="w-3.5 h-3.5" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[11px] font-bold text-white">پشتیبانی واقعی</div>
-                    <div className="text-[9px] text-slate-400">قبل و بعد خرید</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Brand Partners (FORZA & SWR) */}
-              <div className="flex items-center gap-4 border-r border-white/15 pr-4 hidden md:flex">
                 <div className="text-right">
-                  <span className="text-[9px] text-slate-400 block font-medium">برندهای معتبر جهانی</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="text-right">
-                    <div className="text-[11px] font-bold text-white flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 bg-[#F97316] rotate-45 inline-block" />
-                      <span>FORZA</span>
-                    </div>
-                  </div>
-                  <div className="text-right border-r border-white/15 pr-2.5">
-                    <div className="text-[11px] font-bold text-white">SWR</div>
-                  </div>
+                  <div className="text-xs font-bold text-white">کیفیت تضمینی</div>
+                  <div className="text-[10px] text-slate-400 font-medium">گارانتی و اصالت کالا</div>
                 </div>
               </div>
 
+              {/* Item 2: تحویل سریع */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Truck className="w-4 h-4" />
+                </div>
+                <div className="text-right">
+                  <div className="text-xs font-bold text-white">تحویل سریع</div>
+                  <div className="text-[10px] text-slate-400 font-medium">به سراسر کشور</div>
+                </div>
+              </div>
+
+              {/* Item 3: مشاوره تخصصی */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Settings className="w-4 h-4" />
+                </div>
+                <div className="text-right">
+                  <div className="text-xs font-bold text-white">مشاوره تخصصی</div>
+                  <div className="text-[10px] text-slate-400 font-medium">تیم فنی و مهندسی</div>
+                </div>
+              </div>
+
+              {/* Item 4: پشتیبانی واقعی */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Headphones className="w-4 h-4" />
+                </div>
+                <div className="text-right">
+                  <div className="text-xs font-bold text-white">پشتیبانی واقعی</div>
+                  <div className="text-[10px] text-slate-400 font-medium">قبل و بعد از خرید</div>
+                </div>
+              </div>
             </div>
+
+            {/* Brand Partners (FORZA & SWR) */}
+            <div className="flex items-center gap-5 border-r border-white/15 pr-5 hidden md:flex">
+              <div className="text-right">
+                <span className="text-[10px] text-slate-400 block font-medium">همکاری با برندهای معتبر جهانی</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <div className="text-xs font-bold text-white flex items-center gap-1">
+                    <span className="w-2 h-2 bg-[#F97316] rotate-45 inline-block" />
+                    <span>FORZA</span>
+                  </div>
+                  <div className="text-[8px] text-slate-400 font-mono">Power Transmission</div>
+                </div>
+                <div className="text-right border-r border-white/15 pr-3">
+                  <div className="text-xs font-bold text-white">SWR</div>
+                  <div className="text-[8px] text-slate-400 font-mono">Belts & Components</div>
+                </div>
+              </div>
+            </div>
+
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       {/* ========================================================================= */}
       {/* SECTION 2 & 3 CONTAINER - INSIDE MAX-W-7XL                                */}
