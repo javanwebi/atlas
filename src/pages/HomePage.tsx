@@ -47,6 +47,33 @@ export const HomePage: React.FC = () => {
   const industriesScrollRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
+  // Categories carousel scroll tracking
+  const categoriesScrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollCategoriesRight, setCanScrollCategoriesRight] = useState(false);
+
+  const checkCategoriesScroll = () => {
+    const el = categoriesScrollRef.current;
+    if (!el) return;
+    const scrolled = Math.abs(el.scrollLeft) > 10;
+    setCanScrollCategoriesRight(scrolled);
+  };
+
+  const handleScrollCategoriesLeft = () => {
+    const el = categoriesScrollRef.current;
+    if (el) {
+      el.scrollBy({ left: -260, behavior: 'smooth' });
+      setCanScrollCategoriesRight(true);
+    }
+  };
+
+  const handleScrollCategoriesRight = () => {
+    const el = categoriesScrollRef.current;
+    if (el) {
+      el.scrollBy({ left: 260, behavior: 'smooth' });
+      setTimeout(checkCategoriesScroll, 350);
+    }
+  };
+
   const checkIndustriesScroll = () => {
     const el = industriesScrollRef.current;
     if (!el) return;
@@ -353,12 +380,21 @@ export const HomePage: React.FC = () => {
         {/* ========================================================================= */}
         {/* 2. DUAL AI FEATURE BANNER (مشاوره هوشمند قطعات & پیدا کردن قطعه با AI)       */}
         {/* ========================================================================= */}
-        <section className="relative overflow-hidden rounded-3xl bg-[#090F1D] text-white border border-slate-800 shadow-xl p-6 sm:p-8">
-          {/* Ambient Subtle Gradients */}
-          <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#F97316]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-[#C2410C] via-[#7C2D12] to-[#0A101D] text-white shadow-xl border border-orange-900/40 p-6 sm:p-8" dir="rtl">
+          {/* Subtle Ambient Industrial Waves / Geometric Glow matching Consultation Banner */}
+          <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
+            <svg className="w-full h-full" viewBox="0 0 1200 240" preserveAspectRatio="none" fill="none">
+              <path d="M0,80 C300,10 600,160 900,70 C1050,30 1150,110 1200,80 L1200,240 L0,240 Z" fill="white" opacity="0.2" />
+              <path d="M0,120 C250,50 500,190 800,110 C1000,60 1100,170 1200,130 L1200,240 L0,240 Z" fill="white" opacity="0.1" />
+            </svg>
+          </div>
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff0d_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" />
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 divide-y lg:divide-y-0 lg:divide-x lg:divide-x-reverse divide-slate-800">
+          {/* Ambient Corner Glows */}
+          <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#F97316]/25 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-orange-900/30 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 divide-y lg:divide-y-0 lg:divide-x lg:divide-x-reverse divide-orange-900/50">
             {/* Card A (Right in RTL): مشاوره با هوش مصنوعی */}
             <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 lg:pb-0 lg:pl-6">
               {/* Visual: Glowing AI Cybernetic Face */}
@@ -449,35 +485,65 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          {/* 7 Clean Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3.5">
-            {categories.map(cat => (
-              <Link
-                key={cat.id}
-                to={cat.link}
-                className="group bg-white rounded-2xl border border-slate-200/80 p-3 flex flex-col justify-between hover:border-[#F97316]/50 hover:shadow-lg transition-all duration-300 text-right"
-              >
-                {/* Product Image Box */}
-                <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center mb-3 group-hover:bg-orange-50/30 transition-colors">
-                  <img
-                    src={cat.image}
-                    alt={cat.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
+          {/* Carousel / Scrollable Row with Left and Right Navigation Buttons */}
+          <div className="relative group/categories">
+            {/* Right Button: Only appears after clicking left button or scrolling left */}
+            <button
+              type="button"
+              onClick={handleScrollCategoriesRight}
+              className={`absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all duration-300 cursor-pointer ${
+                canScrollCategoriesRight ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'
+              }`}
+              aria-label="دسته‌بندی‌های قبلی"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
 
-                {/* Title & Orange Arrow Circle Button */}
-                <div className="flex items-center justify-between gap-1.5 pt-1">
-                  <div className="w-7 h-7 rounded-full bg-[#F97316] group-hover:bg-[#EA580C] text-white flex items-center justify-center shrink-0 shadow-xs transition-colors">
-                    <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+            {/* Left Button: Always visible for scrolling forward */}
+            <button
+              type="button"
+              onClick={handleScrollCategoriesLeft}
+              className="absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
+              aria-label="دسته‌بندی‌های بعدی"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Scrollable Categories Container */}
+            <div
+              ref={categoriesScrollRef}
+              onScroll={checkCategoriesScroll}
+              className="flex items-stretch gap-3.5 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none snap-x snap-mandatory"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {categories.map(cat => (
+                <Link
+                  key={cat.id}
+                  to={cat.link}
+                  className="w-44 sm:w-48 shrink-0 group bg-white rounded-2xl border border-slate-200/80 p-3 flex flex-col justify-between hover:border-[#F97316]/50 hover:shadow-lg transition-all duration-300 text-right snap-start"
+                >
+                  {/* Product Image Box */}
+                  <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center mb-3 group-hover:bg-orange-50/30 transition-colors">
+                    <img
+                      src={cat.image}
+                      alt={cat.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                  <h3 className="font-bold text-xs text-[#0A172F] group-hover:text-[#F97316] transition-colors line-clamp-1">
-                    {cat.title}
-                  </h3>
-                </div>
-              </Link>
-            ))}
+
+                  {/* Title & Orange Arrow Circle Button */}
+                  <div className="flex items-center justify-between gap-1.5 pt-1">
+                    <div className="w-7 h-7 rounded-full bg-[#F97316] group-hover:bg-[#EA580C] text-white flex items-center justify-center shrink-0 shadow-xs transition-colors">
+                      <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                    </div>
+                    <h3 className="font-bold text-xs text-[#0A172F] group-hover:text-[#F97316] transition-colors line-clamp-1">
+                      {cat.title}
+                    </h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       </div>
