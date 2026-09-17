@@ -245,43 +245,43 @@ export const HomePage: React.FC = () => {
       {/* 0. VERTICAL ORANGE SCROLL INDICATOR LINE (میزان اسکرول صفحه)              */}
       {/* ========================================================================= */}
       <div 
-        className="fixed top-0 right-0 z-50 w-1.5 h-full pointer-events-none bg-black/20"
+        className="fixed top-0 right-0 z-50 w-1 h-full pointer-events-none bg-black/15"
         title="شاخص پیمایش صفحه"
       >
         {/* Glowing Orange Fill Line */}
         <div
-          className="w-full bg-gradient-to-b from-[#EA580C] via-[#F97316] to-[#FF8C00] shadow-[0_0_12px_#F97316] transition-all duration-75"
+          className="w-full bg-gradient-to-b from-[#EA580C] via-[#F97316] to-[#FF8C00] shadow-[0_0_8px_#F97316] transition-all duration-75"
           style={{ height: `${Math.round(scrollProgress * 100)}%` }}
         />
       </div>
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION - 100% FULL WIDTH WITH PARALLAX & ANIMATIONS              */}
+      {/* 1. HERO SECTION - BALANCED PROPORTIONS WITH PARALLAX & ANIMATIONS        */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] flex flex-col justify-between">
+      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[500px] sm:min-h-[560px] lg:min-h-[600px] flex flex-col justify-between">
         {/* Background Factory Image with Smooth Parallax Movement on Scroll */}
         <div
-          className="absolute -top-12 -bottom-12 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform scale-105"
+          className="absolute -top-10 -bottom-10 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
           style={{
             backgroundImage: `url(${STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley})`,
-            transform: `translateY(${Math.min(160, scrollY * 0.35)}px) scale(1.05)`,
+            transform: `translateY(${Math.min(120, scrollY * 0.28)}px) scale(1.04)`,
           }}
         />
 
         {/* Cinematic Factory Vignette Overlay: Deep contrast on right for headline, warm orange reflections on floor */}
-        <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/70 to-[#060A14]/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/75 to-[#060A14]/35 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#060A14] via-transparent to-black/40 pointer-events-none" />
         {/* Warm Golden Flare on Factory floor */}
-        <div className="absolute bottom-0 left-1/4 w-[600px] h-[220px] bg-gradient-to-t from-orange-600/25 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[180px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
-        {/* Top & Middle Content Container - Aligned within max-w-[1520px] */}
-        <div className="relative z-10 max-w-[1520px] w-full mx-auto px-4 sm:px-8 lg:px-14 pt-12 sm:pt-16 pb-6 flex-1 flex flex-col justify-center">
-          <div className="max-w-2xl lg:max-w-3xl space-y-6">
+        {/* Top & Middle Content Container - Standard max-w-7xl matching the header perfectly */}
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-6 flex-1 flex flex-col justify-center">
+          <div className="max-w-xl lg:max-w-2xl space-y-4 sm:space-y-5">
             
             {/* Top Eyebrow Tag: تأمین قطعات صنعتی با کیفیت، با گارانتی و پشتوانه مطمئن */}
             <div className="flex items-center gap-2.5 justify-start">
-              <span className="w-10 h-[2px] bg-[#F97316]" />
-              <span className="text-xs sm:text-sm font-bold text-orange-400/90 tracking-wide">
+              <span className="w-8 h-[2px] bg-[#F97316]" />
+              <span className="text-xs sm:text-[13px] font-bold text-orange-400/90 tracking-wide">
                 تأمین قطعات صنعتی با کیفیت، قیمت رقابتی، برای آینده‌ای مطمئن
               </span>
             </div>
@@ -291,44 +291,44 @@ export const HomePage: React.FC = () => {
               className="transition-all duration-100 ease-out will-change-transform"
               style={{
                 opacity: Math.max(0, 1 - scrollY / 320),
-                transform: `translateX(${Math.min(80, scrollY * 0.22)}px)`,
+                transform: `translateX(${Math.min(70, scrollY * 0.2)}px)`,
               }}
             >
-              <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-black leading-[1.18] tracking-tight text-white drop-shadow-lg">
+              <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black leading-[1.18] tracking-tight text-white drop-shadow-md">
                 <span>همراه صنعتگران</span>
                 <span className="block text-[#F97316] pt-1">در مسیر رشد و پیشرفت</span>
               </h1>
             </div>
 
             {/* Action Buttons & Subtitle - PUSHED DOWN BY ~18px AS REQUESTED */}
-            <div className="pt-4 sm:pt-5 space-y-4">
+            <div className="pt-3 sm:pt-4 space-y-3.5">
               {/* Subtitle Description */}
-              <p className="text-xs sm:text-[15px] text-slate-200/90 leading-relaxed max-w-xl font-normal">
+              <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-lg font-normal">
                 ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.
               </p>
 
               {/* Action Buttons Row */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <div className="pt-1.5 flex flex-wrap items-center gap-3.5">
                 {/* Primary Luminous Orange Button: مشاهده محصولات */}
                 <Link
                   to="/category/industrial-belts"
-                  className="h-12 sm:h-13 px-8 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-sm sm:text-base rounded-2xl shadow-[0_10px_25px_rgba(249,115,22,0.4)] hover:shadow-[0_12px_30px_rgba(249,115,22,0.6)] hover:scale-[1.02] transition-all flex items-center gap-2.5 cursor-pointer group"
+                  className="h-11 sm:h-12 px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_8px_20px_rgba(249,115,22,0.35)] hover:shadow-[0_10px_25px_rgba(249,115,22,0.55)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
                 >
                   <span>مشاهده محصولات</span>
-                  <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1.5 transition-transform text-white" />
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-white" />
                 </Link>
 
                 {/* Secondary Video/Company Intro Outline Button: معرفی شرکت */}
                 <button
                   type="button"
                   onClick={() => setIsConsultOpen(true)}
-                  className="h-12 sm:h-13 px-7 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-2xl border border-white/25 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-3 cursor-pointer group shadow-lg"
+                  className="h-11 sm:h-12 px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2.5 cursor-pointer group shadow-md"
                 >
-                  <span className="w-7 h-7 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
-                    <Play className="w-3.5 h-3.5 fill-[#F97316] text-[#F97316] ml-0.5" />
+                  <span className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
+                    <Play className="w-3 h-3 fill-[#F97316] text-[#F97316] ml-0.5" />
                   </span>
                   <span>معرفی شرکت</span>
-                  <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+                  <ArrowLeft className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
                 </button>
               </div>
             </div>
@@ -336,110 +336,110 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Far Left Vertical Scroll Visual Indicator (عین تصویر: آیکون ماوس اسکرول + نشانگر) */}
-        <div className="absolute left-6 lg:left-10 bottom-24 z-20 hidden md:flex flex-col items-center gap-3 text-slate-300">
-          <div className="flex flex-col items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-            <span className="w-1.5 h-5 rounded-full bg-[#F97316] shadow-[0_0_8px_#F97316]" />
-            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+        {/* Far Left Vertical Scroll Visual Indicator (آیکون ماوس اسکرول + نشانگر) */}
+        <div className="absolute left-6 lg:left-8 bottom-20 z-20 hidden md:flex flex-col items-center gap-2.5 text-slate-400">
+          <div className="flex flex-col items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+            <span className="w-1.5 h-4 rounded-full bg-[#F97316] shadow-[0_0_8px_#F97316]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
           </div>
 
-          <div className="w-6 h-9 rounded-full border-2 border-white/40 flex items-start justify-center pt-1.5">
-            <span className="w-1 h-2 rounded-full bg-white/80 animate-bounce" />
+          <div className="w-5 h-8 rounded-full border-2 border-white/35 flex items-start justify-center pt-1">
+            <span className="w-1 h-1.5 rounded-full bg-white/80 animate-bounce" />
           </div>
-          <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase rotate-180 [writing-mode:vertical-lr]">
+          <span className="text-[9px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase rotate-180 [writing-mode:vertical-lr]">
             SCROLL
           </span>
         </div>
 
         {/* Bottom Left Badge: تجربه‌ی موفق همکاری با صنایع پیشرو */}
-        <div className="absolute left-4 sm:left-12 bottom-6 z-20 hidden lg:flex items-center gap-3 bg-black/65 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/15 shadow-xl">
-          <div className="w-2 h-7 bg-[#F97316] rounded-full" />
+        <div className="absolute left-4 sm:left-8 bottom-5 z-20 hidden lg:flex items-center gap-2.5 bg-black/60 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/15 shadow-lg">
+          <div className="w-1.5 h-6 bg-[#F97316] rounded-full" />
           <div className="text-right">
-            <div className="text-xs font-bold text-white">تجربه‌ی موفق همکاری با صنایع پیشرو</div>
-            <div className="text-[10px] text-slate-400 font-medium">کیفیت، سرعت، اعتماد</div>
+            <div className="text-[11px] font-bold text-white">تجربه‌ی موفق همکاری با صنایع پیشرو</div>
+            <div className="text-[9px] text-slate-400 font-medium">کیفیت، سرعت، اعتماد</div>
           </div>
-          <ArrowLeft className="w-4 h-4 text-orange-400 mr-2" />
+          <ArrowLeft className="w-3.5 h-3.5 text-orange-400 mr-1" />
         </div>
 
         {/* ========================================================================= */}
-        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - ثابت و سپس محو)     */}
+        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - استاندارد max-w-7xl) */}
         {/* ========================================================================= */}
         <div
-          className="relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-4 sm:py-5 transition-all duration-150 ease-out"
+          className="relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-3.5 sm:py-4 transition-all duration-150 ease-out"
           style={{
             opacity: Math.max(0, 1 - scrollY / 380),
             transform: `translateY(${Math.min(30, scrollY * 0.1)}px)`,
             pointerEvents: scrollY > 360 ? 'none' : 'auto',
           }}
         >
-          <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-wrap items-center justify-between gap-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
             
             {/* 4 Advantages Items */}
-            <div className="flex flex-wrap items-center gap-6 sm:gap-10 lg:gap-14">
+            <div className="flex flex-wrap items-center gap-5 sm:gap-8 lg:gap-10">
               {/* Item 1: کیفیت تضمینی */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                  <ShieldCheck className="w-5 h-5" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div className="text-right">
-                  <div className="text-xs sm:text-[13px] font-bold text-white">کیفیت تضمینی</div>
-                  <div className="text-[10px] text-slate-400 font-medium">همراه با گارانتی و اصالت کالا</div>
+                  <div className="text-xs font-bold text-white">کیفیت تضمینی</div>
+                  <div className="text-[10px] text-slate-400 font-medium">گارانتی و اصالت کالا</div>
                 </div>
               </div>
 
               {/* Item 2: تحویل سریع */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                  <Truck className="w-5 h-5" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Truck className="w-4 h-4" />
                 </div>
                 <div className="text-right">
-                  <div className="text-xs sm:text-[13px] font-bold text-white">تحویل سریع</div>
+                  <div className="text-xs font-bold text-white">تحویل سریع</div>
                   <div className="text-[10px] text-slate-400 font-medium">به سراسر کشور</div>
                 </div>
               </div>
 
               {/* Item 3: مشاوره تخصصی */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                  <Settings className="w-5 h-5" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Settings className="w-4 h-4" />
                 </div>
                 <div className="text-right">
-                  <div className="text-xs sm:text-[13px] font-bold text-white">مشاوره تخصصی</div>
+                  <div className="text-xs font-bold text-white">مشاوره تخصصی</div>
                   <div className="text-[10px] text-slate-400 font-medium">تیم فنی و مهندسی</div>
                 </div>
               </div>
 
               {/* Item 4: پشتیبانی واقعی */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
-                  <Headphones className="w-5 h-5" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Headphones className="w-4 h-4" />
                 </div>
                 <div className="text-right">
-                  <div className="text-xs sm:text-[13px] font-bold text-white">پشتیبانی واقعی</div>
+                  <div className="text-xs font-bold text-white">پشتیبانی واقعی</div>
                   <div className="text-[10px] text-slate-400 font-medium">قبل و بعد از خرید</div>
                 </div>
               </div>
             </div>
 
             {/* Brand Partners (FORZA & SWR) */}
-            <div className="flex items-center gap-6 border-r border-white/15 pr-6 hidden md:flex">
+            <div className="flex items-center gap-5 border-r border-white/15 pr-5 hidden md:flex">
               <div className="text-right">
-                <span className="text-[11px] text-slate-400 block font-medium">همکاری با برندهای معتبر جهانی</span>
+                <span className="text-[10px] text-slate-400 block font-medium">همکاری با برندهای معتبر جهانی</span>
               </div>
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-4">
                 <div className="text-right">
                   <div className="text-xs font-bold text-white flex items-center gap-1">
                     <span className="w-2 h-2 bg-[#F97316] rotate-45 inline-block" />
                     <span>FORZA</span>
                   </div>
-                  <div className="text-[8px] text-slate-400 font-mono">Power Transmission Solutions</div>
+                  <div className="text-[8px] text-slate-400 font-mono">Power Transmission</div>
                 </div>
-                <div className="text-right border-r border-white/15 pr-4">
+                <div className="text-right border-r border-white/15 pr-3">
                   <div className="text-xs font-bold text-white">SWR</div>
-                  <div className="text-[8px] text-slate-400 font-mono">Industrial Belts & Components</div>
+                  <div className="text-[8px] text-slate-400 font-mono">Belts & Components</div>
                 </div>
               </div>
             </div>
