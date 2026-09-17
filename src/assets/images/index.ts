@@ -19,6 +19,11 @@ import indTextileImg from './ind_textile_1789372911510.jpg';
 import indFactoryImg from './ind_factory_1789372929899.jpg';
 import indCementPlantImg from './ind_cement_plant_1789379772744.jpg';
 import indFoodBeltImg from './ind_food_belt_1789640443445.jpg';
+import indBgPlantImg from './ind_bg_plant_1789640602049.jpg';
+import indFoodBottlesImg from './ind_food_bottles_1789640622505.jpg';
+import indMiningTruckImg from './ind_mining_truck_1789640639445.jpg';
+import indPowerCoolingImg from './ind_power_cooling_1789640659745.jpg';
+import indRobotArmImg from './ind_robot_arm_1789640675729.jpg';
 
 import aiConsultRobotImg from './ai_consult_robot_1789379706342.jpg';
 import aiSearchMobileImg from './ai_search_mobile_1789379723502.jpg';
@@ -67,6 +72,11 @@ export const STORE_ASSETS = {
     manufacturing: indFactoryImg,
     cement: indCementPlantImg,
     food: indFoodBeltImg,
+    foodBottles: indFoodBottlesImg,
+    miningTruck: indMiningTruckImg,
+    powerCooling: indPowerCoolingImg,
+    robotArm: indRobotArmImg,
+    bgPlant: indBgPlantImg,
   },
   products: {
     ceramicParts: prodCerPartsImg,

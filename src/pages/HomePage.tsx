@@ -20,6 +20,11 @@ import {
   Flame,
   Phone,
   CheckCircle2,
+  Factory,
+  Zap,
+  Cpu,
+  Gem,
+  Wheat,
 } from 'lucide-react';
 import { STORE_ASSETS } from '../assets/images';
 import { AiVisualPartSearchModal } from '../components/search/AiVisualPartSearchModal';
@@ -84,37 +89,57 @@ export const HomePage: React.FC = () => {
     },
   ];
 
-  // 5 Covered Industries
+  // 7 Covered Industries matching reference screenshot exactly
   const coveredIndustries = [
     {
       id: 1,
-      title: 'خطوط کاشی و سرامیک',
-      image: STORE_ASSETS.industries.ceramic,
-      link: '/category/ceramic-tiles',
+      title: 'سیمان و فولاد',
+      image: STORE_ASSETS.industries.cement,
+      icon: Factory,
+      link: '/category/cement-industry',
     },
     {
       id: 2,
-      title: 'ماشین‌آلات نساجی و ریسندگی',
-      image: STORE_ASSETS.industries.textile,
-      link: '/category/textile-machinery',
+      title: 'صنایع غذایی',
+      image: STORE_ASSETS.industries.foodBottles,
+      icon: Wheat,
+      link: '/category/food-industry',
+      highlight: true,
     },
     {
       id: 3,
-      title: 'خطوط معادن و صنایع فولاد',
-      image: STORE_ASSETS.industries.manufacturing,
+      title: 'معادن',
+      image: STORE_ASSETS.industries.miningTruck,
+      icon: Gem,
       link: '/category/mining-steel',
     },
     {
       id: 4,
-      title: 'خطوط صنایع غذایی و بسته‌بندی',
-      image: STORE_ASSETS.industries.food,
-      link: '/category/food-industry',
+      title: 'نساجی',
+      image: STORE_ASSETS.industries.textile,
+      icon: Cpu,
+      link: '/category/textile-machinery',
     },
     {
       id: 5,
-      title: 'خطوط تولید سیمان و گچ',
-      image: STORE_ASSETS.industries.cement,
-      link: '/category/cement-industry',
+      title: 'کاشی و سرامیک',
+      image: STORE_ASSETS.industries.ceramic,
+      icon: Flame,
+      link: '/category/ceramic-tiles',
+    },
+    {
+      id: 6,
+      title: 'نیرو و انرژی',
+      image: STORE_ASSETS.industries.powerCooling,
+      icon: Zap,
+      link: '/category/power-energy',
+    },
+    {
+      id: 7,
+      title: 'تولیدی و ساخت',
+      image: STORE_ASSETS.industries.robotArm,
+      icon: Factory,
+      link: '/category/manufacturing',
     },
   ];
 
@@ -427,78 +452,166 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 4. COVERED INDUSTRIES - 100% FULL WIDTH (قطعات خطوط صنایع مختلف عین تصویر) */}
+      {/* 4. COVERED INDUSTRIES - 100% FULL WIDTH MATCHING REFERENCE UI/UX           */}
       {/* ========================================================================= */}
       <section
-        className="relative w-full overflow-hidden bg-gradient-to-l from-[#C2410C] via-[#9A3412] to-[#120704] text-white py-12 sm:py-16 my-8 sm:my-10 shadow-2xl"
+        className="relative w-full overflow-hidden bg-[#0A0D14] text-white py-14 sm:py-20 my-8 sm:my-12 shadow-2xl border-y border-orange-950/40"
         dir="rtl"
       >
-        {/* Subtle Industrial Background Dot Texture exactly as in image */}
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0d_1.2px,transparent_1.2px)] [background-size:20px_20px] pointer-events-none" />
+        {/* Background Plant Backdrop with dramatic dusk gradient overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={STORE_ASSETS.industries.bgPlant}
+            alt="Industrial Plant Refinery"
+            className="w-full h-full object-cover object-center opacity-35"
+          />
+          {/* Radial & directional gradient lighting (orange flame on top-right, dark moody base on left) */}
+          <div className="absolute inset-0 bg-gradient-to-l from-[#EA580C]/85 via-[#9A3412]/75 to-[#06080E]/95 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#06080E] via-transparent to-transparent" />
+        </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12">
-          {/* 5 Industry Cards (Left side in LTR, Right order in RTL) */}
-          <div className="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-            {coveredIndustries.map((ind) => (
-              <Link
-                key={ind.id}
-                to={ind.link}
-                className="group relative aspect-[3/4.4] rounded-2xl overflow-hidden border border-white/20 hover:border-white/50 shadow-xl flex flex-col justify-end p-2.5 sm:p-3 transition-all duration-300"
-              >
-                {/* Card Background Image */}
-                <img
-                  src={ind.image}
-                  alt={ind.title}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {/* Gradient overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+        {/* Diagonal Glowing Laser Light Rays at bottom right (just like in screenshot) */}
+        <div className="absolute bottom-0 right-0 w-[55%] h-32 pointer-events-none z-1 overflow-hidden opacity-80">
+          <div className="absolute -bottom-10 right-10 w-[650px] h-[3px] bg-gradient-to-r from-transparent via-[#F97316] to-transparent rotate-[-18deg] shadow-[0_0_15px_#F97316]" />
+          <div className="absolute -bottom-16 right-32 w-[550px] h-[2px] bg-gradient-to-r from-transparent via-[#EA580C] to-transparent rotate-[-18deg] shadow-[0_0_10px_#EA580C]" />
+          <div className="absolute -bottom-24 right-56 w-[450px] h-[2px] bg-gradient-to-r from-transparent via-orange-400 to-transparent rotate-[-18deg]" />
+        </div>
 
-                {/* Bottom Overlay Label Pill with Round Orange Icon */}
-                <div className="relative z-10 flex items-center justify-between gap-1.5 bg-black/75 backdrop-blur-md px-2.5 py-2 rounded-xl border border-white/20 shadow-md">
-                  <div className="w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-[#F97316] text-white flex items-center justify-center shrink-0 shadow-xs">
-                    <ArrowLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" />
+        {/* Subtle Industrial Background Dot Pattern */}
+        <div className="absolute inset-0 z-1 bg-[radial-gradient(#ffffff0f_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+
+        {/* Carousel Navigation Chevron Arrows (Left & Right) */}
+        <button
+          type="button"
+          onClick={() => {
+            const el = document.getElementById('industries-scroll-container');
+            if (el) el.scrollBy({ left: 280, behavior: 'smooth' });
+          }}
+          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#F97316] border border-white/20 hover:border-[#F97316] text-white flex items-center justify-center backdrop-blur-md shadow-xl transition-all cursor-pointer group"
+          aria-label="صنایع بعدی"
+        >
+          <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            const el = document.getElementById('industries-scroll-container');
+            if (el) el.scrollBy({ left: -280, behavior: 'smooth' });
+          }}
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#F97316] border border-white/20 hover:border-[#F97316] text-white flex items-center justify-center backdrop-blur-md shadow-xl transition-all cursor-pointer group"
+          aria-label="صنایع قبلی"
+        >
+          <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
+        </button>
+
+        {/* Main Content Layout */}
+        <div className="relative z-10 max-w-[1480px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          {/* Scrollable / Flexible Cards Row (Left side in LTR, Right sequence in RTL) */}
+          <div
+            id="industries-scroll-container"
+            className="flex-1 w-full flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto pb-4 pt-2 px-1 scrollbar-none snap-x snap-mandatory"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {coveredIndustries.map((ind) => {
+              const IconComp = ind.icon;
+              const isHighlighted = Boolean(ind.highlight);
+
+              return (
+                <Link
+                  key={ind.id}
+                  to={ind.link}
+                  className={`group relative w-[170px] sm:w-[195px] shrink-0 aspect-[1/1.7] rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-end p-2.5 sm:p-3 transition-all duration-300 snap-start cursor-pointer ${
+                    isHighlighted
+                      ? 'border-2 border-[#F97316] shadow-[0_0_25px_rgba(249,115,22,0.45)] ring-2 ring-orange-500/30 scale-[1.03] z-10'
+                      : 'border border-white/15 hover:border-white/40 hover:scale-[1.02]'
+                  }`}
+                >
+                  {/* Card Industrial Machinery Photo */}
+                  <img
+                    src={ind.image}
+                    alt={ind.title}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+
+                  {/* Dark Vignette and bottom contrast gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15" />
+
+                  {/* Top Subtle Amber Highlight glow on active card */}
+                  {isHighlighted && (
+                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#F97316] to-transparent" />
+                  )}
+
+                  {/* Bottom Glass Card Pill with Icon + Title + Orange Arrow */}
+                  <div className="relative z-10 flex items-center justify-between gap-1.5 bg-[#0A0E18]/85 backdrop-blur-md px-2.5 py-2 rounded-xl border border-white/15 shadow-lg group-hover:border-orange-500/60 transition-colors">
+                    {/* Left Icon (Orange Arrow Circle Button) */}
+                    <div className="w-6 h-6 rounded-full bg-[#F97316] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#EA580C] transition-colors">
+                      <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                    </div>
+
+                    {/* Middle Title */}
+                    <span className="text-xs sm:text-[13px] font-bold text-white group-hover:text-orange-200 transition-colors line-clamp-1">
+                      {ind.title}
+                    </span>
+
+                    {/* Right Mini Industry Category Icon */}
+                    {IconComp && (
+                      <div className="w-5 h-5 flex items-center justify-center text-orange-400/80 shrink-0">
+                        <IconComp className="w-3.5 h-3.5" />
+                      </div>
+                    )}
                   </div>
-                  <span className="text-[11px] sm:text-xs font-bold text-white group-hover:text-orange-300 transition-colors line-clamp-1">
-                    {ind.title}
-                  </span>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Right Header Text Column (راست‌چین مطابق عکس ارسالی) */}
-          <div className="w-full lg:w-[380px] xl:w-[420px] space-y-4 text-right shrink-0">
-            <span className="text-xs sm:text-sm font-semibold text-orange-200/90 tracking-wide block">
-              تضمین استمرار خطوط تولید صنعتی
-            </span>
+          {/* Right Header Text Column (راست‌چین دقیقاً مطابق عکس ارسالی) */}
+          <div className="w-full lg:w-[440px] xl:w-[480px] space-y-4 text-right shrink-0 lg:pr-2">
+            {/* Top English Brand Label: ATLAS TRADING ——— */}
+            <div className="flex items-center gap-2 justify-start">
+              <span className="text-xs sm:text-sm font-black tracking-[0.25em] text-[#F97316] uppercase font-mono">
+                ATLAS TRADING
+              </span>
+              <span className="w-12 h-[2px] bg-[#F97316]" />
+            </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-white leading-tight tracking-tight">
-              قطعات خطوط صنایع مختلف
-            </h2>
-
-            <p className="text-xs sm:text-sm text-orange-50/90 leading-relaxed font-normal">
-              از خطوط کاشی و سرامیک، نساجی و فولاد تا صنایع غذایی؛ هایپر صنعت قطعات ضدسایش و پردوام را برای صفر کردن توقف خطوط تولید کارخانجات تأمین می‌کند.
+            {/* Subtitle */}
+            <p className="text-xs sm:text-sm font-bold text-slate-200 tracking-wide">
+              تأمین‌کننده قطعات و تجهیزات صنعتی
             </p>
 
-            <div className="pt-2">
+            {/* Main Headline (تأمین قطعات خطوط صنایع مختلف) */}
+            <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-black text-white leading-[1.2] tracking-tight">
+              تأمین قطعات خطوط
+              <span className="block text-[#F97316] pt-1">صنایع مختلف</span>
+            </h2>
+
+            {/* Description Paragraph */}
+            <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-light">
+              از خطوط کاشی و سرامیک، نساجی و فولاد تا صنایع غذایی، فولاد، پتروشیمی و نیروگاهی؛ با بهترین برندها و کیفیت تضمین‌شده، همراه شما در تأمین قطعات صنعتی هستیم.
+            </p>
+
+            {/* CTA Button: مشاهده قطعات خطوط (Large Orange Glowing Button) */}
+            <div className="pt-3">
               <Link
                 to="/category/industrial-belts"
-                className="inline-flex items-center justify-center gap-2 h-11 px-6 bg-[#38150B]/90 hover:bg-[#250E07] text-white text-xs sm:text-sm font-bold rounded-xl border border-white/20 hover:border-white/40 shadow-lg backdrop-blur-xs transition-all cursor-pointer group"
+                className="inline-flex items-center justify-center gap-2.5 h-12 sm:h-13 px-8 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white text-sm sm:text-base font-black rounded-2xl shadow-[0_10px_25px_rgba(249,115,22,0.4)] hover:shadow-[0_12px_30px_rgba(249,115,22,0.6)] hover:scale-[1.02] transition-all cursor-pointer group"
               >
                 <span>مشاهده قطعات خطوط</span>
-                <ArrowLeft className="w-4 h-4 text-orange-300 group-hover:-translate-x-1 transition-transform" />
+                <ArrowLeft className="w-5 h-5 text-white group-hover:-translate-x-1.5 transition-transform" />
               </Link>
             </div>
           </div>
         </div>
 
         {/* Bottom Carousel / Slider Indicator Dots */}
-        <div className="flex items-center justify-center gap-2 pt-8 sm:pt-10">
-          <span className="w-8 h-2 rounded-full bg-[#F97316] shadow-xs" />
-          <span className="w-2 h-2 rounded-full bg-white/30" />
-          <span className="w-2 h-2 rounded-full bg-white/30" />
+        <div className="flex items-center justify-center gap-2 pt-8 sm:pt-12 relative z-10">
+          <span className="w-9 h-2.5 rounded-full bg-[#F97316] shadow-[0_0_10px_#F97316]" />
+          <span className="w-7 h-2 rounded-full bg-white/25" />
+          <span className="w-7 h-2 rounded-full bg-white/25" />
+          <span className="w-7 h-2 rounded-full bg-white/25" />
         </div>
       </section>
 
