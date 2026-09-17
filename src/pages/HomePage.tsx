@@ -158,7 +158,7 @@ export const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="w-full text-right font-sans overflow-x-hidden">
+    <div className="w-full text-right font-sans pb-12 overflow-x-hidden">
       {/* ========================================================================= */}
       {/* 1. HERO SECTION - 100% FULL WIDTH (تمام صفحه و لبه‌به‌لبه عین تصویر)           */}
       {/* ========================================================================= */}
@@ -695,10 +695,10 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 7. CTA CONSULTATION & INQUIRY BANNER (مشاوره تخصصی و استعلام قیمت)        */}
+      {/* 7. CTA CONSULTATION & INQUIRY BANNER (مشاوره تخصصی و استعلام قیمت) - FULL WIDTH */}
       {/* ========================================================================= */}
       <section
-        className="relative overflow-hidden w-full bg-gradient-to-l from-[#C2410C] via-[#EA580C] to-[#F97316] text-white border-t border-orange-400/40"
+        className="relative overflow-hidden w-full bg-gradient-to-l from-[#C2410C] via-[#EA580C] to-[#F97316] text-white shadow-xl mt-8"
         dir="rtl"
       >
         {/* Subtle Ambient Industrial Waves / Geometric Glow */}
@@ -709,61 +709,59 @@ export const HomePage: React.FC = () => {
           </svg>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center">
-            
-            {/* RIGHT: Text and Action Buttons (کاملاً راست‌چین طبق تصویر) */}
-            <div className="lg:col-span-7 xl:col-span-7 py-8 sm:py-10 lg:py-12 lg:pl-10 space-y-4 text-right">
-              <div className="space-y-2">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
-                  مشاوره تخصصی و استعلام قیمت
-                </h3>
-                <p className="text-xs sm:text-sm text-orange-50/90 font-medium leading-relaxed max-w-xl">
-                  تیم کارشناسان ما، آماده پاسخگویی به سوالات شما و ارائه بهترین راهکارهاست
-                </p>
-              </div>
-
-              {/* Action Buttons Row */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                {/* Dark Navy Button: درخواست مشاوره */}
-                <button
-                  type="button"
-                  onClick={() => setIsConsultOpen(true)}
-                  className="h-11 px-6 bg-[#18253A] hover:bg-[#0F172A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md hover:shadow-black/30 transition-all flex items-center gap-2 cursor-pointer group shrink-0"
-                >
-                  <ChevronLeft className="w-4 h-4 text-orange-400 group-hover:-translate-x-0.5 transition-transform" />
-                  <span>درخواست مشاوره</span>
-                </button>
-
-                {/* Orange Phone Call Button */}
-                <a
-                  href="tel:02142772340"
-                  className="h-11 px-5 bg-orange-700/60 hover:bg-orange-700 border border-white/40 hover:border-white text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center gap-2.5 backdrop-blur-xs cursor-pointer shrink-0"
-                  dir="ltr"
-                >
-                  <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0">
-                    <Phone className="w-3.5 h-3.5" />
-                  </div>
-                  <span className="font-mono tracking-wider font-extrabold text-white text-sm sm:text-base">
-                    ۰۲۱-۴۲۷۷۲۳۴۰
-                  </span>
-                </a>
-              </div>
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 items-center">
+          
+          {/* RIGHT: Text and Action Buttons */}
+          <div className="lg:col-span-7 xl:col-span-7 p-6 sm:p-8 lg:p-10 space-y-4 text-right">
+            <div className="space-y-2">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
+                مشاوره تخصصی و استعلام قیمت
+              </h3>
+              <p className="text-xs sm:text-sm text-orange-50/90 font-medium leading-relaxed max-w-xl">
+                تیم کارشناسان ما، آماده پاسخگویی به سوالات شما و ارائه بهترین راهکارهاست
+              </p>
             </div>
 
-            {/* LEFT: Industrial Table with Yellow Hard Hat & Machinery (فید نرم به پس‌زمینه نارنجی) */}
-            <div className="lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-72 w-full overflow-hidden">
-              <img
-                src={STORE_ASSETS.ctaConsultBanner}
-                alt="مشاوره تخصصی و استعلام قیمت قطعات خط تولید"
-                className="w-full h-full object-cover object-center"
-              />
-              {/* Gradient masks blending smoothly from image to orange banner */}
-              <div className="absolute inset-0 bg-gradient-to-l from-[#EA580C] via-[#EA580C]/40 to-transparent hidden lg:block pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#EA580C] via-[#EA580C]/30 to-transparent lg:hidden pointer-events-none" />
-            </div>
+            {/* Action Buttons Row */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* Dark Navy Button: درخواست مشاوره */}
+              <button
+                type="button"
+                onClick={() => setIsConsultOpen(true)}
+                className="h-11 px-6 bg-[#18253A] hover:bg-[#0F172A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md hover:shadow-black/30 transition-all flex items-center gap-2 cursor-pointer group shrink-0"
+              >
+                <ChevronLeft className="w-4 h-4 text-orange-400 group-hover:-translate-x-0.5 transition-transform" />
+                <span>درخواست مشاوره</span>
+              </button>
 
+              {/* Orange Phone Call Button */}
+              <a
+                href="tel:02142772340"
+                className="h-11 px-5 bg-orange-700/60 hover:bg-orange-700 border border-white/40 hover:border-white text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center gap-2.5 backdrop-blur-xs cursor-pointer shrink-0"
+                dir="ltr"
+              >
+                <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0">
+                  <Phone className="w-3.5 h-3.5" />
+                </div>
+                <span className="font-mono tracking-wider font-extrabold text-white text-sm sm:text-base">
+                  ۰۲۱-۴۲۷۷۲۳۴۰
+                </span>
+              </a>
+            </div>
           </div>
+
+          {/* LEFT: Industrial Table with Yellow Hard Hat & Machinery */}
+          <div className="lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-64 overflow-hidden lg:mr-auto w-full">
+            <img
+              src={STORE_ASSETS.ctaConsultBanner}
+              alt="مشاوره تخصصی و استعلام قیمت قطعات خط تولید"
+              className="w-full h-full object-cover object-center"
+            />
+            {/* Gradient masks blending smoothly from image to orange banner */}
+            <div className="absolute inset-0 bg-gradient-to-l from-[#EA580C] via-[#EA580C]/40 to-transparent hidden lg:block pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#EA580C] via-[#EA580C]/30 to-transparent lg:hidden pointer-events-none" />
+          </div>
+
         </div>
       </section>
 
