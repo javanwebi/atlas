@@ -256,15 +256,15 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION - BALANCED HEIGHT WITH PARALLAX & ANIMATIONS             */}
+      {/* 1. HERO SECTION - FULL VIEWPORT FIT ON DESKTOP WITH PARALLAX & ANIMATIONS */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[460px] sm:min-h-[510px] lg:min-h-[560px] flex flex-col justify-between">
+      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[520px] sm:min-h-[580px] lg:min-h-[calc(100vh-155px)] flex flex-col justify-between">
         {/* Background Factory Image with Smooth Parallax Movement on Scroll */}
         <div
-          className="absolute -top-9 -bottom-9 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
+          className="absolute -top-10 -bottom-10 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
           style={{
             backgroundImage: `url(${STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley})`,
-            transform: `translateY(${Math.min(110, scrollY * 0.26)}px) scale(1.04)`,
+            transform: `translateY(${Math.min(120, scrollY * 0.26)}px) scale(1.04)`,
           }}
         />
 
@@ -272,15 +272,15 @@ export const HomePage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/75 to-[#060A14]/35 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#060A14] via-transparent to-black/40 pointer-events-none" />
         {/* Warm Golden Flare on Factory floor */}
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[170px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[180px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
         {/* Top & Middle Content Container - Standard max-w-7xl matching the header perfectly */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-9 sm:pt-12 pb-5 flex-1 flex flex-col justify-center">
-          <div className="max-w-xl lg:max-w-2xl space-y-3.5 sm:space-y-4">
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 flex-1 flex flex-col justify-center">
+          <div className="max-w-xl lg:max-w-2xl space-y-4 sm:space-y-5">
             
             {/* Top Eyebrow Tag: تأمین قطعات صنعتی با کیفیت، با گارانتی و پشتوانه مطمئن */}
             <div className="flex items-center gap-2 justify-start">
-              <span className="w-7 h-[2px] bg-[#F97316]" />
+              <span className="w-8 h-[2px] bg-[#F97316]" />
               <span className="text-xs sm:text-[13px] font-bold text-orange-400/90 tracking-wide">
                 تأمین قطعات صنعتی با کیفیت، قیمت رقابتی، برای آینده‌ای مطمئن
               </span>
@@ -290,25 +290,25 @@ export const HomePage: React.FC = () => {
             <div
               className="transition-all duration-100 ease-out will-change-transform"
               style={{
-                opacity: Math.max(0, 1 - scrollY / 310),
-                transform: `translateX(${Math.min(65, scrollY * 0.19)}px)`,
+                opacity: Math.max(0, 1 - scrollY / 320),
+                transform: `translateX(${Math.min(70, scrollY * 0.2)}px)`,
               }}
             >
-              <h1 className="text-3xl sm:text-5xl lg:text-[50px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
+              <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
                 <span>همراه صنعتگران</span>
-                <span className="block text-[#F97316] pt-0.5">در مسیر رشد و پیشرفت</span>
+                <span className="block text-[#F97316] pt-1">در مسیر رشد و پیشرفت</span>
               </h1>
             </div>
 
             {/* Action Buttons & Subtitle */}
-            <div className="pt-2 sm:pt-3 space-y-3.5">
+            <div className="pt-2 sm:pt-3 space-y-4">
               {/* Subtitle Description */}
               <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl font-normal">
                 ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.
               </p>
 
               {/* Action Buttons Row */}
-              <div className="pt-1 flex flex-wrap items-center gap-3.5">
+              <div className="pt-1.5 flex flex-wrap items-center gap-3.5">
                 {/* Primary Luminous Orange Button: مشاهده محصولات */}
                 <Link
                   to="/category/industrial-belts"
@@ -337,16 +337,16 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Far Left Vertical Scroll Visual Indicator (آیکون ماوس اسکرول + نشانگر) */}
-        <div className="absolute left-6 lg:left-8 bottom-18 z-20 hidden md:flex flex-col items-center gap-2 text-slate-400">
+        <div className="absolute left-6 lg:left-8 bottom-24 z-20 hidden md:flex flex-col items-center gap-2.5 text-slate-400">
           <div className="flex flex-col items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
             <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-            <span className="w-1.5 h-3.5 rounded-full bg-[#F97316] shadow-[0_0_6px_#F97316]" />
+            <span className="w-1.5 h-4 rounded-full bg-[#F97316] shadow-[0_0_6px_#F97316]" />
             <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
             <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
           </div>
 
-          <div className="w-5 h-7 rounded-full border-2 border-white/35 flex items-start justify-center pt-1">
+          <div className="w-5 h-8 rounded-full border-2 border-white/35 flex items-start justify-center pt-1">
             <span className="w-1 h-1.5 rounded-full bg-white/80 animate-bounce" />
           </div>
           <span className="text-[8px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase rotate-180 [writing-mode:vertical-lr]">
