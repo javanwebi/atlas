@@ -256,15 +256,15 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION - COMPACT & BALANCED WITH PARALLAX & ANIMATIONS          */}
+      {/* 1. HERO SECTION - BALANCED HEIGHT WITH PARALLAX & ANIMATIONS             */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[420px] sm:min-h-[470px] lg:min-h-[510px] flex flex-col justify-between">
+      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[460px] sm:min-h-[510px] lg:min-h-[560px] flex flex-col justify-between">
         {/* Background Factory Image with Smooth Parallax Movement on Scroll */}
         <div
-          className="absolute -top-8 -bottom-8 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
+          className="absolute -top-9 -bottom-9 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform"
           style={{
             backgroundImage: `url(${STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley})`,
-            transform: `translateY(${Math.min(100, scrollY * 0.25)}px) scale(1.04)`,
+            transform: `translateY(${Math.min(110, scrollY * 0.26)}px) scale(1.04)`,
           }}
         />
 
@@ -272,11 +272,11 @@ export const HomePage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/75 to-[#060A14]/35 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#060A14] via-transparent to-black/40 pointer-events-none" />
         {/* Warm Golden Flare on Factory floor */}
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[160px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[170px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
         {/* Top & Middle Content Container - Standard max-w-7xl matching the header perfectly */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-7 sm:pt-9 pb-4 flex-1 flex flex-col justify-center">
-          <div className="max-w-xl lg:max-w-2xl space-y-3 sm:space-y-4">
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-9 sm:pt-12 pb-5 flex-1 flex flex-col justify-center">
+          <div className="max-w-xl lg:max-w-2xl space-y-3.5 sm:space-y-4">
             
             {/* Top Eyebrow Tag: تأمین قطعات صنعتی با کیفیت، با گارانتی و پشتوانه مطمئن */}
             <div className="flex items-center gap-2 justify-start">
@@ -290,29 +290,29 @@ export const HomePage: React.FC = () => {
             <div
               className="transition-all duration-100 ease-out will-change-transform"
               style={{
-                opacity: Math.max(0, 1 - scrollY / 300),
-                transform: `translateX(${Math.min(60, scrollY * 0.18)}px)`,
+                opacity: Math.max(0, 1 - scrollY / 310),
+                transform: `translateX(${Math.min(65, scrollY * 0.19)}px)`,
               }}
             >
-              <h1 className="text-2xl sm:text-4xl lg:text-[46px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
+              <h1 className="text-3xl sm:text-5xl lg:text-[50px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
                 <span>همراه صنعتگران</span>
                 <span className="block text-[#F97316] pt-0.5">در مسیر رشد و پیشرفت</span>
               </h1>
             </div>
 
             {/* Action Buttons & Subtitle */}
-            <div className="pt-2 sm:pt-2.5 space-y-3">
+            <div className="pt-2 sm:pt-3 space-y-3.5">
               {/* Subtitle Description */}
-              <p className="text-xs sm:text-[13px] text-slate-200/90 leading-relaxed max-w-lg font-normal">
+              <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl font-normal">
                 ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.
               </p>
 
               {/* Action Buttons Row */}
-              <div className="pt-1 flex flex-wrap items-center gap-3">
+              <div className="pt-1 flex flex-wrap items-center gap-3.5">
                 {/* Primary Luminous Orange Button: مشاهده محصولات */}
                 <Link
                   to="/category/industrial-belts"
-                  className="h-10 sm:h-11 px-6 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
+                  className="h-11 sm:h-12 px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
                 >
                   <span>مشاهده محصولات</span>
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-white" />
@@ -322,10 +322,10 @@ export const HomePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsConsultOpen(true)}
-                  className="h-10 sm:h-11 px-5 bg-black/40 hover:bg-black/70 text-white font-bold text-xs rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer group shadow-md"
+                  className="h-11 sm:h-12 px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2.5 cursor-pointer group shadow-md"
                 >
-                  <span className="w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
-                    <Play className="w-2.5 h-2.5 fill-[#F97316] text-[#F97316] ml-0.5" />
+                  <span className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
+                    <Play className="w-3 h-3 fill-[#F97316] text-[#F97316] ml-0.5" />
                   </span>
                   <span>معرفی شرکت</span>
                   <ArrowLeft className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
@@ -337,7 +337,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Far Left Vertical Scroll Visual Indicator (آیکون ماوس اسکرول + نشانگر) */}
-        <div className="absolute left-6 lg:left-8 bottom-16 z-20 hidden md:flex flex-col items-center gap-2 text-slate-400">
+        <div className="absolute left-6 lg:left-8 bottom-18 z-20 hidden md:flex flex-col items-center gap-2 text-slate-400">
           <div className="flex flex-col items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
             <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
