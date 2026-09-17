@@ -699,16 +699,17 @@ export const HomePage: React.FC = () => {
       {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 my-8 sm:my-10">
         <section
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-[#C2410C] via-[#EA580C] to-[#F97316] text-white shadow-xl border border-orange-400/40"
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-[#C2410C] via-[#7C2D12] to-[#0A101D] text-white shadow-xl border border-orange-900/30"
           dir="rtl"
         >
           {/* Subtle Ambient Industrial Waves / Geometric Glow */}
           <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
             <svg className="w-full h-full" viewBox="0 0 1200 240" preserveAspectRatio="none" fill="none">
-              <path d="M0,80 C300,10 600,160 900,70 C1050,30 1150,110 1200,80 L1200,240 L0,240 Z" fill="white" opacity="0.4" />
-              <path d="M0,120 C250,50 500,190 800,110 C1000,60 1100,170 1200,130 L1200,240 L0,240 Z" fill="white" opacity="0.25" />
+              <path d="M0,80 C300,10 600,160 900,70 C1050,30 1150,110 1200,80 L1200,240 L0,240 Z" fill="white" opacity="0.2" />
+              <path d="M0,120 C250,50 500,190 800,110 C1000,60 1100,170 1200,130 L1200,240 L0,240 Z" fill="white" opacity="0.1" />
             </svg>
           </div>
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center">
             
@@ -718,7 +719,7 @@ export const HomePage: React.FC = () => {
                 <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
                   مشاوره تخصصی و استعلام قیمت
                 </h3>
-                <p className="text-xs sm:text-sm text-orange-50/90 font-medium leading-relaxed max-w-xl">
+                <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed max-w-xl">
                   تیم کارشناسان ما، آماده پاسخگویی به سوالات شما و ارائه بهترین راهکارهاست
                 </p>
               </div>
@@ -729,19 +730,19 @@ export const HomePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsConsultOpen(true)}
-                  className="h-11 px-6 bg-[#18253A] hover:bg-[#0F172A] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md hover:shadow-black/30 transition-all flex items-center gap-2 cursor-pointer group shrink-0"
+                  className="h-11 px-6 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md hover:shadow-orange-500/30 transition-all flex items-center gap-2 cursor-pointer group shrink-0"
                 >
-                  <ChevronLeft className="w-4 h-4 text-orange-400 group-hover:-translate-x-0.5 transition-transform" />
+                  <ChevronLeft className="w-4 h-4 text-white group-hover:-translate-x-0.5 transition-transform" />
                   <span>درخواست مشاوره</span>
                 </button>
 
                 {/* Orange Phone Call Button */}
                 <a
                   href="tel:02142772340"
-                  className="h-11 px-5 bg-orange-700/60 hover:bg-orange-700 border border-white/40 hover:border-white text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center gap-2.5 backdrop-blur-xs cursor-pointer shrink-0"
+                  className="h-11 px-5 bg-black/40 hover:bg-black/60 border border-white/20 hover:border-white/40 text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center gap-2.5 backdrop-blur-xs cursor-pointer shrink-0"
                   dir="ltr"
                 >
-                  <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0">
+                  <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center text-white shrink-0">
                     <Phone className="w-3.5 h-3.5" />
                   </div>
                   <span className="font-mono tracking-wider font-extrabold text-white text-sm sm:text-base">
@@ -751,16 +752,16 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* LEFT: Industrial Table with Yellow Hard Hat & Machinery (فید نرم به پس‌زمینه نارنجی) */}
+            {/* LEFT: Industrial Table with Yellow Hard Hat & Machinery (فید نرم به پس‌زمینه تیره) */}
             <div className="lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-64 overflow-hidden">
               <img
                 src={STORE_ASSETS.ctaConsultBanner}
                 alt="مشاوره تخصصی و استعلام قیمت قطعات خط تولید"
                 className="w-full h-full object-cover object-center"
               />
-              {/* Gradient masks blending smoothly from image to orange banner */}
-              <div className="absolute inset-0 bg-gradient-to-l from-[#EA580C] via-[#EA580C]/40 to-transparent hidden lg:block pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#EA580C] via-[#EA580C]/30 to-transparent lg:hidden pointer-events-none" />
+              {/* Gradient masks blending smoothly from image to banner bg */}
+              <div className="absolute inset-0 bg-gradient-to-l from-[#0A101D] via-[#0A101D]/60 to-transparent hidden lg:block pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0A101D] via-[#0A101D]/40 to-transparent lg:hidden pointer-events-none" />
             </div>
 
           </div>
