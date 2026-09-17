@@ -18,6 +18,7 @@ import indCeramicImg from './ind_ceramic_1789372889504.jpg';
 import indTextileImg from './ind_textile_1789372911510.jpg';
 import indFactoryImg from './ind_factory_1789372929899.jpg';
 import indCementPlantImg from './ind_cement_plant_1789379772744.jpg';
+import indFoodBeltImg from './ind_food_belt_1789640443445.jpg';
 
 import aiConsultRobotImg from './ai_consult_robot_1789379706342.jpg';
 import aiSearchMobileImg from './ai_search_mobile_1789379723502.jpg';
@@ -65,6 +66,7 @@ export const STORE_ASSETS = {
     textile: indTextileImg,
     manufacturing: indFactoryImg,
     cement: indCementPlantImg,
+    food: indFoodBeltImg,
   },
   products: {
     ceramicParts: prodCerPartsImg,

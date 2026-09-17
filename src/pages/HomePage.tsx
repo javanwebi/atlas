@@ -107,7 +107,7 @@ export const HomePage: React.FC = () => {
     {
       id: 4,
       title: 'خطوط صنایع غذایی و بسته‌بندی',
-      image: STORE_ASSETS.categories.conveyor,
+      image: STORE_ASSETS.industries.food,
       link: '/category/food-industry',
     },
     {
@@ -427,71 +427,78 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 4. COVERED INDUSTRIES - 100% FULL WIDTH (صنایع تحت پوشش تمام صفحه عین عکس) */}
+      {/* 4. COVERED INDUSTRIES - 100% FULL WIDTH (قطعات خطوط صنایع مختلف عین تصویر) */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-l from-[#C2410C] via-[#7C2D12] to-[#0A101D] text-white py-10 sm:py-14 my-6 sm:my-8 shadow-2xl border-y border-orange-900/30">
-        {/* Subtle Industrial Background Texture */}
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+      <section
+        className="relative w-full overflow-hidden bg-gradient-to-l from-[#C2410C] via-[#9A3412] to-[#120704] text-white py-12 sm:py-16 my-8 sm:my-10 shadow-2xl"
+        dir="rtl"
+      >
+        {/* Subtle Industrial Background Dot Texture exactly as in image */}
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0d_1.2px,transparent_1.2px)] [background-size:20px_20px] pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-8">
-          {/* Header Column (Right in RTL) */}
-          <div className="max-w-xs space-y-3.5 text-right shrink-0">
-            <span className="text-xs font-bold text-orange-200 tracking-wide block">
-              تضمین استمرار خطوط تولید صنعتی
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">
-              قطعات خطوط صنایع مختلف
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-light">
-              از خطوط کاشی و سرامیک، نساجی و فولاد تا صنایع غذایی؛ هایپر صنعت قطعات ضدسایش و پردوام را برای صفر کردن توقف خطوط تولید کارخانجات تأمین می‌کند.
-            </p>
-            <div className="pt-2">
-              <Link
-                to="/category/industrial-belts"
-                className="inline-flex items-center gap-2 h-10 px-5 bg-black/40 hover:bg-black/60 text-white text-xs font-bold rounded-xl border border-white/20 hover:border-white/40 backdrop-blur-xs transition-all"
-              >
-                <span>مشاهده قطعات خطوط</span>
-                <ArrowLeft className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
-
-          {/* 5 Industry Cards (Left in RTL) */}
-          <div className="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-            {coveredIndustries.map(ind => (
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          {/* 5 Industry Cards (Left side in LTR, Right order in RTL) */}
+          <div className="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
+            {coveredIndustries.map((ind) => (
               <Link
                 key={ind.id}
                 to={ind.link}
-                className="group relative aspect-4/5 rounded-2xl overflow-hidden border border-white/20 shadow-md flex flex-col justify-end p-3 hover:border-white/60 transition-all"
+                className="group relative aspect-[3/4.4] rounded-2xl overflow-hidden border border-white/20 hover:border-white/50 shadow-xl flex flex-col justify-end p-2.5 sm:p-3 transition-all duration-300"
               >
-                {/* Background Image */}
+                {/* Card Background Image */}
                 <img
                   src={ind.image}
                   alt={ind.title}
                   loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                {/* Gradient overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                {/* Bottom Overlay Label */}
-                <div className="relative z-10 flex items-center justify-between gap-1 bg-black/60 backdrop-blur-xs px-2.5 py-1.5 rounded-xl border border-white/15">
-                  <div className="w-5 h-5 rounded-full bg-[#F97316] text-white flex items-center justify-center shrink-0">
+                {/* Bottom Overlay Label Pill with Round Orange Icon */}
+                <div className="relative z-10 flex items-center justify-between gap-1.5 bg-black/75 backdrop-blur-md px-2.5 py-2 rounded-xl border border-white/20 shadow-md">
+                  <div className="w-5 sm:w-6 h-5 sm:h-6 rounded-full bg-[#F97316] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <ArrowLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" />
                   </div>
-                  <span className="text-[11px] font-bold text-white group-hover:text-orange-300 transition-colors line-clamp-1">
+                  <span className="text-[11px] sm:text-xs font-bold text-white group-hover:text-orange-300 transition-colors line-clamp-1">
                     {ind.title}
                   </span>
                 </div>
               </Link>
             ))}
           </div>
+
+          {/* Right Header Text Column (راست‌چین مطابق عکس ارسالی) */}
+          <div className="w-full lg:w-[380px] xl:w-[420px] space-y-4 text-right shrink-0">
+            <span className="text-xs sm:text-sm font-semibold text-orange-200/90 tracking-wide block">
+              تضمین استمرار خطوط تولید صنعتی
+            </span>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-white leading-tight tracking-tight">
+              قطعات خطوط صنایع مختلف
+            </h2>
+
+            <p className="text-xs sm:text-sm text-orange-50/90 leading-relaxed font-normal">
+              از خطوط کاشی و سرامیک، نساجی و فولاد تا صنایع غذایی؛ هایپر صنعت قطعات ضدسایش و پردوام را برای صفر کردن توقف خطوط تولید کارخانجات تأمین می‌کند.
+            </p>
+
+            <div className="pt-2">
+              <Link
+                to="/category/industrial-belts"
+                className="inline-flex items-center justify-center gap-2 h-11 px-6 bg-[#38150B]/90 hover:bg-[#250E07] text-white text-xs sm:text-sm font-bold rounded-xl border border-white/20 hover:border-white/40 shadow-lg backdrop-blur-xs transition-all cursor-pointer group"
+              >
+                <span>مشاهده قطعات خطوط</span>
+                <ArrowLeft className="w-4 h-4 text-orange-300 group-hover:-translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
         </div>
 
-        {/* Bottom Slider Dots */}
-        <div className="flex items-center justify-center gap-1.5 pt-6 sm:pt-8">
-          <span className="w-6 h-1.5 rounded-full bg-[#F97316]" />
-          <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-          <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+        {/* Bottom Carousel / Slider Indicator Dots */}
+        <div className="flex items-center justify-center gap-2 pt-8 sm:pt-10">
+          <span className="w-8 h-2 rounded-full bg-[#F97316] shadow-xs" />
+          <span className="w-2 h-2 rounded-full bg-white/30" />
+          <span className="w-2 h-2 rounded-full bg-white/30" />
         </div>
       </section>
 
