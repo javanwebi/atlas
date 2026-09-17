@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -42,6 +42,37 @@ export const HomePage: React.FC = () => {
   // Hero Slider
   const [activeSlide, setActiveSlide] = useState(1);
   const totalSlides = 3;
+
+  // Industries carousel scroll tracking
+  const industriesScrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkIndustriesScroll = () => {
+    const el = industriesScrollRef.current;
+    if (!el) return;
+    // In RTL, scrollLeft can be 0 at initial state or negative/positive depending on browser implementation
+    // When user scrolls to left (forward in carousel), scroll offset changes from initial 0
+    const scrolled = Math.abs(el.scrollLeft) > 10;
+    setCanScrollRight(scrolled);
+  };
+
+  const handleScrollLeft = () => {
+    const el = industriesScrollRef.current;
+    if (el) {
+      // In RTL, scrolling "left" (forward) is done with negative or positive depending on layout
+      el.scrollBy({ left: -320, behavior: 'smooth' });
+      // Immediately reveal right button
+      setCanScrollRight(true);
+    }
+  };
+
+  const handleScrollRight = () => {
+    const el = industriesScrollRef.current;
+    if (el) {
+      el.scrollBy({ left: 320, behavior: 'smooth' });
+      setTimeout(checkIndustriesScroll, 350);
+    }
+  };
 
   // 7 Categories matching production line parts
   const categories = [
@@ -481,36 +512,74 @@ export const HomePage: React.FC = () => {
         <div className="absolute inset-0 z-1 bg-[radial-gradient(#ffffff0f_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
         {/* Carousel Navigation Chevron Arrows (Left & Right) */}
+        {/* Right Arrow: only shown when user has scrolled towards the left / can scroll back right */}
         <button
           type="button"
-          onClick={() => {
-            const el = document.getElementById('industries-scroll-container');
-            if (el) el.scrollBy({ left: 280, behavior: 'smooth' });
-          }}
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#F97316] border border-white/20 hover:border-[#F97316] text-white flex items-center justify-center backdrop-blur-md shadow-xl transition-all cursor-pointer group"
-          aria-label="صنایع بعدی"
+          onClick={handleScrollRight}
+          className={`absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/70 hover:bg-[#F97316] border border-white/20 hover:border-[#F97316] text-white flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-300 cursor-pointer group ${
+            canScrollRight ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'
+          }`}
+          aria-label="صنایع قبلی"
         >
           <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
         </button>
 
+        {/* Left Arrow: always visible to scroll left (forward in RTL) */}
         <button
           type="button"
-          onClick={() => {
-            const el = document.getElementById('industries-scroll-container');
-            if (el) el.scrollBy({ left: -280, behavior: 'smooth' });
-          }}
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#F97316] border border-white/20 hover:border-[#F97316] text-white flex items-center justify-center backdrop-blur-md shadow-xl transition-all cursor-pointer group"
-          aria-label="صنایع قبلی"
+          onClick={handleScrollLeft}
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/70 hover:bg-[#F97316] border border-white/20 hover:border-[#F97316] text-white flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-300 cursor-pointer group"
+          aria-label="صنایع بعدی"
         >
           <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
         </button>
 
-        {/* Main Content Layout */}
-        <div className="relative z-10 max-w-[1480px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12">
-          {/* Scrollable / Flexible Cards Row (Left side in LTR, Right sequence in RTL) */}
+        {/* Main Content Layout: In RTL, flex-col lg:flex-row puts first child (Text Header) on the RIGHT, and second child (Cards) on the LEFT */}
+        <div className="relative z-10 max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          {/* Right Header Text Column (در دسکتاپ دقیقاً در سمت راست قرار می‌گیرد) */}
+          <div className="w-full lg:w-[420px] xl:w-[460px] space-y-4 text-right shrink-0">
+            {/* Top English Brand Label: ATLAS TRADING ——— */}
+            <div className="flex items-center gap-2 justify-start">
+              <span className="text-xs sm:text-sm font-black tracking-[0.25em] text-[#F97316] uppercase font-mono">
+                ATLAS TRADING
+              </span>
+              <span className="w-12 h-[2px] bg-[#F97316]" />
+            </div>
+
+            {/* Subtitle */}
+            <p className="text-xs sm:text-sm font-bold text-slate-200 tracking-wide">
+              تأمین‌کننده قطعات و تجهیزات صنعتی
+            </p>
+
+            {/* Main Headline (تأمین قطعات خطوط صنایع مختلف) */}
+            <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[46px] font-black text-white leading-[1.2] tracking-tight">
+              تأمین قطعات خطوط
+              <span className="block text-[#F97316] pt-1">صنایع مختلف</span>
+            </h2>
+
+            {/* Description Paragraph */}
+            <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-light">
+              از خطوط کاشی و سرامیک، نساجی و فولاد تا صنایع غذایی، فولاد، پتروشیمی و نیروگاهی؛ با بهترین برندها و کیفیت تضمین‌شده، همراه شما در تأمین قطعات صنعتی هستیم.
+            </p>
+
+            {/* CTA Button: مشاهده قطعات خطوط (Large Orange Glowing Button) */}
+            <div className="pt-3">
+              <Link
+                to="/category/industrial-belts"
+                className="inline-flex items-center justify-center gap-2.5 h-12 sm:h-13 px-8 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white text-sm sm:text-base font-black rounded-2xl shadow-[0_10px_25px_rgba(249,115,22,0.4)] hover:shadow-[0_12px_30px_rgba(249,115,22,0.6)] hover:scale-[1.02] transition-all cursor-pointer group"
+              >
+                <span>مشاهده قطعات خطوط</span>
+                <ArrowLeft className="w-5 h-5 text-white group-hover:-translate-x-1.5 transition-transform" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Scrollable Cards Row (در دسکتاپ در سمت چپ قرار می‌گیرد) */}
           <div
             id="industries-scroll-container"
-            className="flex-1 w-full flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto pb-4 pt-2 px-1 scrollbar-none snap-x snap-mandatory"
+            ref={industriesScrollRef}
+            onScroll={checkIndustriesScroll}
+            className="flex-1 w-full min-w-0 flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto pb-4 pt-2 px-1 scrollbar-none snap-x snap-mandatory"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {coveredIndustries.map((ind) => {
@@ -565,44 +634,6 @@ export const HomePage: React.FC = () => {
                 </Link>
               );
             })}
-          </div>
-
-          {/* Right Header Text Column (راست‌چین دقیقاً مطابق عکس ارسالی) */}
-          <div className="w-full lg:w-[440px] xl:w-[480px] space-y-4 text-right shrink-0 lg:pr-2">
-            {/* Top English Brand Label: ATLAS TRADING ——— */}
-            <div className="flex items-center gap-2 justify-start">
-              <span className="text-xs sm:text-sm font-black tracking-[0.25em] text-[#F97316] uppercase font-mono">
-                ATLAS TRADING
-              </span>
-              <span className="w-12 h-[2px] bg-[#F97316]" />
-            </div>
-
-            {/* Subtitle */}
-            <p className="text-xs sm:text-sm font-bold text-slate-200 tracking-wide">
-              تأمین‌کننده قطعات و تجهیزات صنعتی
-            </p>
-
-            {/* Main Headline (تأمین قطعات خطوط صنایع مختلف) */}
-            <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-black text-white leading-[1.2] tracking-tight">
-              تأمین قطعات خطوط
-              <span className="block text-[#F97316] pt-1">صنایع مختلف</span>
-            </h2>
-
-            {/* Description Paragraph */}
-            <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-light">
-              از خطوط کاشی و سرامیک، نساجی و فولاد تا صنایع غذایی، فولاد، پتروشیمی و نیروگاهی؛ با بهترین برندها و کیفیت تضمین‌شده، همراه شما در تأمین قطعات صنعتی هستیم.
-            </p>
-
-            {/* CTA Button: مشاهده قطعات خطوط (Large Orange Glowing Button) */}
-            <div className="pt-3">
-              <Link
-                to="/category/industrial-belts"
-                className="inline-flex items-center justify-center gap-2.5 h-12 sm:h-13 px-8 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white text-sm sm:text-base font-black rounded-2xl shadow-[0_10px_25px_rgba(249,115,22,0.4)] hover:shadow-[0_12px_30px_rgba(249,115,22,0.6)] hover:scale-[1.02] transition-all cursor-pointer group"
-              >
-                <span>مشاهده قطعات خطوط</span>
-                <ArrowLeft className="w-5 h-5 text-white group-hover:-translate-x-1.5 transition-transform" />
-              </Link>
-            </div>
           </div>
         </div>
 
