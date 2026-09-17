@@ -7,6 +7,7 @@ import {
   Clock,
   Headphones,
   ChevronLeft,
+  ChevronDown,
   Send,
   Instagram,
   MessageCircle,
@@ -68,6 +69,11 @@ export const Footer: React.FC = () => {
   const [isConsultOpen, setIsConsultOpen] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const toggleAccordion = (key: string) => {
+    setOpenAccordion((prev) => (prev === key ? null : key));
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -230,11 +236,27 @@ export const Footer: React.FC = () => {
           {/* ========================================================================= */}
           {/* 2. QUICK ACCESS COLUMN (دسترسی سریع - دومین ستون از چپ)                    */}
           {/* ========================================================================= */}
-          <div className="space-y-2 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5" dir="rtl">
-            {/* Orange dash header accent */}
-            <div className="w-5 h-0.5 bg-[#F97316] rounded-full mb-1" />
-            <h4 className="text-xs sm:text-[13px] font-bold text-white mb-2">دسترسی سریع</h4>
-            <ul className="space-y-1.5 text-[11px] text-slate-300">
+          <div className="space-y-2 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5 border-b border-slate-800/60 pb-3 md:border-b-0 md:pb-0" dir="rtl">
+            {/* Accordion trigger on mobile, static header on desktop */}
+            <button
+              type="button"
+              onClick={() => toggleAccordion('quickAccess')}
+              className="w-full flex items-center justify-between py-1.5 md:py-0 md:cursor-default cursor-pointer group"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-4 sm:w-5 h-0.5 bg-[#F97316] rounded-full" />
+                <h4 className="text-xs sm:text-[13px] font-bold text-white group-hover:text-orange-400 md:group-hover:text-white transition-colors">
+                  دسترسی سریع
+                </h4>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-slate-400 transition-transform duration-200 md:hidden ${
+                  openAccordion === 'quickAccess' ? 'rotate-180 text-[#F97316]' : ''
+                }`}
+              />
+            </button>
+
+            <ul className={`space-y-1.5 text-[11px] text-slate-300 pt-1.5 md:pt-0 ${openAccordion === 'quickAccess' ? 'block' : 'hidden'} md:block animate-in fade-in`}>
               <li>
                 <Link to="/" className="hover:text-[#F97316] transition-colors block">
                   خانه
@@ -298,11 +320,27 @@ export const Footer: React.FC = () => {
           {/* ========================================================================= */}
           {/* 3. PRODUCTS COLUMN (محصولات - سومین ستون از چپ)                             */}
           {/* ========================================================================= */}
-          <div className="space-y-2 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5" dir="rtl">
-            {/* Orange dash header accent */}
-            <div className="w-5 h-0.5 bg-[#F97316] rounded-full mb-1" />
-            <h4 className="text-xs sm:text-[13px] font-bold text-white mb-2">محصولات</h4>
-            <ul className="space-y-1.5 text-[11px] text-slate-300">
+          <div className="space-y-2 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5 border-b border-slate-800/60 pb-3 md:border-b-0 md:pb-0" dir="rtl">
+            {/* Accordion trigger on mobile, static header on desktop */}
+            <button
+              type="button"
+              onClick={() => toggleAccordion('products')}
+              className="w-full flex items-center justify-between py-1.5 md:py-0 md:cursor-default cursor-pointer group"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-4 sm:w-5 h-0.5 bg-[#F97316] rounded-full" />
+                <h4 className="text-xs sm:text-[13px] font-bold text-white group-hover:text-orange-400 md:group-hover:text-white transition-colors">
+                  محصولات
+                </h4>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-slate-400 transition-transform duration-200 md:hidden ${
+                  openAccordion === 'products' ? 'rotate-180 text-[#F97316]' : ''
+                }`}
+              />
+            </button>
+
+            <ul className={`space-y-1.5 text-[11px] text-slate-300 pt-1.5 md:pt-0 ${openAccordion === 'products' ? 'block' : 'hidden'} md:block animate-in fade-in`}>
               <li>
                 <Link to="/category/industrial-belts" className="hover:text-[#F97316] transition-colors flex items-center justify-between group">
                   <span>تسمه‌های صنعتی</span>
@@ -357,11 +395,27 @@ export const Footer: React.FC = () => {
           {/* ========================================================================= */}
           {/* 4. CUSTOMER SERVICES (خدمات مشتریان - چهارمین ستون از چپ)                    */}
           {/* ========================================================================= */}
-          <div className="space-y-2 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5" dir="rtl">
-            {/* Orange dash header accent */}
-            <div className="w-5 h-0.5 bg-[#F97316] rounded-full mb-1" />
-            <h4 className="text-xs sm:text-[13px] font-bold text-white mb-2">خدمات مشتریان</h4>
-            <ul className="space-y-1.5 text-[11px] text-slate-300">
+          <div className="space-y-2 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5 border-b border-slate-800/60 pb-3 md:border-b-0 md:pb-0" dir="rtl">
+            {/* Accordion trigger on mobile, static header on desktop */}
+            <button
+              type="button"
+              onClick={() => toggleAccordion('services')}
+              className="w-full flex items-center justify-between py-1.5 md:py-0 md:cursor-default cursor-pointer group"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-4 sm:w-5 h-0.5 bg-[#F97316] rounded-full" />
+                <h4 className="text-xs sm:text-[13px] font-bold text-white group-hover:text-orange-400 md:group-hover:text-white transition-colors">
+                  خدمات مشتریان
+                </h4>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-slate-400 transition-transform duration-200 md:hidden ${
+                  openAccordion === 'services' ? 'rotate-180 text-[#F97316]' : ''
+                }`}
+              />
+            </button>
+
+            <ul className={`space-y-1.5 text-[11px] text-slate-300 pt-1.5 md:pt-0 ${openAccordion === 'services' ? 'block' : 'hidden'} md:block animate-in fade-in`}>
               <li>
                 <button
                   type="button"
@@ -424,84 +478,101 @@ export const Footer: React.FC = () => {
           {/* ========================================================================= */}
           {/* 5. CONTACT INFO COLUMN (اطلاعات تماس - پنجمین ستون از چپ)                    */}
           {/* ========================================================================= */}
-          <div className="space-y-2.5 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5" dir="rtl">
-            {/* Orange dash header accent */}
-            <div className="w-5 h-0.5 bg-[#F97316] rounded-full mb-1" />
-            <h4 className="text-xs sm:text-[13px] font-bold text-white mb-2">اطلاعات تماس</h4>
-
-            {/* Phone */}
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0 mt-0.5">
-                <Phone className="w-3 h-3" />
+          <div className="space-y-2.5 text-right lg:border-l lg:border-slate-800/80 lg:pl-4 xl:pl-5 border-b border-slate-800/60 pb-3 md:border-b-0 md:pb-0" dir="rtl">
+            {/* Accordion trigger on mobile, static header on desktop */}
+            <button
+              type="button"
+              onClick={() => toggleAccordion('contact')}
+              className="w-full flex items-center justify-between py-1.5 md:py-0 md:cursor-default cursor-pointer group"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-4 sm:w-5 h-0.5 bg-[#F97316] rounded-full" />
+                <h4 className="text-xs sm:text-[13px] font-bold text-white group-hover:text-orange-400 md:group-hover:text-white transition-colors">
+                  اطلاعات تماس
+                </h4>
               </div>
-              <div className="space-y-0.5 text-[11px] text-slate-300 font-mono text-right" dir="ltr">
-                <div>
-                  <a href="tel:03538739900" className="hover:text-[#F97316] transition-colors">
-                    ۰۳۵-۳۸۷۳۹۹۰۰-۰
-                  </a>
+              <ChevronDown
+                className={`w-4 h-4 text-slate-400 transition-transform duration-200 md:hidden ${
+                  openAccordion === 'contact' ? 'rotate-180 text-[#F97316]' : ''
+                }`}
+              />
+            </button>
+
+            <div className={`space-y-2.5 pt-1.5 md:pt-0 ${openAccordion === 'contact' ? 'block' : 'hidden'} md:block animate-in fade-in`}>
+              {/* Phone */}
+              <div className="flex items-start gap-2">
+                <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0 mt-0.5">
+                  <Phone className="w-3 h-3" />
                 </div>
-                <div>
-                  <a href="tel:03538739988" className="hover:text-[#F97316] transition-colors">
-                    ۰۳۵-۳۸۷۳۹۹۸۸
-                  </a>
+                <div className="space-y-0.5 text-[11px] text-slate-300 font-mono text-right" dir="ltr">
+                  <div>
+                    <a href="tel:03538739900" className="hover:text-[#F97316] transition-colors">
+                      ۰۳۵-۳۸۷۳۹۹۰۰-۰
+                    </a>
+                  </div>
+                  <div>
+                    <a href="tel:03538739988" className="hover:text-[#F97316] transition-colors">
+                      ۰۳۵-۳۸۷۳۹۹۸۸
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Email */}
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0">
-                <Mail className="w-3 h-3" />
-              </div>
-              <a
-                href="mailto:info@atlastrading.com"
-                className="text-[11px] text-slate-300 font-mono hover:text-[#F97316] transition-colors"
-                dir="ltr"
-              >
-                info@atlastrading.com
-              </a>
-            </div>
-
-            {/* Address */}
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0 mt-0.5">
-                <MapPin className="w-3 h-3" />
-              </div>
-              <div className="space-y-0.5 text-[11px] text-slate-300">
-                <p>یزد، شهرک صنعتی، خیابان صنعت ۱</p>
+              {/* Email */}
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0">
+                  <Mail className="w-3 h-3" />
+                </div>
                 <a
-                  href="https://maps.google.com/?q=Yazd+Industrial+Town"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-slate-400 hover:text-[#F97316] transition-colors text-[10px] inline-block underline decoration-slate-600 underline-offset-2"
+                  href="mailto:info@atlastrading.com"
+                  className="text-[11px] text-slate-300 font-mono hover:text-[#F97316] transition-colors"
+                  dir="ltr"
                 >
-                  مشاهده روی نقشه
+                  info@atlastrading.com
                 </a>
               </div>
-            </div>
 
-            {/* Working Hours */}
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0 mt-0.5">
-                <Clock className="w-3 h-3" />
+              {/* Address */}
+              <div className="flex items-start gap-2">
+                <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0 mt-0.5">
+                  <MapPin className="w-3 h-3" />
+                </div>
+                <div className="space-y-0.5 text-[11px] text-slate-300">
+                  <p>یزد، شهرک صنعتی، خیابان صنعت ۱</p>
+                  <a
+                    href="https://maps.google.com/?q=Yazd+Industrial+Town"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-slate-400 hover:text-[#F97316] transition-colors text-[10px] inline-block underline decoration-slate-600 underline-offset-2"
+                  >
+                    مشاهده روی نقشه
+                  </a>
+                </div>
               </div>
-              <div className="space-y-0.5 text-[11px] text-slate-300">
-                <span className="font-bold text-white block">ساعات کاری</span>
-                <span className="text-[10.5px] text-slate-400 block">شنبه تا پنجشنبه</span>
-                <span className="text-[10px] text-slate-400 block">۸:۰۰ الی ۲۰:۰۰</span>
-              </div>
-            </div>
 
-            {/* Consultation CTA Button matching screenshot */}
-            <div className="pt-1">
-              <button
-                type="button"
-                onClick={() => setIsConsultOpen(true)}
-                className="w-full h-8 rounded-full border border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10 flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer text-xs font-bold shadow-xs group"
-              >
-                <Headphones className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                <span>درخواست مشاوره</span>
-              </button>
+              {/* Working Hours */}
+              <div className="flex items-start gap-2">
+                <div className="w-6 h-6 rounded-full border border-[#F97316] text-[#F97316] flex items-center justify-center shrink-0 mt-0.5">
+                  <Clock className="w-3 h-3" />
+                </div>
+                <div className="space-y-0.5 text-[11px] text-slate-300">
+                  <span className="font-bold text-white block">ساعات کاری</span>
+                  <span className="text-[10.5px] text-slate-400 block">شنبه تا پنجشنبه</span>
+                  <span className="text-[10px] text-slate-400 block">۸:۰۰ الی ۲۰:۰۰</span>
+                </div>
+              </div>
+
+              {/* Consultation CTA Button matching screenshot */}
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsConsultOpen(true)}
+                  className="w-full h-8 rounded-full border border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10 flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer text-xs font-bold shadow-xs group"
+                >
+                  <Headphones className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                  <span>درخواست مشاوره</span>
+                </button>
+              </div>
             </div>
           </div>
 

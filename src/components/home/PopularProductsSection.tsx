@@ -206,7 +206,7 @@ export const PopularProductsSection: React.FC = () => {
         <button
           type="button"
           onClick={() => scroll('right')}
-          className="absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
+          className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
           aria-label="محصولات قبلی"
         >
           <ChevronRight className="w-5 h-5" />
@@ -216,7 +216,7 @@ export const PopularProductsSection: React.FC = () => {
         <button
           type="button"
           onClick={() => scroll('left')}
-          className="absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
+          className="hidden sm:flex absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
           aria-label="محصولات بعدی"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -225,7 +225,7 @@ export const PopularProductsSection: React.FC = () => {
         {/* Scrollable Products Row */}
         <div
           ref={scrollContainerRef}
-          className="flex items-stretch gap-4 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none snap-x snap-mandatory"
+          className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none snap-x snap-mandatory"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {POPULAR_PRODUCTS.map((product) => {
@@ -235,7 +235,7 @@ export const PopularProductsSection: React.FC = () => {
             return (
               <div
                 key={product.id}
-                className="w-48 sm:w-56 shrink-0 bg-white rounded-2xl border border-slate-200/85 p-3 sm:p-4 shadow-2xs hover:shadow-lg hover:border-orange-300 transition-all duration-300 relative flex flex-col justify-between group snap-start"
+                className="w-40 sm:w-56 shrink-0 bg-white rounded-2xl border border-slate-200/85 p-3 sm:p-4 shadow-2xs hover:shadow-lg hover:border-orange-300 transition-all duration-300 relative flex flex-col justify-between group snap-start"
               >
                 {/* Top Badge: پرفروش (دقیقاً مانند تصویر ارسالی کاربر) */}
                 <div className="flex items-center justify-between w-full mb-1">

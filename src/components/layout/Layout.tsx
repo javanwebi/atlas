@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { MobileBottomBar } from './MobileBottomBar';
 import { AuthModal } from '../auth/AuthModal';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -24,13 +25,26 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
   const isHomePage = location.pathname === '/';
 
+  const handleOpenMobileMenu = () => {
+    window.dispatchEvent(new CustomEvent('open-mobile-menu'));
+  };
+
+  const handleOpenSearch = () => {
+    window.dispatchEvent(new CustomEvent('open-mobile-search'));
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0A172F]">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0A172F] overflow-x-hidden">
       <Header />
-      <main className={`flex-1 w-full ${isHomePage ? '' : 'max-w-7xl mx-auto px-4 py-6'}`}>
+      <main className={`flex-1 w-full pb-16 lg:pb-0 ${isHomePage ? '' : 'max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6'}`}>
         {children}
       </main>
       <Footer />
+      {/* Mobile Floating Bottom Navigation Bar */}
+      <MobileBottomBar
+        onOpenMobileMenu={handleOpenMobileMenu}
+        onOpenSearch={handleOpenSearch}
+      />
       {/* Global OTP Auth Modal */}
       <AuthModal />
     </div>

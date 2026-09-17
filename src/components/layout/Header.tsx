@@ -62,6 +62,8 @@ export const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<NavMenuType>(null);
   const [activeMegaCategory, setActiveMegaCategory] = useState(CATEGORIES[0].slug);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [mobileAccordionOpen, setMobileAccordionOpen] = useState<string | null>('categories');
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
 
   // Modals
@@ -100,8 +102,22 @@ export const Header: React.FC = () => {
         setIsUserMenuOpen(false);
       }
     };
+
+    const handleOpenMenu = () => setIsMobileMenuOpen(true);
+    const handleOpenSearch = () => {
+      setIsMobileSearchOpen(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    window.addEventListener('open-mobile-menu', handleOpenMenu);
+    window.addEventListener('open-mobile-search', handleOpenSearch);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('open-mobile-menu', handleOpenMenu);
+      window.removeEventListener('open-mobile-search', handleOpenSearch);
+    };
   }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -233,35 +249,27 @@ export const Header: React.FC = () => {
       </div>
 
       {/* 2. MAIN WHITE HEADER */}
-      <div className="bg-white border-b border-[#E2E8F0] px-4 py-3.5">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 lg:gap-8">
-          {/* Right: Mobile Menu + ATLAS TRADING Logo */}
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 rounded-lg hover:bg-slate-100 text-[#0A172F] cursor-pointer"
-              aria-label="منو"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-
-            <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-              <div className="w-10 h-10 rounded-xl bg-[#0F172A] flex items-center justify-center text-white shadow-xs group-hover:bg-[#1E293B] transition-colors relative overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] px-3 sm:px-4 py-2.5 sm:py-3.5 transition-all">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4 lg:gap-8">
+          {/* Right: ATLAS TRADING Logo */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0F172A] flex items-center justify-center text-white shadow-xs group-hover:bg-[#1E293B] transition-colors relative overflow-hidden shrink-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent pointer-events-none" />
-                <Layers className="w-6 h-6 text-[#F97316]" />
+                <Layers className="w-5 h-5 sm:w-6 sm:h-6 text-[#F97316]" />
               </div>
               <div className="flex flex-col text-right">
-                <div className="text-lg sm:text-xl font-black tracking-tight text-[#0F172A] leading-none">
+                <div className="text-base sm:text-lg lg:text-xl font-black tracking-tight text-[#0F172A] leading-none">
                   هایپر صنعت
                 </div>
-                <div className="text-[10px] text-[#F97316] font-bold tracking-tight mt-1 leading-none">
-                  قطعات خطوط تولید | کارخانجات اطلس
+                <div className="text-[9px] sm:text-[10px] text-[#F97316] font-bold tracking-tight mt-0.5 sm:mt-1 leading-none">
+                  کارخانجات اطلس
                 </div>
               </div>
             </Link>
           </div>
 
-          {/* Center: Search Bar with Orange Button */}
+          {/* Center: Search Bar with Orange Button (Desktop) */}
           <div className="hidden lg:block flex-1 max-w-2xl relative" ref={searchContainerRef}>
             <form onSubmit={handleSearchSubmit} className="relative w-full flex items-center">
               <input
@@ -392,24 +400,34 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Left/End: Actions (RFQ Button, Cart, Favorites, User) */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            {/* Mobile Search Toggle Button (Toggles Mobile Search Bar) */}
+            <button
+              type="button"
+              onClick={() => setIsMobileSearchOpen(prev => !prev)}
+              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-slate-200 hover:border-[#F97316] hover:bg-orange-50/40 text-slate-700 hover:text-[#F97316] flex items-center justify-center transition-colors cursor-pointer active:scale-95 shadow-2xs"
+              aria-label="جستجوی سریع قطعات"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
             {/* User Account / Login Button */}
             <div className="relative" ref={userMenuRef}>
               {currentUser ? (
                 <button
                   onClick={() => setIsUserMenuOpen(prev => !prev)}
-                  className="flex items-center gap-2 h-10 px-3 rounded-xl border border-[#E2E8F0] hover:border-slate-300 hover:bg-slate-50 transition-colors text-xs font-medium text-[#0A172F] cursor-pointer"
+                  className="flex items-center gap-1 sm:gap-2 h-9 sm:h-10 px-2 sm:px-3 rounded-xl border border-[#E2E8F0] hover:border-slate-300 hover:bg-slate-50 transition-colors text-xs font-medium text-[#0A172F] cursor-pointer"
                 >
                   <User className="w-4 h-4 text-[#F97316]" />
                   <span className="hidden sm:inline font-bold truncate max-w-[110px]">
                     {currentUser.fullName.split(' ')[0]}
                   </span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:inline" />
                 </button>
               ) : (
                 <button
                   onClick={() => openAuthModal()}
-                  className="flex items-center gap-1.5 h-10 px-3 rounded-xl border border-slate-200 hover:border-[#F97316] hover:bg-orange-50/40 transition-colors text-xs font-bold text-[#0A172F] cursor-pointer"
+                  className="flex items-center gap-1 sm:gap-1.5 h-9 sm:h-10 px-2.5 sm:px-3 rounded-xl border border-slate-200 hover:border-[#F97316] hover:bg-orange-50/40 transition-colors text-xs font-bold text-[#0A172F] cursor-pointer"
                 >
                   <User className="w-4 h-4 text-slate-600" />
                   <span className="hidden md:inline">ورود / ثبت‌نام</span>
@@ -475,7 +493,7 @@ export const Header: React.FC = () => {
               )}
             </div>
 
-            {/* Favorites Icon */}
+            {/* Favorites Icon (Hidden on mobile) */}
             <Link
               to="/account"
               className="hidden sm:flex items-center gap-1.5 h-10 px-3 rounded-xl border border-slate-200 hover:border-[#F97316] hover:bg-orange-50/40 text-[#0A172F] transition-colors text-xs font-medium"
@@ -488,7 +506,7 @@ export const Header: React.FC = () => {
             {/* Shopping Cart Icon with Badge */}
             <Link
               to="/cart"
-              className="relative flex items-center gap-1.5 h-10 px-3 rounded-xl border border-slate-200 hover:border-[#F97316] hover:bg-orange-50/40 text-[#0A172F] transition-colors text-xs font-medium"
+              className="relative flex items-center justify-center gap-1.5 h-9 sm:h-10 px-2.5 sm:px-3 rounded-xl border border-slate-200 hover:border-[#F97316] hover:bg-orange-50/40 text-[#0A172F] transition-colors text-xs font-medium"
               aria-label="سبد خرید"
             >
               <ShoppingCart className="w-4 h-4 text-slate-600" />
@@ -500,10 +518,10 @@ export const Header: React.FC = () => {
               )}
             </Link>
 
-            {/* Inquiries / RFQ Button (Orange Accent Button matching design) */}
+            {/* Inquiries / RFQ Button (Orange Accent Button) */}
             <Link
               to="/inquiry"
-              className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs shadow-xs transition-colors cursor-pointer shrink-0"
+              className="hidden sm:flex items-center gap-1.5 h-10 px-4 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs shadow-xs transition-colors cursor-pointer shrink-0"
             >
               <FileText className="w-4 h-4" />
               <span className="hidden sm:inline">درخواست پیش‌فاکتور</span>
@@ -511,26 +529,59 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Search Row (Row 2 in mobile) */}
-        <div className="mt-2.5 lg:hidden" ref={searchContainerRef}>
-          <form onSubmit={handleSearchSubmit} className="relative w-full">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="جستجو در ۵٬۰۰۰ قلم کالا..."
-              className="w-full h-10 pr-10 pl-12 bg-slate-50 text-xs rounded-xl border border-[#E2E8F0] focus:border-[#F97316] focus:outline-none"
-            />
-            <Search className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" />
-            <button
-              type="button"
-              onClick={() => setIsCameraModalOpen(true)}
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#F97316] p-1"
-            >
-              <Camera className="w-4 h-4" />
-            </button>
-          </form>
-        </div>
+        {/* Mobile Search Expandable Box */}
+        {isMobileSearchOpen && (
+          <div className="mt-2.5 lg:hidden pt-1 border-t border-slate-100 animate-in fade-in slide-in-from-top-2 duration-200" ref={searchContainerRef}>
+            <form onSubmit={handleSearchSubmit} className="relative w-full flex items-center">
+              <input
+                type="text"
+                autoFocus
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="جستجو در قطعات خطوط، تسمه، پولی، بلبرینگ..."
+                className="w-full h-10 pr-10 pl-24 bg-slate-50 text-xs rounded-xl border border-[#E2E8F0] focus:border-[#F97316] focus:bg-white focus:outline-none transition-all shadow-inner"
+              />
+              <Search className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+
+              {/* Camera AI Visual Part Search Trigger */}
+              <button
+                type="button"
+                onClick={() => setIsCameraModalOpen(true)}
+                title="شناسایی تصویری قطعه با AI"
+                className="absolute left-11 top-1/2 -translate-y-1/2 p-1 text-orange-500 hover:text-orange-600"
+              >
+                <Camera className="w-4 h-4" />
+              </button>
+
+              {/* Quick Submit */}
+              <button
+                type="submit"
+                className="absolute left-1 top-1 bottom-1 px-3 bg-[#F97316] hover:bg-[#EA580C] text-white text-[11px] font-bold rounded-lg flex items-center justify-center transition-colors"
+              >
+                برو
+              </button>
+            </form>
+
+            {/* Popular Quick Search Chips on Mobile */}
+            <div className="flex items-center gap-1.5 overflow-x-auto py-2 scrollbar-none text-[10px]" style={{ scrollbarWidth: 'none' }}>
+              <span className="text-slate-400 shrink-0 font-medium">پیشنهادی:</span>
+              {['تسمه تایم', 'پولی FORZA', 'بلبرینگ NSK', 'تسمه کانوایر', 'یاتاقان'].map((term) => (
+                <button
+                  key={term}
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery(term);
+                    navigate(`/search?q=${encodeURIComponent(term)}`);
+                    setIsMobileSearchOpen(false);
+                  }}
+                  className="px-2 py-0.5 bg-slate-100 hover:bg-orange-50 hover:text-orange-600 text-slate-600 rounded-md shrink-0 transition-colors"
+                >
+                  {term}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 3. SUBHEADER NAVIGATION ROW: Dark Industrial Nav Bar matching image.png exactly */}
@@ -1071,195 +1122,311 @@ export const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. MOBILE DRAWER MENU */}
+      {/* 4. HIGH-END INDUSTRIAL MOBILE DRAWER MENU */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-50 lg:hidden flex" dir="rtl">
+          {/* Smooth Backdrop */}
           <div
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-[#0A172F]/60 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-[#070D18]/75 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
           />
 
-          {/* Drawer Body */}
-          <div className="relative w-80 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col z-10 text-right">
-            {/* Drawer Header */}
-            <div className="p-4 bg-[#0A172F] text-white flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Layers className="w-5 h-5 text-[#F97316]" />
-                <span className="font-black text-lg">هایپر صنعت</span>
+          {/* Drawer Sheet */}
+          <div className="relative w-[85vw] max-w-sm bg-[#0C1527] text-white h-full shadow-2xl flex flex-col z-10 text-right animate-in slide-in-from-right duration-250 border-l border-slate-800">
+            {/* Drawer Brand Header */}
+            <div className="p-4 bg-[#080E1A] border-b border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#EA580C] to-[#F97316] flex items-center justify-center text-white shadow-md shadow-orange-950/40">
+                  <Layers className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="font-black text-sm tracking-tight text-white">هایپر صنعت</div>
+                  <div className="text-[10px] text-orange-400 font-bold tracking-tight">کارخانجات اطلس</div>
+                </div>
               </div>
               <button
+                type="button"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="p-1 text-slate-400 hover:text-white"
+                className="w-8 h-8 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer active:scale-95"
+                aria-label="بستن منو"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Drawer Navigation Content */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs">
-              {/* Primary 7 Menus */}
-              <div className="space-y-1 pb-3 border-b border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate('/catalog');
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl bg-orange-50/70 text-[#F97316] font-bold text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <LayoutGrid className="w-4 h-4 text-[#F97316]" />
-                    <span>همه محصولات و قطعات</span>
+            {/* User Profile / Login Banner */}
+            <div className="p-3.5 bg-slate-900/90 border-b border-slate-800/80">
+              {currentUser ? (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400 font-bold text-sm">
+                      {currentUser.fullName.slice(0, 1)}
+                    </div>
+                    <div>
+                      <div className="font-bold text-xs text-white line-clamp-1">{currentUser.fullName}</div>
+                      <div className="text-[10px] font-mono text-slate-400" dir="ltr">{currentUser.phone}</div>
+                    </div>
                   </div>
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate('/category/ceramic-tiles');
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-[#0A172F] font-bold text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <Factory className="w-4 h-4 text-slate-500" />
-                    <span>صنایع و کاربردها</span>
-                  </div>
-                  <ChevronLeft className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate('/category/swr-forza-exclusive');
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-[#0A172F] font-bold text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <Tag className="w-4 h-4 text-[#F97316]" />
-                    <span>برندهای انحصاری (SWR & FORZA)</span>
-                  </div>
-                  <ChevronLeft className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate('/inquiry');
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-[#0A172F] font-bold text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <Wrench className="w-4 h-4 text-slate-500" />
-                    <span>خدمات صنعتی و استعلام قیمت</span>
-                  </div>
-                  <ChevronLeft className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate('/about');
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-[#0A172F] font-bold text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-slate-500" />
-                    <span>درباره بازرگانی اطلس</span>
-                  </div>
-                  <ChevronLeft className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate('/agency');
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-[#0A172F] font-bold text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-slate-500" />
-                    <span>مشتریان و عاملیت‌ها</span>
-                  </div>
-                  <ChevronLeft className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate('/catalog');
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-[#0A172F] font-bold text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-slate-500" />
-                    <span>دانشنامه فنی</span>
-                  </div>
-                  <ChevronLeft className="w-3.5 h-3.5 text-slate-400" />
-                </button>
-              </div>
-
-              {/* Primary Categories Accordion */}
-              <div>
-                <div className="font-bold text-xs text-[#0A172F] mb-2 pb-1 border-b border-slate-200">
-                  دسته‌بندی‌های ۶ گانه
+                  <Link
+                    to={currentUser.role === 'dealer' ? '/dealer' : currentUser.role === 'admin' ? '/admin' : '/account'}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="px-2.5 py-1 bg-slate-800 hover:bg-orange-600 text-orange-300 hover:text-white rounded-lg text-[11px] font-bold transition-colors border border-slate-700"
+                  >
+                    داشبورد
+                  </Link>
                 </div>
-                <div className="space-y-1">
-                  {CATEGORIES.map(cat => (
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openAuthModal();
+                  }}
+                  className="w-full py-2.5 px-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                >
+                  <User className="w-4 h-4" />
+                  <span>ورود یا ثبت‌نام در هایپر صنعت</span>
+                </button>
+              )}
+            </div>
+
+            {/* Quick 4-Action Grid */}
+            <div className="grid grid-cols-2 gap-2 p-3 bg-[#09101E] border-b border-slate-800 text-[11px]">
+              <a
+                href="tel:03538739900"
+                className="flex items-center gap-2 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60 text-slate-200 hover:text-white hover:border-orange-500/50 transition-colors"
+              >
+                <Phone className="w-3.5 h-3.5 text-orange-400" />
+                <span className="font-bold">تماس فروش</span>
+              </a>
+              <a
+                href="https://wa.me/989903427027"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60 text-slate-200 hover:text-white hover:border-emerald-500/50 transition-colors"
+              >
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="font-bold">واتس‌اپ صنعتی</span>
+              </a>
+              <Link
+                to="/inquiry"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-2 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60 text-slate-200 hover:text-white hover:border-orange-500/50 transition-colors"
+              >
+                <FileText className="w-3.5 h-3.5 text-orange-400" />
+                <span className="font-bold">پیش‌فاکتور آنلاین</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsConsultModalOpen(true);
+                }}
+                className="flex items-center gap-2 p-2 rounded-xl bg-slate-800/60 border border-slate-700/60 text-slate-200 hover:text-white hover:border-blue-500/50 transition-colors text-right cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                <span className="font-bold">مشاوره هوشمند</span>
+              </button>
+            </div>
+
+            {/* Scrollable Navigation Accordions */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-2 text-xs divide-y divide-slate-800/60">
+              {/* Accordion 1: Product Categories */}
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setMobileAccordionOpen(prev => prev === 'categories' ? null : 'categories')}
+                  className="w-full flex items-center justify-between py-2 text-slate-200 hover:text-orange-400 font-black text-xs transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <LayoutGrid className="w-4 h-4 text-orange-400" />
+                    <span>دسته‌بندی قطعات خطوط تولید</span>
+                  </div>
+                  <ChevronDown
+                    className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                      mobileAccordionOpen === 'categories' ? 'rotate-180 text-orange-400' : ''
+                    }`}
+                  />
+                </button>
+
+                {mobileAccordionOpen === 'categories' && (
+                  <div className="mt-1 mr-2 pl-1 space-y-1 border-r-2 border-orange-500/30 pr-2.5 animate-in fade-in duration-150">
                     <Link
-                      key={cat.slug}
-                      to={`/category/${cat.slug}`}
+                      to="/catalog"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block p-2 rounded-lg hover:bg-slate-100 font-medium text-[#0A172F]"
+                      className="block py-1.5 px-2 rounded-lg text-orange-400 font-bold hover:bg-white/5"
                     >
-                      {cat.name}
+                      مشاهده تمام ۵٬۰۰۰ قلم کالا ←
                     </Link>
-                  ))}
-                </div>
+                    {CATEGORIES.map(cat => (
+                      <Link
+                        key={cat.slug}
+                        to={`/category/${cat.slug}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center justify-between py-1.5 px-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                      >
+                        <span>{cat.name}</span>
+                        <span className="text-[10px] font-mono text-slate-500">{toPersianDigits(cat.subcategories.length)} گروه</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {/* Quick Links */}
-              <div>
-                <div className="font-bold text-xs text-[#0A172F] mb-2 pb-1 border-b border-slate-200">
-                  دسترسی سریع
-                </div>
-                <div className="space-y-2">
-                  <Link
-                    to="/account"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-100 text-[#0A172F]"
-                  >
-                    <User className="w-4 h-4 text-[#F97316]" />
-                    <span>داشبورد مشتری (سفارشات و استعلام)</span>
-                  </Link>
-                  <Link
-                    to="/agency"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-100 text-[#0A172F]"
-                  >
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    <span>درخواست اخذ نمایندگی رسمی</span>
-                  </Link>
-                </div>
+              {/* Accordion 2: Covered Industries */}
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setMobileAccordionOpen(prev => prev === 'industries' ? null : 'industries')}
+                  className="w-full flex items-center justify-between py-2 text-slate-200 hover:text-orange-400 font-black text-xs transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <Factory className="w-4 h-4 text-blue-400" />
+                    <span>صنایع و کاربری‌های خطوط تولید</span>
+                  </div>
+                  <ChevronDown
+                    className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                      mobileAccordionOpen === 'industries' ? 'rotate-180 text-orange-400' : ''
+                    }`}
+                  />
+                </button>
+
+                {mobileAccordionOpen === 'industries' && (
+                  <div className="mt-1 mr-2 pl-1 space-y-1 border-r-2 border-blue-500/30 pr-2.5 animate-in fade-in duration-150">
+                    {[
+                      { name: 'صنایع کاشی، سرامیک و لعاب', slug: 'ceramic-tiles' },
+                      { name: 'صنایع نساجی، بافندگی و ریسندگی', slug: 'textile-machinery' },
+                      { name: 'صنایع فولاد، ریخته‌گری و متالورژی', slug: 'steel-metals' },
+                      { name: 'صنایع بسته‌بندی، دارویی و غذایی', slug: 'food-pharma' },
+                      { name: 'سنگ‌بری و مصالح ساختمانی', slug: 'mining-stone' },
+                    ].map(ind => (
+                      <Link
+                        key={ind.slug}
+                        to={`/category/${ind.slug}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block py-1.5 px-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                      >
+                        {ind.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Accordion 3: Exclusive Brands */}
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setMobileAccordionOpen(prev => prev === 'brands' ? null : 'brands')}
+                  className="w-full flex items-center justify-between py-2 text-slate-200 hover:text-orange-400 font-black text-xs transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <Award className="w-4 h-4 text-amber-400" />
+                    <span>برندهای انحصاری بازرگانی اطلس</span>
+                  </div>
+                  <ChevronDown
+                    className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                      mobileAccordionOpen === 'brands' ? 'rotate-180 text-orange-400' : ''
+                    }`}
+                  />
+                </button>
+
+                {mobileAccordionOpen === 'brands' && (
+                  <div className="mt-1 mr-2 pl-1 space-y-1.5 border-r-2 border-amber-500/30 pr-2.5 animate-in fade-in duration-150">
+                    <Link
+                      to="/category/swr-forza-exclusive"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="p-2 rounded-xl bg-slate-800/60 block hover:bg-slate-800 transition-colors"
+                    >
+                      <div className="font-bold text-orange-400 text-xs">FORZA - ایتالیا</div>
+                      <div className="text-[10px] text-slate-400 mt-0.5">تسمه‌های صنعتی پیشرفته خطوط کاشی و سرامیک</div>
+                    </Link>
+                    <Link
+                      to="/category/swr-forza-exclusive"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="p-2 rounded-xl bg-slate-800/60 block hover:bg-slate-800 transition-colors"
+                    >
+                      <div className="font-bold text-blue-400 text-xs">SWR - آلمان</div>
+                      <div className="text-[10px] text-slate-400 mt-0.5">سیستم‌های محرک صنعتی و تسمه‌های ضدحرارت و روغن</div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Direct Links */}
+              <div className="pt-3 space-y-1">
+                <Link
+                  to="/agency"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800/60 text-slate-200 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    <span className="font-bold">درخواست اخذ نمایندگی استانی</span>
+                  </div>
+                  <ChevronLeft className="w-3.5 h-3.5 text-slate-500" />
+                </Link>
+
+                <Link
+                  to="/club"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800/60 text-slate-200 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Award className="w-4 h-4 text-yellow-400" />
+                    <span className="font-bold">باشگاه مشتریان و امتیازات فنی</span>
+                  </div>
+                  <ChevronLeft className="w-3.5 h-3.5 text-slate-500" />
+                </Link>
+
+                <Link
+                  to="/catalog"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800/60 text-slate-200 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-sky-400" />
+                    <span className="font-bold">دانشنامه فنی و کاتالوگ‌ها</span>
+                  </div>
+                  <ChevronLeft className="w-3.5 h-3.5 text-slate-500" />
+                </Link>
+
+                <Link
+                  to="/about"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800/60 text-slate-200 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Building className="w-4 h-4 text-purple-400" />
+                    <span className="font-bold">درباره کارخانجات و بازرگانی اطلس</span>
+                  </div>
+                  <ChevronLeft className="w-3.5 h-3.5 text-slate-500" />
+                </Link>
               </div>
             </div>
 
-            {/* Drawer Footer Hotline */}
-            <div className="p-4 bg-slate-50 border-t border-slate-200 text-xs">
+            {/* Drawer Footer Hotline & Social Links */}
+            <div className="p-3.5 bg-[#080E1A] border-t border-slate-800 space-y-3">
               <a
                 href="tel:03538739900"
-                className="flex items-center justify-center gap-2 w-full py-2.5 bg-[#F97316] text-white rounded-xl font-bold"
+                className="flex items-center justify-center gap-2 w-full py-2.5 bg-gradient-to-r from-[#EA580C] to-[#F97316] text-white rounded-xl font-black text-xs shadow-md shadow-orange-950/50"
               >
                 <Phone className="w-4 h-4" />
                 <span>تماس فوری: ۰۳۵-۳۸۷۳۹۹۰۰</span>
               </a>
+
+              <div className="flex items-center justify-center gap-3 text-slate-400 pt-1">
+                <span className="text-[10px] text-slate-500">شبکه‌های رسمی:</span>
+                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-orange-400 transition-colors" aria-label="اینستاگرام">
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a href="https://t.me" target="_blank" rel="noreferrer" className="hover:text-sky-400 transition-colors" aria-label="تلگرام">
+                  <Send className="w-4 h-4" />
+                </a>
+                <a href="https://wa.me/989903427027" target="_blank" rel="noreferrer" className="hover:text-emerald-400 transition-colors" aria-label="واتس‌اپ">
+                  <MessageCircle className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

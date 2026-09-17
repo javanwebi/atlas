@@ -179,6 +179,31 @@ export const HomePage: React.FC = () => {
     setHeroSlideIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
   };
 
+  // Mobile Touch Gestures for Hero Carousel
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const diff = touchStartX.current - touchEndX.current;
+    // In RTL, swipe left (diff > 40) moves forward to next slide
+    if (diff > 40) {
+      handleNextSlide();
+    } else if (diff < -40) {
+      handlePrevSlide();
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
   // Industries carousel scroll tracking
   const industriesScrollRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -368,7 +393,12 @@ export const HomePage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION - 5-SECOND DYNAMIC CAROUSEL WITH PARALLAX & ANIMATIONS    */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[520px] sm:min-h-[580px] lg:min-h-[calc(100vh-155px)] flex flex-col justify-between">
+      <section
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[500px] sm:min-h-[580px] lg:min-h-[calc(100vh-155px)] flex flex-col justify-between select-none"
+      >
         {/* Background Factory Images with Smooth Cross-Fade & Parallax */}
         {heroSlides.map((slide, idx) => {
           const isActive = idx === heroSlideIndex;
@@ -393,15 +423,15 @@ export const HomePage: React.FC = () => {
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[180px] bg-gradient-to-t from-orange-600/20 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
         {/* Top & Middle Content Container - Standard max-w-7xl matching the header perfectly */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 flex-1 flex flex-col justify-center">
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-14 pb-6 sm:pb-8 flex-1 flex flex-col justify-center">
           <div
             key={heroSlideIndex}
-            className="max-w-xl lg:max-w-2xl space-y-4 sm:space-y-5 transition-all duration-500 ease-out animate-in fade-in slide-in-from-right-3"
+            className="max-w-xl lg:max-w-2xl space-y-3.5 sm:space-y-5 transition-all duration-500 ease-out animate-in fade-in slide-in-from-right-3"
           >
             {/* Top Eyebrow Tag */}
             <div className="flex items-center gap-2 justify-start">
-              <span className="w-8 h-[2px] bg-[#F97316]" />
-              <span className="text-xs sm:text-[13px] font-bold text-orange-400/90 tracking-wide line-clamp-1">
+              <span className="w-6 sm:w-8 h-[2px] bg-[#F97316]" />
+              <span className="text-[11px] sm:text-[13px] font-bold text-orange-400/90 tracking-wide line-clamp-1">
                 {heroSlides[heroSlideIndex].eyebrow}
               </span>
             </div>
@@ -414,26 +444,26 @@ export const HomePage: React.FC = () => {
                 transform: `translateX(${Math.min(70, scrollY * 0.2)}px)`,
               }}
             >
-              <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black leading-[1.2] tracking-tight text-white drop-shadow-md">
+              <h1 className="text-2xl sm:text-5xl lg:text-[54px] font-black leading-[1.25] sm:leading-[1.2] tracking-tight text-white drop-shadow-md">
                 <span>{heroSlides[heroSlideIndex].titlePart1}</span>
                 <span className="block text-[#F97316] pt-1">{heroSlides[heroSlideIndex].titlePart2}</span>
               </h1>
             </div>
 
             {/* Action Buttons & Subtitle */}
-            <div className="pt-2 sm:pt-3 space-y-4">
+            <div className="pt-1.5 sm:pt-3 space-y-3 sm:space-y-4">
               {/* Subtitle Description */}
-              <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl font-normal min-h-[44px]">
+              <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl font-normal min-h-[38px] sm:min-h-[44px]">
                 {heroSlides[heroSlideIndex].description}
               </p>
 
-              {/* Action Buttons Row */}
-              <div className="pt-1.5 flex flex-wrap items-center gap-3.5">
+              {/* Action Buttons Row - Full width touch targets on mobile */}
+              <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3.5">
                 {/* Primary Button */}
                 {heroSlides[heroSlideIndex].primaryBtn.link ? (
                   <Link
                     to={heroSlides[heroSlideIndex].primaryBtn.link!}
-                    className="h-11 sm:h-12 px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
+                    className="h-11 sm:h-12 px-6 sm:px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer group active:scale-95"
                   >
                     <span>{heroSlides[heroSlideIndex].primaryBtn.text}</span>
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform text-white" />
@@ -448,7 +478,7 @@ export const HomePage: React.FC = () => {
                         setIsConsultOpen(true);
                       }
                     }}
-                    className="h-11 sm:h-12 px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer group"
+                    className="h-11 sm:h-12 px-6 sm:px-7 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm rounded-xl shadow-[0_6px_18px_rgba(249,115,22,0.35)] hover:shadow-[0_8px_22px_rgba(249,115,22,0.5)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer group active:scale-95"
                   >
                     <Camera className="w-4 h-4 text-white" />
                     <span>{heroSlides[heroSlideIndex].primaryBtn.text}</span>
@@ -460,7 +490,7 @@ export const HomePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setIsConsultOpen(true)}
-                    className="h-11 sm:h-12 px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2.5 cursor-pointer group shadow-md"
+                    className="h-11 sm:h-12 px-5 sm:px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center justify-center gap-2.5 cursor-pointer group shadow-md active:scale-95"
                   >
                     <span className="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
                       <Play className="w-3 h-3 fill-[#F97316] text-[#F97316] ml-0.5" />
@@ -472,7 +502,7 @@ export const HomePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setIsVisualSearchOpen(true)}
-                    className="h-11 sm:h-12 px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-2.5 cursor-pointer group shadow-md"
+                    className="h-11 sm:h-12 px-5 sm:px-6 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center justify-center gap-2.5 cursor-pointer group shadow-md active:scale-95"
                   >
                     <span>{heroSlides[heroSlideIndex].secondaryBtn.text}</span>
                     <ArrowLeft className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
@@ -482,7 +512,7 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Slide Navigation Dots with 5-Second Timer Progress Bar & Controls */}
-            <div className="pt-3 flex items-center gap-3">
+            <div className="pt-2 sm:pt-3 flex items-center justify-between sm:justify-start gap-3">
               <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                 {heroSlides.map((slide, idx) => {
                   const isActive = idx === heroSlideIndex;
@@ -520,7 +550,7 @@ export const HomePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrevSlide}
-                  className="w-7 h-7 rounded-full bg-black/40 hover:bg-[#F97316] border border-white/15 hover:border-[#F97316] text-white flex items-center justify-center transition-all cursor-pointer"
+                  className="w-7 h-7 rounded-full bg-black/40 hover:bg-[#F97316] border border-white/15 hover:border-[#F97316] text-white flex items-center justify-center transition-all cursor-pointer active:scale-90"
                   aria-label="اسلاید قبلی"
                 >
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -528,7 +558,7 @@ export const HomePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNextSlide}
-                  className="w-7 h-7 rounded-full bg-black/40 hover:bg-[#F97316] border border-white/15 hover:border-[#F97316] text-white flex items-center justify-center transition-all cursor-pointer"
+                  className="w-7 h-7 rounded-full bg-black/40 hover:bg-[#F97316] border border-white/15 hover:border-[#F97316] text-white flex items-center justify-center transition-all cursor-pointer active:scale-90"
                   aria-label="اسلاید بعدی"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
@@ -571,7 +601,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - استاندارد max-w-7xl) */}
+        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - گرید ۲×۲ در موبایل) */}
         {/* ========================================================================= */}
         <div
           className="relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-3 sm:py-3.5 transition-all duration-150 ease-out"
@@ -581,51 +611,51 @@ export const HomePage: React.FC = () => {
             pointerEvents: scrollY > 330 ? 'none' : 'auto',
           }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
             
-            {/* 4 Advantages Items */}
-            <div className="flex flex-wrap items-center gap-5 sm:gap-8 lg:gap-10">
+            {/* 4 Advantages Items: 2x2 Grid on Mobile, Flex row on Tablet/Desktop */}
+            <div className="w-full md:w-auto grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-8 lg:gap-10">
               {/* Item 1: کیفیت تضمینی */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+              <div className="flex items-center gap-2 p-2 sm:p-0 rounded-xl bg-white/[0.04] sm:bg-transparent border border-white/[0.08] sm:border-0">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316] shrink-0">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
-                <div className="text-right">
-                  <div className="text-xs font-bold text-white">کیفیت تضمینی</div>
-                  <div className="text-[10px] text-slate-400 font-medium">گارانتی و اصالت کالا</div>
+                <div className="text-right min-w-0">
+                  <div className="text-xs font-bold text-white truncate">کیفیت تضمینی</div>
+                  <div className="text-[10px] text-slate-400 font-medium truncate">گارانتی و اصالت کالا</div>
                 </div>
               </div>
 
               {/* Item 2: تحویل سریع */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+              <div className="flex items-center gap-2 p-2 sm:p-0 rounded-xl bg-white/[0.04] sm:bg-transparent border border-white/[0.08] sm:border-0">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316] shrink-0">
                   <Truck className="w-4 h-4" />
                 </div>
-                <div className="text-right">
-                  <div className="text-xs font-bold text-white">تحویل سریع</div>
-                  <div className="text-[10px] text-slate-400 font-medium">به سراسر کشور</div>
+                <div className="text-right min-w-0">
+                  <div className="text-xs font-bold text-white truncate">تحویل سریع</div>
+                  <div className="text-[10px] text-slate-400 font-medium truncate">به سراسر کشور</div>
                 </div>
               </div>
 
               {/* Item 3: مشاوره تخصصی */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+              <div className="flex items-center gap-2 p-2 sm:p-0 rounded-xl bg-white/[0.04] sm:bg-transparent border border-white/[0.08] sm:border-0">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316] shrink-0">
                   <Settings className="w-4 h-4" />
                 </div>
-                <div className="text-right">
-                  <div className="text-xs font-bold text-white">مشاوره تخصصی</div>
-                  <div className="text-[10px] text-slate-400 font-medium">تیم فنی و مهندسی</div>
+                <div className="text-right min-w-0">
+                  <div className="text-xs font-bold text-white truncate">مشاوره تخصصی</div>
+                  <div className="text-[10px] text-slate-400 font-medium truncate">تیم فنی و مهندسی</div>
                 </div>
               </div>
 
               {/* Item 4: پشتیبانی واقعی */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+              <div className="flex items-center gap-2 p-2 sm:p-0 rounded-xl bg-white/[0.04] sm:bg-transparent border border-white/[0.08] sm:border-0">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316] shrink-0">
                   <Headphones className="w-4 h-4" />
                 </div>
-                <div className="text-right">
-                  <div className="text-xs font-bold text-white">پشتیبانی واقعی</div>
-                  <div className="text-[10px] text-slate-400 font-medium">قبل و بعد از خرید</div>
+                <div className="text-right min-w-0">
+                  <div className="text-xs font-bold text-white truncate">پشتیبانی صنعتی</div>
+                  <div className="text-[10px] text-slate-400 font-medium truncate">قبل و بعد از خرید</div>
                 </div>
               </div>
             </div>
