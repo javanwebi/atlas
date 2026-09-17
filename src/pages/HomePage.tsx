@@ -9,6 +9,7 @@ import {
   Camera,
   Sparkles,
   Headphones,
+  Shield,
   ShieldCheck,
   Building,
   Truck,
@@ -115,35 +116,43 @@ export const HomePage: React.FC = () => {
     },
   ];
 
-  // 5 Reasons Why Hyper Sanat & Atlas
-  const whyAtlasTopRow = [
+  // 6 Reasons Why Atlas (منطبق با تصویر ارسالی کاربر و راست‌چین)
+  const whyAtlasItems = [
     {
-      icon: Award,
-      title: 'پشتوانه ۳۵ ساله کارخانجات اطلس',
-      subtitle: 'تولیدکننده و واردکننده تخصصی قطعات صنعتی از ۱۳۶۶',
+      id: 1,
+      title: 'قیمت رقابتی',
+      subtitle: 'بهترین قیمت بازار',
+      icon: Shield,
     },
     {
-      icon: Building,
-      title: 'تأمین مستقیم به قیمت کارخانه',
-      subtitle: 'حذف واسطه‌ها برای مدیران تدارکات و کارخانجات',
-    },
-    {
+      id: 2,
+      title: 'ضمانت اصالت کالا',
+      subtitle: 'همراه با گارانتی معتبر',
       icon: ShieldCheck,
-      title: 'تضمین اصالت و سلامت کارکرد',
-      subtitle: 'تأییدیه فنی قطعات برای کارکرد در شرایط سخت خطوط تولید',
     },
-  ];
-
-  const whyAtlasBottomRow = [
     {
+      id: 3,
+      title: 'مشاوره تخصصی',
+      subtitle: 'پشتیبانی فنی و مهندسی',
       icon: Headphones,
-      title: 'مشاوره تخصصی مهندسی خط تولید',
-      subtitle: 'محاسبه فنی و انتخاب بهینه تسمه، پولی و قطعات توسط مهندسین مجرب',
     },
     {
+      id: 4,
+      title: 'تأمین سریع',
+      subtitle: 'ارسال در کوتاه‌ترین زمان',
       icon: Truck,
-      title: 'ارسال فوری برای جلوگیری از توقف خط',
-      subtitle: 'تأمین ضرب‌الاجل و ارسال قطعه یدکی به تمام شهرک‌های صنعتی کشور',
+    },
+    {
+      id: 5,
+      title: 'تجربه و اعتبار',
+      subtitle: 'همکاری با صنایع بزرگ',
+      icon: Building,
+    },
+    {
+      id: 6,
+      title: 'خدمات پس از فروش',
+      subtitle: 'تأییدیه فنی و تضمین تعویض',
+      icon: Award,
     },
   ];
 
@@ -595,77 +604,91 @@ export const HomePage: React.FC = () => {
         <OurClientsSection />
 
         {/* ========================================================================= */}
-        {/* 6. WHY ATLAS & HYPER SANAT (چرا هایپر صنعت با پشتوانه اطلس؟)              */}
+        {/* 6. WHY ATLAS SECTION (چرا اطلس؟ - راست‌چین و منطبق کامل با تصویر)         */}
         {/* ========================================================================= */}
-        <section className="space-y-6">
-          {/* Section Header */}
-          <div className="text-center space-y-1">
-            <h2 className="text-2xl sm:text-3xl font-black text-[#0A172F]">چرا هایپر صنعت با پشتوانه اطلس؟</h2>
-            <p className="text-xs sm:text-sm text-slate-500">تولید، واردات مستقیم و تأمین پایدار قطعات خطوط تولید در سراسر کشور</p>
-          </div>
+        <section className="relative w-full rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden" dir="rtl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            
+            {/* 1. RIGHT SIDE: Dark "چرا اطلس؟" Card (سمت راست - کاملاً راست‌چین با زاویه اسلنت و دکمه نارنجی) */}
+            <div className="lg:col-span-4 xl:col-span-4 relative bg-[#091222] text-white p-6 sm:p-8 flex flex-col justify-between overflow-hidden lg:[clip-path:polygon(32px_0,100%_0,100%_100%,0_100%)] z-10">
+              {/* Industrial background image texture & ambient glow */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity pointer-events-none"
+                style={{ backgroundImage: `url(${STORE_ASSETS.heroPulley})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-bl from-[#091222]/85 via-[#091222]/95 to-[#050A14] pointer-events-none" />
 
-          {/* Content Layout: Photo on Left + 5 Feature Cards on Right (Row 1: 3 cards, Row 2: 2 cards) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            {/* Left Column: Industrial Plant Photo with Engineer */}
-            <div className="lg:col-span-4 relative rounded-3xl overflow-hidden border border-slate-200/80 shadow-md min-h-[280px] lg:min-h-[320px]">
+              {/* Diagonal Orange Accent Stripe at bottom-right corner (عین خط مورب نارنجی تصویر) */}
+              <div className="absolute -bottom-8 -right-8 w-28 h-7 bg-[#F97316] -rotate-45 shadow-lg pointer-events-none z-20" />
+
+              {/* Text Content */}
+              <div className="relative z-10 space-y-2.5 text-right">
+                <span className="inline-block text-[#F97316] font-bold text-sm sm:text-base tracking-wide">
+                  چرا اطلس؟
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  تجربه، کیفیت، تعهد
+                </h3>
+                <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed pt-1 max-w-sm">
+                  ما با بیش از یک دهه تجربه در تأمین تجهیزات صنعتی و قطعات خطوط تولید، همواره در کنار شما هستیم تا بهترین محصولات، مشاوره تخصصی و پشتیبانی کامل را ارائه دهیم.
+                </p>
+              </div>
+
+              {/* Orange Action Button */}
+              <div className="relative z-10 pt-6 mt-auto">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs rounded-xl shadow-md hover:shadow-orange-500/25 transition-all cursor-pointer group"
+                >
+                  <span>بیشتر بدانید</span>
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+            {/* 2. CENTER: The 6 Feature Cards (وسط - ۶ ویژگی در ۲ ستون ۳ ردیفه) */}
+            <div className="lg:col-span-5 xl:col-span-5 p-4 sm:p-6 lg:p-7 flex items-center">
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
+                {whyAtlasItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between p-3 sm:p-3.5 bg-white rounded-2xl border border-slate-100/90 shadow-2xs hover:border-orange-200 hover:shadow-xs transition-all group"
+                    >
+                      <div className="text-right">
+                        <h4 className="font-bold text-xs sm:text-[13px] text-[#0A172F] group-hover:text-[#F97316] transition-colors">
+                          {item.title}
+                        </h4>
+                        <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-medium">
+                          {item.subtitle}
+                        </p>
+                      </div>
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#F97316] shrink-0 group-hover:bg-[#F97316] group-hover:text-white group-hover:scale-105 transition-all shadow-2xs">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 3. LEFT: Industrial Plant Photo with Engineer (سمت چپ - عکس مهندس با زاویه اسلنت موازی) */}
+            <div className="lg:col-span-3 xl:col-span-3 relative min-h-[260px] lg:min-h-[320px] overflow-hidden lg:[clip-path:polygon(0_0,100%_0,calc(100%-32px)_100%,0_100%)]">
               <img
                 src={STORE_ASSETS.engineerWhyAtlas}
                 alt="مهندس ناظر خطوط تولید کارخانجات اطلس"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-              <div className="absolute bottom-4 right-4 left-4 text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 right-4 left-4 text-white text-right">
                 <div className="text-xs font-bold text-orange-400">کارخانجات و بازرگانی اطلس</div>
-                <div className="text-[11px] text-slate-300">
-                  پشتوانه تولید و تأمین قطعات تخصصی برای هایپر صنعت
+                <div className="text-[10px] text-slate-300 mt-0.5">
+                  پشتیبانی فنی و مهندسی خطوط تولید
                 </div>
               </div>
             </div>
 
-            {/* Right Column: 5 Cards structured into Top Row (3 cards) & Bottom Row (2 cards) */}
-            <div className="lg:col-span-8 flex flex-col justify-between gap-3.5">
-              {/* Top Row: 3 Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-                {whyAtlasTopRow.map((pt, idx) => {
-                  const Icon = pt.icon;
-                  return (
-                    <div
-                      key={idx}
-                      className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 flex flex-col items-center text-center justify-between space-y-3 shadow-2xs hover:border-[#F97316]/50 hover:shadow-md transition-all"
-                    >
-                      <div className="w-12 h-12 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F97316]">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-sm text-[#0A172F]">{pt.title}</h3>
-                        <p className="text-xs text-slate-500 mt-1">{pt.subtitle}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Bottom Row: 2 Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {whyAtlasBottomRow.map((pt, idx) => {
-                  const Icon = pt.icon;
-                  return (
-                    <div
-                      key={idx}
-                      className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 flex flex-col items-center text-center justify-between space-y-3 shadow-2xs hover:border-[#F97316]/50 hover:shadow-md transition-all"
-                    >
-                      <div className="w-12 h-12 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F97316]">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-sm text-[#0A172F]">{pt.title}</h3>
-                        <p className="text-xs text-slate-500 mt-1">{pt.subtitle}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
         </section>
 
