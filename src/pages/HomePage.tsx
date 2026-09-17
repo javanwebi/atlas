@@ -557,10 +557,10 @@ export const HomePage: React.FC = () => {
               <Link
                 key={cat.id}
                 to={cat.link}
-                className="group bg-white rounded-2xl border border-slate-200/80 p-3 flex flex-col justify-between hover:border-[#F97316]/50 hover:shadow-lg transition-all duration-300 text-right"
+                className="group bg-white rounded-2xl border border-slate-200/80 p-3 flex flex-col justify-between hover:border-[#F97316] hover:shadow-[0_8px_25px_rgba(249,115,22,0.2)] hover:ring-2 hover:ring-orange-500/20 hover:-translate-y-1 transition-all duration-300 text-right"
               >
                 {/* Product Image Box */}
-                <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center mb-3 group-hover:bg-orange-50/30 transition-colors">
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center mb-3 group-hover:bg-orange-50/40 group-hover:border-orange-200/60 transition-colors">
                   <img
                     src={cat.image}
                     alt={cat.title}
@@ -571,7 +571,7 @@ export const HomePage: React.FC = () => {
 
                 {/* Title & Orange Arrow Circle Button */}
                 <div className="flex items-center justify-between gap-1.5 pt-1">
-                  <div className="w-7 h-7 rounded-full bg-[#F97316] group-hover:bg-[#EA580C] text-white flex items-center justify-center shrink-0 shadow-xs transition-colors">
+                  <div className="w-7 h-7 rounded-full bg-[#F97316] group-hover:bg-[#EA580C] text-white flex items-center justify-center shrink-0 shadow-xs group-hover:shadow-[0_0_8px_#F97316] transition-all">
                     <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
                   </div>
                   <h3 className="font-bold text-xs text-[#0A172F] group-hover:text-[#F97316] transition-colors line-clamp-1">
@@ -695,7 +695,7 @@ export const HomePage: React.FC = () => {
                   className={`group relative w-[170px] sm:w-[195px] shrink-0 aspect-[1/1.7] rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-end p-2.5 sm:p-3 transition-all duration-300 snap-start cursor-pointer ${
                     isHighlighted
                       ? 'border-2 border-[#F97316] shadow-[0_0_25px_rgba(249,115,22,0.45)] ring-2 ring-orange-500/30 scale-[1.03] z-10'
-                      : 'border border-white/15 hover:border-white/40 hover:scale-[1.02]'
+                      : 'border-2 border-white/15 hover:border-[#F97316] hover:shadow-[0_0_25px_rgba(249,115,22,0.45)] hover:ring-2 hover:ring-orange-500/30 hover:scale-[1.03] hover:z-10'
                   }`}
                 >
                   {/* Card Industrial Machinery Photo */}
@@ -709,15 +709,23 @@ export const HomePage: React.FC = () => {
                   {/* Dark Vignette and bottom contrast gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15" />
 
-                  {/* Top Subtle Amber Highlight glow on active card */}
-                  {isHighlighted && (
-                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#F97316] to-transparent" />
-                  )}
+                  {/* Top Subtle Amber Highlight glow on active card & on hover (عین صنایع غذایی) */}
+                  <div
+                    className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#F97316] to-transparent transition-opacity duration-300 ${
+                      isHighlighted ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}
+                  />
 
                   {/* Bottom Glass Card Pill with Icon + Title + Orange Arrow */}
-                  <div className="relative z-10 flex items-center justify-between gap-1.5 bg-[#0A0E18]/85 backdrop-blur-md px-2.5 py-2 rounded-xl border border-white/15 shadow-lg group-hover:border-orange-500/60 transition-colors">
+                  <div
+                    className={`relative z-10 flex items-center justify-between gap-1.5 bg-[#0A0E18]/85 backdrop-blur-md px-2.5 py-2 rounded-xl border shadow-lg transition-all duration-300 ${
+                      isHighlighted
+                        ? 'border-orange-500/60 shadow-[0_0_12px_rgba(249,115,22,0.25)]'
+                        : 'border-white/15 group-hover:border-orange-500/60 group-hover:shadow-[0_0_12px_rgba(249,115,22,0.25)]'
+                    }`}
+                  >
                     {/* Left Icon (Orange Arrow Circle Button) */}
-                    <div className="w-6 h-6 rounded-full bg-[#F97316] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#EA580C] transition-colors">
+                    <div className="w-6 h-6 rounded-full bg-[#F97316] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#EA580C] group-hover:shadow-[0_0_8px_#F97316] transition-all">
                       <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
                     </div>
 
@@ -728,7 +736,11 @@ export const HomePage: React.FC = () => {
 
                     {/* Right Mini Industry Category Icon */}
                     {IconComp && (
-                      <div className="w-5 h-5 flex items-center justify-center text-orange-400/80 shrink-0">
+                      <div
+                        className={`w-5 h-5 flex items-center justify-center shrink-0 transition-colors ${
+                          isHighlighted ? 'text-[#F97316]' : 'text-orange-400/80 group-hover:text-[#F97316]'
+                        }`}
+                      >
                         <IconComp className="w-3.5 h-3.5" />
                       </div>
                     )}
