@@ -125,24 +125,11 @@ export const PopularProductsSection: React.FC = () => {
   const [customerPhone, setCustomerPhone] = useState('');
   const [inquirySubmitted, setInquirySubmitted] = useState(false);
   const [quickAddedId, setQuickAddedId] = useState<string | null>(null);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
-  const checkScroll = () => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    const scrolled = Math.abs(el.scrollLeft) > 10;
-    setCanScrollRight(scrolled);
-  };
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const scrollAmount = direction === 'left' ? -320 : 320;
       scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      if (direction === 'left') {
-        setCanScrollRight(true);
-      } else {
-        setTimeout(checkScroll, 350);
-      }
     }
   };
 
@@ -215,19 +202,17 @@ export const PopularProductsSection: React.FC = () => {
 
       {/* Carousel Container with Left/Right Navigation Arrows */}
       <div className="relative group/carousel">
-        {/* Navigation Arrow: Right (تنها پس از کلیک بر چپ یا اسکرول ظاهر می‌شود) */}
+        {/* Navigation Arrow: Right (اسکرول به راست) */}
         <button
           type="button"
           onClick={() => scroll('right')}
-          className={`absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all duration-300 cursor-pointer ${
-            canScrollRight ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'
-          }`}
+          className="absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
           aria-label="محصولات قبلی"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        {/* Navigation Arrow: Left (همواره در دسترس برای اسکرول به جلو) */}
+        {/* Navigation Arrow: Left (اسکرول به چپ) */}
         <button
           type="button"
           onClick={() => scroll('left')}
@@ -240,7 +225,6 @@ export const PopularProductsSection: React.FC = () => {
         {/* Scrollable Products Row */}
         <div
           ref={scrollContainerRef}
-          onScroll={checkScroll}
           className="flex items-stretch gap-4 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none snap-x snap-mandatory"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >

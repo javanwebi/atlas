@@ -25,6 +25,10 @@ import {
   Cpu,
   Gem,
   Wheat,
+  Play,
+  Mouse,
+  Settings,
+  Clock,
 } from 'lucide-react';
 import { STORE_ASSETS } from '../assets/images';
 import { AiVisualPartSearchModal } from '../components/search/AiVisualPartSearchModal';
@@ -43,36 +47,30 @@ export const HomePage: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(1);
   const totalSlides = 3;
 
+  // Window scroll tracking for Parallax, Headline fade/shift, Sticky Advantages bar, and Scroll Indicator line
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleWindowScroll = () => {
+      const currentScroll = window.scrollY;
+      setScrollY(currentScroll);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress(Math.min(1, Math.max(0, currentScroll / totalHeight)));
+      }
+    };
+
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+    handleWindowScroll();
+
+    return () => window.removeEventListener('scroll', handleWindowScroll);
+  }, []);
+
   // Industries carousel scroll tracking
   const industriesScrollRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(false);
-
-  // Categories carousel scroll tracking
-  const categoriesScrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollCategoriesRight, setCanScrollCategoriesRight] = useState(false);
-
-  const checkCategoriesScroll = () => {
-    const el = categoriesScrollRef.current;
-    if (!el) return;
-    const scrolled = Math.abs(el.scrollLeft) > 10;
-    setCanScrollCategoriesRight(scrolled);
-  };
-
-  const handleScrollCategoriesLeft = () => {
-    const el = categoriesScrollRef.current;
-    if (el) {
-      el.scrollBy({ left: -260, behavior: 'smooth' });
-      setCanScrollCategoriesRight(true);
-    }
-  };
-
-  const handleScrollCategoriesRight = () => {
-    const el = categoriesScrollRef.current;
-    if (el) {
-      el.scrollBy({ left: 260, behavior: 'smooth' });
-      setTimeout(checkCategoriesScroll, 350);
-    }
-  };
 
   const checkIndustriesScroll = () => {
     const el = industriesScrollRef.current;
@@ -242,134 +240,211 @@ export const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="w-full text-right font-sans pb-12 overflow-x-hidden">
+    <div className="w-full text-right font-sans pb-12 overflow-x-hidden relative">
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION - 100% FULL WIDTH (تمام صفحه و لبه‌به‌لبه عین تصویر)           */}
+      {/* 0. VERTICAL ORANGE SCROLL INDICATOR LINE (میزان اسکرول صفحه)              */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden bg-[#070D18] text-white border-b border-slate-800/80">
-        {/* Background Image: Industrial conveyor line with drive rollers & belts */}
+      <div 
+        className="fixed top-0 right-0 z-50 w-1.5 h-full pointer-events-none bg-black/20"
+        title="شاخص پیمایش صفحه"
+      >
+        {/* Glowing Orange Fill Line */}
         <div
-          className="absolute inset-0 bg-cover bg-center transition-all duration-1000 scale-[1.01]"
+          className="w-full bg-gradient-to-b from-[#EA580C] via-[#F97316] to-[#FF8C00] shadow-[0_0_12px_#F97316] transition-all duration-75"
+          style={{ height: `${Math.round(scrollProgress * 100)}%` }}
+        />
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 1. HERO SECTION - 100% FULL WIDTH WITH PARALLAX & ANIMATIONS              */}
+      {/* ========================================================================= */}
+      <section className="relative w-full overflow-hidden bg-[#060A14] text-white border-b border-slate-800/80 min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] flex flex-col justify-between">
+        {/* Background Factory Image with Smooth Parallax Movement on Scroll */}
+        <div
+          className="absolute -top-12 -bottom-12 inset-x-0 bg-cover bg-center transition-transform duration-75 ease-out will-change-transform scale-105"
           style={{
-            backgroundImage: `url(${STORE_ASSETS.heroPulley})`,
+            backgroundImage: `url(${STORE_ASSETS.heroSteelCoils || STORE_ASSETS.heroPulley})`,
+            transform: `translateY(${Math.min(160, scrollY * 0.35)}px) scale(1.05)`,
           }}
         />
 
-        {/* Cinematic Vignette Overlay: Deep contrast on right for text, warm amber glow on left */}
-        <div className="absolute inset-0 bg-gradient-to-l from-[#070D18]/95 via-[#070D18]/80 to-[#070D18]/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070D18]/95 via-transparent to-black/30" />
+        {/* Cinematic Factory Vignette Overlay: Deep contrast on right for headline, warm orange reflections on floor */}
+        <div className="absolute inset-0 bg-gradient-to-l from-[#060A14]/95 via-[#060A14]/70 to-[#060A14]/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#060A14] via-transparent to-black/40 pointer-events-none" />
+        {/* Warm Golden Flare on Factory floor */}
+        <div className="absolute bottom-0 left-1/4 w-[600px] h-[220px] bg-gradient-to-t from-orange-600/25 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
-        {/* Hero Content Container - Aligned within max-w-7xl */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 min-h-[420px] sm:min-h-[460px] flex flex-col justify-between">
-          <div className="max-w-xl lg:max-w-2xl space-y-5">
-            {/* Eyebrow badge with warm flame icon */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-xs font-bold text-[#F97316]">
-              <Flame className="w-3.5 h-3.5 fill-[#F97316]" />
-              <span>هایپر صنعت؛ بازار تخصصی قطعات خطوط تولید | با پشتوانه کارخانجات اطلس</span>
+        {/* Top & Middle Content Container - Aligned within max-w-[1520px] */}
+        <div className="relative z-10 max-w-[1520px] w-full mx-auto px-4 sm:px-8 lg:px-14 pt-12 sm:pt-16 pb-6 flex-1 flex flex-col justify-center">
+          <div className="max-w-2xl lg:max-w-3xl space-y-6">
+            
+            {/* Top Eyebrow Tag: تأمین قطعات صنعتی با کیفیت، با گارانتی و پشتوانه مطمئن */}
+            <div className="flex items-center gap-2.5 justify-start">
+              <span className="w-10 h-[2px] bg-[#F97316]" />
+              <span className="text-xs sm:text-sm font-bold text-orange-400/90 tracking-wide">
+                تأمین قطعات صنعتی با کیفیت، قیمت رقابتی، برای آینده‌ای مطمئن
+              </span>
             </div>
 
-            {/* Main Bold Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[52px] font-black leading-tight sm:leading-snug tracking-tight">
-              <span className="block text-white">هایپر صنعت</span>
-              <span className="block text-[#F97316] mt-1.5">تأمین قطعات خطوط تولید کشور</span>
-            </h1>
-
-            {/* Description Subtitle */}
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-lg font-normal">
-              هایپر صنعت بستر تخصصی تأمین قطعات خطوط تولید است که توسط مجموعه کارخانجات و بازرگانی اطلس پشتیبانی می‌شود. ما انواع قطعات مصرفی و یدکی خطوط تولید شامل تسمه، پولی، بلبرینگ و زنجیر را بدون واسطه و با تضمین اصالت به کارخانجات سراسر کشور عرضه می‌کنیم.
-            </p>
-
-            {/* Action Buttons */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              {/* Primary Orange Button */}
-              <Link
-                to="/category/industrial-belts"
-                className="h-12 px-7 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg hover:shadow-orange-500/30 transition-all flex items-center gap-2.5 cursor-pointer"
-              >
-                <span>مشاهده و خرید قطعات خط تولید</span>
-                <ArrowLeft className="w-4 h-4" />
-              </Link>
-
-              {/* Secondary Dark Translucent Outline Button */}
-              <button
-                type="button"
-                onClick={() => setIsConsultOpen(true)}
-                className="h-12 px-6 bg-black/40 hover:bg-black/60 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 hover:border-white/40 backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <Headphones className="w-4 h-4 text-slate-300" />
-                <span>مشاوره فنی و استعلام خط تولید</span>
-                <span className="text-slate-400 mr-1">+</span>
-              </button>
+            {/* Main Headline: همراه صنعتگران در مسیر رشد و پیشرفت (With Fade & Shift to Right on Scroll) */}
+            <div
+              className="transition-all duration-100 ease-out will-change-transform"
+              style={{
+                opacity: Math.max(0, 1 - scrollY / 320),
+                transform: `translateX(${Math.min(80, scrollY * 0.22)}px)`,
+              }}
+            >
+              <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-black leading-[1.18] tracking-tight text-white drop-shadow-lg">
+                <span>همراه صنعتگران</span>
+                <span className="block text-[#F97316] pt-1">در مسیر رشد و پیشرفت</span>
+              </h1>
             </div>
-          </div>
 
-          {/* Bottom Brand Badges on Hero */}
-          <div className="pt-8 flex flex-wrap items-center justify-between sm:justify-end gap-8 border-t border-white/10 mt-6">
-            {/* SWR logo mark */}
-            <div className="flex items-center gap-2.5 opacity-90 hover:opacity-100 transition-opacity">
-              <div className="text-right">
-                <div className="font-black tracking-widest text-lg sm:text-xl text-white">
-                  SWR
-                </div>
-                <div className="text-[9px] text-slate-400 font-mono tracking-wider">
-                  Industrial Belts & Components
-                </div>
+            {/* Action Buttons & Subtitle - PUSHED DOWN BY ~18px AS REQUESTED */}
+            <div className="pt-4 sm:pt-5 space-y-4">
+              {/* Subtitle Description */}
+              <p className="text-xs sm:text-[15px] text-slate-200/90 leading-relaxed max-w-xl font-normal">
+                ارائه‌دهنده قطعات و تجهیزات صنعتی با کیفیت، از معتبرترین برندهای جهانی با تأمین مطمئن، قیمت رقابتی و پشتیبانی تخصصی خطوط تولید کارخانجات.
+              </p>
+
+              {/* Action Buttons Row */}
+              <div className="pt-2 flex flex-wrap items-center gap-4">
+                {/* Primary Luminous Orange Button: مشاهده محصولات */}
+                <Link
+                  to="/category/industrial-belts"
+                  className="h-12 sm:h-13 px-8 bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-sm sm:text-base rounded-2xl shadow-[0_10px_25px_rgba(249,115,22,0.4)] hover:shadow-[0_12px_30px_rgba(249,115,22,0.6)] hover:scale-[1.02] transition-all flex items-center gap-2.5 cursor-pointer group"
+                >
+                  <span>مشاهده محصولات</span>
+                  <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1.5 transition-transform text-white" />
+                </Link>
+
+                {/* Secondary Video/Company Intro Outline Button: معرفی شرکت */}
+                <button
+                  type="button"
+                  onClick={() => setIsConsultOpen(true)}
+                  className="h-12 sm:h-13 px-7 bg-black/40 hover:bg-black/70 text-white font-bold text-xs sm:text-sm rounded-2xl border border-white/25 hover:border-orange-500/70 backdrop-blur-md transition-all flex items-center gap-3 cursor-pointer group shadow-lg"
+                >
+                  <span className="w-7 h-7 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-110 transition-transform">
+                    <Play className="w-3.5 h-3.5 fill-[#F97316] text-[#F97316] ml-0.5" />
+                  </span>
+                  <span>معرفی شرکت</span>
+                  <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+                </button>
               </div>
             </div>
 
-            {/* FORZA logo mark */}
-            <div className="flex items-center gap-2.5 opacity-90 hover:opacity-100 transition-opacity">
-              <div className="text-right">
-                <div className="font-black tracking-widest text-lg sm:text-xl text-white flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 bg-[#F97316] rotate-45 inline-block" />
-                  <span>FORZA</span>
-                </div>
-                <div className="text-[9px] text-slate-400 font-mono tracking-wider">
-                  Power Transmission Solutions
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Far Left Vertical Slider Controls (Up, 01/03, Down, Share) */}
-        <div className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-2.5 bg-black/45 backdrop-blur-md p-2 rounded-full border border-white/10 text-white text-xs shadow-xl">
-          <button
-            type="button"
-            onClick={() => setActiveSlide(prev => (prev > 1 ? prev - 1 : totalSlides))}
-            className="w-7 h-7 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
-            aria-label="اسلاید قبلی"
-          >
-            <ChevronUp className="w-4 h-4" />
-          </button>
+        {/* Far Left Vertical Scroll Visual Indicator (عین تصویر: آیکون ماوس اسکرول + نشانگر) */}
+        <div className="absolute left-6 lg:left-10 bottom-24 z-20 hidden md:flex flex-col items-center gap-3 text-slate-300">
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <span className="w-1.5 h-5 rounded-full bg-[#F97316] shadow-[0_0_8px_#F97316]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+          </div>
 
-          <span className="text-[10px] font-mono font-bold text-slate-300 py-0.5">
-            0{activeSlide} / 0{totalSlides}
+          <div className="w-6 h-9 rounded-full border-2 border-white/40 flex items-start justify-center pt-1.5">
+            <span className="w-1 h-2 rounded-full bg-white/80 animate-bounce" />
+          </div>
+          <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase rotate-180 [writing-mode:vertical-lr]">
+            SCROLL
           </span>
+        </div>
 
-          <button
-            type="button"
-            onClick={() => setActiveSlide(prev => (prev < totalSlides ? prev + 1 : 1))}
-            className="w-7 h-7 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
-            aria-label="اسلاید بعدی"
-          >
-            <ChevronDown className="w-4 h-4" />
-          </button>
+        {/* Bottom Left Badge: تجربه‌ی موفق همکاری با صنایع پیشرو */}
+        <div className="absolute left-4 sm:left-12 bottom-6 z-20 hidden lg:flex items-center gap-3 bg-black/65 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/15 shadow-xl">
+          <div className="w-2 h-7 bg-[#F97316] rounded-full" />
+          <div className="text-right">
+            <div className="text-xs font-bold text-white">تجربه‌ی موفق همکاری با صنایع پیشرو</div>
+            <div className="text-[10px] text-slate-400 font-medium">کیفیت، سرعت، اعتماد</div>
+          </div>
+          <ArrowLeft className="w-4 h-4 text-orange-400 mr-2" />
+        </div>
 
-          <div className="w-4 h-[1px] bg-white/20 my-0.5" />
+        {/* ========================================================================= */}
+        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - ثابت و سپس محو)     */}
+        {/* ========================================================================= */}
+        <div
+          className="relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-4 sm:py-5 transition-all duration-150 ease-out"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 380),
+            transform: `translateY(${Math.min(30, scrollY * 0.1)}px)`,
+            pointerEvents: scrollY > 360 ? 'none' : 'auto',
+          }}
+        >
+          <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-wrap items-center justify-between gap-6">
+            
+            {/* 4 Advantages Items */}
+            <div className="flex flex-wrap items-center gap-6 sm:gap-10 lg:gap-14">
+              {/* Item 1: کیفیت تضمینی */}
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div className="text-right">
+                  <div className="text-xs sm:text-[13px] font-bold text-white">کیفیت تضمینی</div>
+                  <div className="text-[10px] text-slate-400 font-medium">همراه با گارانتی و اصالت کالا</div>
+                </div>
+              </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              if (navigator.share) {
-                navigator.share({ title: 'هایپر صنعت | فروشگاه قطعات خطوط تولید', url: window.location.href });
-              }
-            }}
-            className="w-7 h-7 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer text-slate-400 hover:text-white"
-            aria-label="اشتراک‌گذاری"
-          >
-            <Share2 className="w-3.5 h-3.5" />
-          </button>
+              {/* Item 2: تحویل سریع */}
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Truck className="w-5 h-5" />
+                </div>
+                <div className="text-right">
+                  <div className="text-xs sm:text-[13px] font-bold text-white">تحویل سریع</div>
+                  <div className="text-[10px] text-slate-400 font-medium">به سراسر کشور</div>
+                </div>
+              </div>
+
+              {/* Item 3: مشاوره تخصصی */}
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Settings className="w-5 h-5" />
+                </div>
+                <div className="text-right">
+                  <div className="text-xs sm:text-[13px] font-bold text-white">مشاوره تخصصی</div>
+                  <div className="text-[10px] text-slate-400 font-medium">تیم فنی و مهندسی</div>
+                </div>
+              </div>
+
+              {/* Item 4: پشتیبانی واقعی */}
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-[#F97316]">
+                  <Headphones className="w-5 h-5" />
+                </div>
+                <div className="text-right">
+                  <div className="text-xs sm:text-[13px] font-bold text-white">پشتیبانی واقعی</div>
+                  <div className="text-[10px] text-slate-400 font-medium">قبل و بعد از خرید</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Brand Partners (FORZA & SWR) */}
+            <div className="flex items-center gap-6 border-r border-white/15 pr-6 hidden md:flex">
+              <div className="text-right">
+                <span className="text-[11px] text-slate-400 block font-medium">همکاری با برندهای معتبر جهانی</span>
+              </div>
+              <div className="flex items-center gap-5">
+                <div className="text-right">
+                  <div className="text-xs font-bold text-white flex items-center gap-1">
+                    <span className="w-2 h-2 bg-[#F97316] rotate-45 inline-block" />
+                    <span>FORZA</span>
+                  </div>
+                  <div className="text-[8px] text-slate-400 font-mono">Power Transmission Solutions</div>
+                </div>
+                <div className="text-right border-r border-white/15 pr-4">
+                  <div className="text-xs font-bold text-white">SWR</div>
+                  <div className="text-[8px] text-slate-400 font-mono">Industrial Belts & Components</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
@@ -380,21 +455,12 @@ export const HomePage: React.FC = () => {
         {/* ========================================================================= */}
         {/* 2. DUAL AI FEATURE BANNER (مشاوره هوشمند قطعات & پیدا کردن قطعه با AI)       */}
         {/* ========================================================================= */}
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-[#C2410C] via-[#7C2D12] to-[#0A101D] text-white shadow-xl border border-orange-900/40 p-6 sm:p-8" dir="rtl">
-          {/* Subtle Ambient Industrial Waves / Geometric Glow matching Consultation Banner */}
-          <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
-            <svg className="w-full h-full" viewBox="0 0 1200 240" preserveAspectRatio="none" fill="none">
-              <path d="M0,80 C300,10 600,160 900,70 C1050,30 1150,110 1200,80 L1200,240 L0,240 Z" fill="white" opacity="0.2" />
-              <path d="M0,120 C250,50 500,190 800,110 C1000,60 1100,170 1200,130 L1200,240 L0,240 Z" fill="white" opacity="0.1" />
-            </svg>
-          </div>
-          <div className="absolute inset-0 bg-[radial-gradient(#ffffff0d_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" />
+        <section className="relative overflow-hidden rounded-3xl bg-[#090F1D] text-white border border-slate-800 shadow-xl p-6 sm:p-8">
+          {/* Ambient Subtle Gradients */}
+          <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#F97316]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Ambient Corner Glows */}
-          <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#F97316]/25 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-orange-900/30 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 divide-y lg:divide-y-0 lg:divide-x lg:divide-x-reverse divide-orange-900/50">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 divide-y lg:divide-y-0 lg:divide-x lg:divide-x-reverse divide-slate-800">
             {/* Card A (Right in RTL): مشاوره با هوش مصنوعی */}
             <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 lg:pb-0 lg:pl-6">
               {/* Visual: Glowing AI Cybernetic Face */}
@@ -485,65 +551,35 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          {/* Carousel / Scrollable Row with Left and Right Navigation Buttons */}
-          <div className="relative group/categories">
-            {/* Right Button: Only appears after clicking left button or scrolling left */}
-            <button
-              type="button"
-              onClick={handleScrollCategoriesRight}
-              className={`absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all duration-300 cursor-pointer ${
-                canScrollCategoriesRight ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'
-              }`}
-              aria-label="دسته‌بندی‌های قبلی"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+          {/* 7 Clean Cards Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3.5">
+            {categories.map(cat => (
+              <Link
+                key={cat.id}
+                to={cat.link}
+                className="group bg-white rounded-2xl border border-slate-200/80 p-3 flex flex-col justify-between hover:border-[#F97316]/50 hover:shadow-lg transition-all duration-300 text-right"
+              >
+                {/* Product Image Box */}
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center mb-3 group-hover:bg-orange-50/30 transition-colors">
+                  <img
+                    src={cat.image}
+                    alt={cat.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
 
-            {/* Left Button: Always visible for scrolling forward */}
-            <button
-              type="button"
-              onClick={handleScrollCategoriesLeft}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 flex items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
-              aria-label="دسته‌بندی‌های بعدی"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Scrollable Categories Container */}
-            <div
-              ref={categoriesScrollRef}
-              onScroll={checkCategoriesScroll}
-              className="flex items-stretch gap-3.5 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none snap-x snap-mandatory"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {categories.map(cat => (
-                <Link
-                  key={cat.id}
-                  to={cat.link}
-                  className="w-44 sm:w-48 shrink-0 group bg-white rounded-2xl border border-slate-200/80 p-3 flex flex-col justify-between hover:border-[#F97316]/50 hover:shadow-lg transition-all duration-300 text-right snap-start"
-                >
-                  {/* Product Image Box */}
-                  <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center mb-3 group-hover:bg-orange-50/30 transition-colors">
-                    <img
-                      src={cat.image}
-                      alt={cat.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                {/* Title & Orange Arrow Circle Button */}
+                <div className="flex items-center justify-between gap-1.5 pt-1">
+                  <div className="w-7 h-7 rounded-full bg-[#F97316] group-hover:bg-[#EA580C] text-white flex items-center justify-center shrink-0 shadow-xs transition-colors">
+                    <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
                   </div>
-
-                  {/* Title & Orange Arrow Circle Button */}
-                  <div className="flex items-center justify-between gap-1.5 pt-1">
-                    <div className="w-7 h-7 rounded-full bg-[#F97316] group-hover:bg-[#EA580C] text-white flex items-center justify-center shrink-0 shadow-xs transition-colors">
-                      <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-                    </div>
-                    <h3 className="font-bold text-xs text-[#0A172F] group-hover:text-[#F97316] transition-colors line-clamp-1">
-                      {cat.title}
-                    </h3>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  <h3 className="font-bold text-xs text-[#0A172F] group-hover:text-[#F97316] transition-colors line-clamp-1">
+                    {cat.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
       </div>

@@ -1,6 +1,7 @@
 // Export all generated industrial assets for Atlas Trading Storefront
 import heroBannerImg from './industrial_hero_banner_1789372743298.jpg';
 import atlasHeroPulleyImg from './atlas_hero_pulley_1789379687558.jpg';
+import heroSteelCoilsImg from './hero_steel_coils_1789642667373.jpg';
 
 import catBeltsImg from './cat_belts_1789372769676.jpg';
 import catPulleysImg from './cat_pulleys_1789372787444.jpg';
@@ -47,6 +48,7 @@ import footerConveyorImg from './footer_conveyor_1789463035125.jpg';
 export const STORE_ASSETS = {
   heroBanner: heroBannerImg,
   heroPulley: atlasHeroPulleyImg,
+  heroSteelCoils: heroSteelCoilsImg,
   footerConveyor: footerConveyorImg,
   aiConsultRobot: aiConsultRobotImg,
   aiSearchMobile: aiSearchMobileImg,
