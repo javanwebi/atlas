@@ -30,6 +30,12 @@ import prodPvcBeltImg from './prod_pvc_belt_1789373040329.jpg';
 import prodBearingImg from './prod_bearing_1789373059455.jpg';
 import prodForzaBeltImg from './prod_forza_belt_1789373077648.jpg';
 import prodCerRollerImg from './prod_cer_roller_1789373093705.jpg';
+import prodFlangeImg from './prod_flange_1789639958727.jpg';
+import prodPipesImg from './prod_pipes_1789639975465.jpg';
+import prodValveImg from './prod_valve_1789639989306.jpg';
+import prodPumpImg from './prod_pump_1789640002577.jpg';
+import prodMotorImg from './prod_motor_1789640017545.jpg';
+import prodBearingNskImg from './prod_bearing_nsk_1789640036345.jpg';
 import footerConveyorImg from './footer_conveyor_1789463035125.jpg';
 
 export const STORE_ASSETS = {
@@ -67,6 +73,12 @@ export const STORE_ASSETS = {
     bearing: prodBearingImg,
     forzaBelt: prodForzaBeltImg,
     ceramicRoller: prodCerRollerImg,
+    flange: prodFlangeImg,
+    pipes: prodPipesImg,
+    valve: prodValveImg,
+    pump: prodPumpImg,
+    motor: prodMotorImg,
+    bearingNsk: prodBearingNskImg,
   },
 };
 

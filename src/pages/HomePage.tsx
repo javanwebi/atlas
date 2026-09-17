@@ -25,6 +25,7 @@ import { STORE_ASSETS } from '../assets/images';
 import { AiVisualPartSearchModal } from '../components/search/AiVisualPartSearchModal';
 import { AiConsultModal } from '../components/search/AiConsultModal';
 import { OurClientsSection } from '../components/home/OurClientsSection';
+import { PopularProductsSection } from '../components/home/PopularProductsSection';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -497,7 +498,12 @@ export const HomePage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 5, 6, 7 CONTAINER - INSIDE MAX-W-7XL                              */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 my-8 sm:my-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 my-8 sm:my-10">
+        {/* ========================================================================= */}
+        {/* POPULAR PRODUCTS - استعلام قیمت آنلاین قطعات پربازدید                       */}
+        {/* ========================================================================= */}
+        <PopularProductsSection />
+
         {/* ========================================================================= */}
         {/* 5. TRUSTED BRANDS (FORZA & SWR LUXURY CARDS)                              */}
         {/* ========================================================================= */}
