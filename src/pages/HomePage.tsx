@@ -334,48 +334,42 @@ export const HomePage: React.FC = () => {
     },
   ];
 
-  // 6 Reasons Why Atlas (منطبق با هویت صنعتی اطلس)
+  // 6 Reasons Why Atlas (منطبق با تصویر ارسالی کاربر و راست‌چین)
   const whyAtlasItems = [
     {
       id: 1,
       title: 'قیمت رقابتی',
       subtitle: 'بهترین قیمت بازار',
-      tag: 'عرضه مستقیم',
       icon: Shield,
     },
     {
       id: 2,
       title: 'ضمانت اصالت کالا',
       subtitle: 'همراه با گارانتی معتبر',
-      tag: 'استاندارد DIN',
       icon: ShieldCheck,
     },
     {
       id: 3,
       title: 'مشاوره تخصصی',
       subtitle: 'پشتیبانی فنی و مهندسی',
-      tag: 'مهندسی خطوط',
       icon: Headphones,
     },
     {
       id: 4,
       title: 'تأمین سریع',
       subtitle: 'ارسال در کوتاه‌ترین زمان',
-      tag: 'اکسپرس کشوری',
       icon: Truck,
     },
     {
       id: 5,
       title: 'تجربه و اعتبار',
       subtitle: 'همکاری با صنایع بزرگ',
-      tag: '+۱۰ سال سابقه',
       icon: Building,
     },
     {
       id: 6,
       title: 'خدمات پس از فروش',
       subtitle: 'تأییدیه فنی و تضمین تعویض',
-      tag: 'تضمین تعویض',
       icon: Award,
     },
   ];
@@ -607,10 +601,10 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - گرید ۲×۲ در موبایل) */}
+        {/* STICKY-THEN-FADE ADVANTAGES BAR (نوار مزیت‌ها پایین هرو - فقط در دسکتاپ/تبلت) */}
         {/* ========================================================================= */}
         <div
-          className="relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-3 sm:py-3.5 transition-all duration-150 ease-out"
+          className="hidden md:block relative z-20 w-full border-t border-white/10 bg-[#060A14]/90 backdrop-blur-md py-3 sm:py-3.5 transition-all duration-150 ease-out"
           style={{
             opacity: Math.max(0, 1 - scrollY / 350),
             transform: `translateY(${Math.min(25, scrollY * 0.08)}px)`,
@@ -1100,193 +1094,93 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 6. WHY ATLAS SECTION (چرا اطلس؟ - طراحی کاملاً تفکیک‌شده موبایل و دسکتاپ)     */}
+      {/* 6. WHY ATLAS SECTION (چرا اطلس؟ - راست‌چین و تمام‌صفحه)                     */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden" dir="rtl">
-        {/* ----------------------------------------------------------------------- */}
-        {/* A. DEDICATED EXTRAORDINARY MOBILE EXPERIENCE (مخصوص گوشی‌های همراه)     */}
-        {/* ----------------------------------------------------------------------- */}
-        <div className="block lg:hidden px-3.5 py-6">
-          <div className="relative rounded-3xl bg-gradient-to-b from-[#091222] via-[#0E1A30] to-[#070D18] text-white p-4.5 sm:p-6 border border-slate-800 shadow-2xl overflow-hidden">
-            {/* Background Texture & Ambient Flares */}
-            <div
-              className="absolute inset-0 bg-cover bg-center opacity-15 mix-blend-luminosity pointer-events-none"
-              style={{ backgroundImage: `url(${STORE_ASSETS.heroPulley})` }}
-            />
-            <div className="absolute top-0 right-1/4 w-52 h-52 bg-[#F97316]/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative w-full bg-white border-y border-slate-200/90 shadow-sm overflow-hidden" dir="rtl">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 items-stretch">
+          
+          {/* 1. RIGHT SIDE: Dark "چرا اطلس؟" Card (سمت راست - کاملاً راست‌چین با زاویه اسلنت و دکمه نارنجی) */}
+          <div className="lg:col-span-4 xl:col-span-4 relative bg-[#091222] text-white p-6 sm:p-10 lg:pl-16 xl:pl-20 flex flex-col justify-between overflow-hidden lg:[clip-path:polygon(40px_0,100%_0,100%_100%,0_100%)] z-10">
+              {/* Industrial background image texture & ambient glow */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity pointer-events-none"
+                style={{ backgroundImage: `url(${STORE_ASSETS.heroPulley})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-bl from-[#091222]/85 via-[#091222]/95 to-[#050A14] pointer-events-none" />
 
-            {/* Top Badge & Header */}
-            <div className="relative z-10 space-y-2 text-right">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-[#F97316] text-[11px] font-bold">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>مزایای هایپر صنعت اطلس</span>
+              {/* Diagonal Orange Accent Stripe at bottom-right corner (عین خط مورب نارنجی تصویر) */}
+              <div className="absolute -bottom-8 -right-8 w-28 h-7 bg-[#F97316] -rotate-45 shadow-lg pointer-events-none z-20" />
+
+              {/* Text Content */}
+              <div className="relative z-10 space-y-2.5 text-right">
+                <span className="inline-block text-[#F97316] font-bold text-sm sm:text-base tracking-wide">
+                  چرا اطلس؟
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  تجربه، کیفیت، تعهد
+                </h3>
+                <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed pt-1 max-w-sm">
+                  ما با بیش از یک دهه تجربه در تأمین تجهیزات صنعتی و قطعات خطوط تولید، همواره در کنار شما هستیم تا بهترین محصولات، مشاوره تخصصی و پشتیبانی کامل را ارائه دهیم.
+                </p>
               </div>
-              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                <span>چرا اطلس؟</span>
-                <span className="text-[#F97316]">تجربه، کیفیت، تعهد</span>
-              </h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-light">
-                بیش از یک دهه تجربه در تأمین تجهیزات و قطعات اصلی خطوط تولید کارخانجات، با پشتیبانی تخصصی و اصالت تضمین‌شده.
-              </p>
+
+              {/* Orange Action Button */}
+              <div className="relative z-10 pt-6 mt-auto">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs rounded-xl shadow-md hover:shadow-orange-500/25 transition-all cursor-pointer group"
+                >
+                  <span>بیشتر بدانید</span>
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                </Link>
+              </div>
             </div>
 
-            {/* 6 Feature Cards in Mobile 2-Column App Grid */}
-            <div className="relative z-10 grid grid-cols-2 gap-2.5 pt-4">
-              {whyAtlasItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={item.id}
-                    className="flex flex-col justify-between p-3 rounded-2xl bg-white/[0.05] hover:bg-white/[0.09] active:bg-orange-500/10 border border-white/10 hover:border-orange-500/40 transition-all text-right shadow-xs group"
-                  >
-                    <div className="flex items-start justify-between gap-1.5 mb-2">
-                      <div className="w-8 h-8 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[#F97316] group-hover:scale-105 group-hover:bg-[#F97316] group-hover:text-white transition-all">
-                        <Icon className="w-4 h-4" />
+            {/* 2. CENTER: The 6 Feature Cards (وسط - ۶ ویژگی در ۲ ستون ۳ ردیفه) */}
+            <div className="lg:col-span-5 xl:col-span-5 p-4 sm:p-6 lg:p-7 flex items-center">
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
+                {whyAtlasItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between p-3 sm:p-3.5 bg-white rounded-2xl border border-slate-100/90 shadow-2xs hover:border-orange-200 hover:shadow-xs transition-all group"
+                    >
+                      <div className="text-right">
+                        <h4 className="font-bold text-xs sm:text-[13px] text-[#0A172F] group-hover:text-[#F97316] transition-colors">
+                          {item.title}
+                        </h4>
+                        <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-medium">
+                          {item.subtitle}
+                        </p>
                       </div>
-                      <span className="text-[9px] font-mono font-bold text-orange-400/90 bg-orange-500/10 px-1.5 py-0.5 rounded border border-orange-500/20 truncate">
-                        {item.tag}
-                      </span>
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#F97316] shrink-0 group-hover:bg-[#F97316] group-hover:text-white group-hover:scale-105 transition-all shadow-2xs">
+                        <Icon className="w-5 h-5" />
+                      </div>
                     </div>
-
-                    <div>
-                      <h4 className="font-bold text-xs text-white group-hover:text-orange-200 transition-colors line-clamp-1">
-                        {item.title}
-                      </h4>
-                      <p className="text-[10px] text-slate-400 mt-0.5 font-medium line-clamp-1">
-                        {item.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Mobile Engineer Trust Card */}
-            <div className="relative z-10 mt-3.5 rounded-2xl overflow-hidden border border-white/15 bg-black/60 shadow-lg flex items-center gap-3 p-2.5">
-              <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-orange-500/30">
-                <img
-                  src={STORE_ASSETS.engineerWhyAtlas}
-                  alt="مهندس ناظر اطلس"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              </div>
-              <div className="flex-1 min-w-0 text-right">
-                <div className="text-[11px] font-bold text-orange-400 truncate">
-                  پایش مهندسی و اصالت قطعات
-                </div>
-                <div className="text-[10px] text-slate-300 leading-tight line-clamp-2 mt-0.5">
-                  انطباق دقیق ابعاد، دور، گشتاور و شرایط کاری قطعه خط تولید قبل از ارسال
+            {/* 3. LEFT: Industrial Plant Photo with Engineer (سمت چپ - عکس مهندس با زاویه اسلنت موازی) */}
+            <div className="lg:col-span-3 xl:col-span-3 relative min-h-[260px] lg:min-h-[320px] overflow-hidden lg:[clip-path:polygon(0_0,100%_0,calc(100%-32px)_100%,0_100%)]">
+              <img
+                src={STORE_ASSETS.engineerWhyAtlas}
+                alt="مهندس ناظر خطوط تولید کارخانجات اطلس"
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 right-4 left-4 text-white text-right">
+                <div className="text-xs font-bold text-orange-400">کارخانجات و بازرگانی اطلس</div>
+                <div className="text-[10px] text-slate-300 mt-0.5">
+                  پشتیبانی فنی و مهندسی خطوط تولید
                 </div>
               </div>
             </div>
 
-            {/* Mobile Action Buttons */}
-            <div className="relative z-10 pt-3.5 flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setIsConsultOpen(true)}
-                className="flex-1 h-11 bg-gradient-to-r from-[#EA580C] to-[#F97316] active:scale-95 text-white font-bold text-xs rounded-xl shadow-[0_4px_14px_rgba(249,115,22,0.4)] flex items-center justify-center gap-1.5 cursor-pointer transition-all"
-              >
-                <span>مشاوره تخصصی</span>
-                <ArrowLeft className="w-3.5 h-3.5" />
-              </button>
-              <Link
-                to="/about"
-                className="px-4 h-11 bg-white/10 hover:bg-white/15 active:scale-95 text-white font-bold text-xs rounded-xl border border-white/20 flex items-center justify-center transition-all"
-              >
-                <span>درباره اطلس</span>
-              </Link>
-            </div>
           </div>
-        </div>
-
-        {/* ----------------------------------------------------------------------- */}
-        {/* B. DESKTOP EXPERIENCE (صفحه‌نمایش‌های بزرگ با کات‌های زاویه‌دار و اسلنت)    */}
-        {/* ----------------------------------------------------------------------- */}
-        <div className="hidden lg:grid grid-cols-12 items-stretch bg-white border-y border-slate-200/90 shadow-sm">
-          {/* 1. RIGHT SIDE: Dark "چرا اطلس؟" Card */}
-          <div className="col-span-4 relative bg-[#091222] text-white p-6 sm:p-10 lg:pl-16 xl:pl-20 flex flex-col justify-between overflow-hidden [clip-path:polygon(40px_0,100%_0,100%_100%,0_100%)] z-10">
-            {/* Industrial background image texture & ambient glow */}
-            <div
-              className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity pointer-events-none"
-              style={{ backgroundImage: `url(${STORE_ASSETS.heroPulley})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-bl from-[#091222]/85 via-[#091222]/95 to-[#050A14] pointer-events-none" />
-
-            {/* Diagonal Orange Accent Stripe at bottom-right corner */}
-            <div className="absolute -bottom-8 -right-8 w-28 h-7 bg-[#F97316] -rotate-45 shadow-lg pointer-events-none z-20" />
-
-            {/* Text Content */}
-            <div className="relative z-10 space-y-2.5 text-right">
-              <span className="inline-block text-[#F97316] font-bold text-sm sm:text-base tracking-wide">
-                چرا اطلس؟
-              </span>
-              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                تجربه، کیفیت، تعهد
-              </h3>
-              <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed pt-1 max-w-sm">
-                ما با بیش از یک دهه تجربه در تأمین تجهیزات صنعتی و قطعات خطوط تولید، همواره در کنار شما هستیم تا بهترین محصولات، مشاوره تخصصی و پشتیبانی کامل را ارائه دهیم.
-              </p>
-            </div>
-
-            {/* Orange Action Button */}
-            <div className="relative z-10 pt-6 mt-auto">
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs rounded-xl shadow-md hover:shadow-orange-500/25 transition-all cursor-pointer group"
-              >
-                <span>بیشتر بدانید</span>
-                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-
-          {/* 2. CENTER: The 6 Feature Cards */}
-          <div className="col-span-5 p-4 sm:p-6 lg:p-7 flex items-center">
-            <div className="w-full grid grid-cols-2 gap-3 sm:gap-3.5">
-              {whyAtlasItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between p-3 sm:p-3.5 bg-white rounded-2xl border border-slate-100/90 shadow-2xs hover:border-orange-200 hover:shadow-xs transition-all group"
-                  >
-                    <div className="text-right">
-                      <h4 className="font-bold text-xs sm:text-[13px] text-[#0A172F] group-hover:text-[#F97316] transition-colors">
-                        {item.title}
-                      </h4>
-                      <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-medium">
-                        {item.subtitle}
-                      </p>
-                    </div>
-                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#F97316] shrink-0 group-hover:bg-[#F97316] group-hover:text-white group-hover:scale-105 transition-all shadow-2xs">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* 3. LEFT: Industrial Plant Photo with Engineer */}
-          <div className="col-span-3 relative min-h-[260px] lg:min-h-[320px] overflow-hidden [clip-path:polygon(0_0,100%_0,calc(100%-32px)_100%,0_100%)]">
-            <img
-              src={STORE_ASSETS.engineerWhyAtlas}
-              alt="مهندس ناظر خطوط تولید کارخانجات اطلس"
-              className="w-full h-full object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute bottom-4 right-4 left-4 text-white text-right">
-              <div className="text-xs font-bold text-orange-400">کارخانجات و بازرگانی اطلس</div>
-              <div className="text-[10px] text-slate-300 mt-0.5">
-                پشتیبانی فنی و مهندسی خطوط تولید
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
       {/* ========================================================================= */}
       {/* 7. CTA CONSULTATION & INQUIRY BANNER (مشاوره تخصصی و استعلام قیمت)        */}
@@ -1307,8 +1201,8 @@ export const HomePage: React.FC = () => {
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center">
             
-            {/* RIGHT: Text and Action Buttons (کاملاً راست‌چین طبق تصویر) */}
-            <div className="lg:col-span-7 xl:col-span-7 p-6 sm:p-8 lg:p-10 space-y-4 text-right">
+            {/* RIGHT in desktop, BOTTOM in mobile: Text and Action Buttons */}
+            <div className="order-2 lg:order-1 lg:col-span-7 xl:col-span-7 p-6 sm:p-8 lg:p-10 space-y-4 text-right">
               <div className="space-y-2">
                 <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
                   مشاوره تخصصی و استعلام قیمت
@@ -1346,8 +1240,8 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* LEFT: Industrial Table with Yellow Hard Hat & Machinery (فید نرم به پس‌زمینه تیره) */}
-            <div className="lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-64 overflow-hidden">
+            {/* LEFT in desktop, TOP in mobile: Industrial Photo */}
+            <div className="order-1 lg:order-2 lg:col-span-5 xl:col-span-5 relative h-52 sm:h-60 lg:h-64 overflow-hidden">
               <img
                 src={STORE_ASSETS.ctaConsultBanner}
                 alt="مشاوره تخصصی و استعلام قیمت قطعات خط تولید"
@@ -1355,7 +1249,7 @@ export const HomePage: React.FC = () => {
               />
               {/* Gradient masks blending smoothly from image to banner bg */}
               <div className="absolute inset-0 bg-gradient-to-l from-[#0A101D] via-[#0A101D]/60 to-transparent hidden lg:block pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0A101D] via-[#0A101D]/40 to-transparent lg:hidden pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#7C2D12] via-transparent to-transparent lg:hidden pointer-events-none" />
             </div>
 
           </div>

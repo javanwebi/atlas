@@ -126,10 +126,29 @@ export const PopularProductsSection: React.FC = () => {
   const [inquirySubmitted, setInquirySubmitted] = useState(false);
   const [quickAddedId, setQuickAddedId] = useState<string | null>(null);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -320 : 320;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  // Carousel scroll tracking matching coveredIndustries pattern
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = () => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const scrolled = Math.abs(el.scrollLeft) > 10;
+    setCanScrollRight(scrolled);
+  };
+
+  const handleScrollLeft = () => {
+    const el = scrollContainerRef.current;
+    if (el) {
+      el.scrollBy({ left: -320, behavior: 'smooth' });
+      setCanScrollRight(true);
+    }
+  };
+
+  const handleScrollRight = () => {
+    const el = scrollContainerRef.current;
+    if (el) {
+      el.scrollBy({ left: 320, behavior: 'smooth' });
+      setTimeout(checkScroll, 350);
     }
   };
 
@@ -187,14 +206,11 @@ export const PopularProductsSection: React.FC = () => {
           </span>
         </div>
 
-        {/* Left Link: مشاهده همه محصولات */}
+        {/* Left Link: مشاهده همه محصولات (بدون لوگوی span طبق درخواست کاربر) */}
         <Link
           to="/category/industrial-belts"
           className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#F97316] hover:text-[#EA580C] transition-colors group"
         >
-          <span className="w-5 h-5 rounded-md bg-orange-100 flex items-center justify-center text-[#F97316] group-hover:bg-[#F97316] group-hover:text-white transition-colors">
-            <Sparkles className="w-3 h-3" />
-          </span>
           <span>مشاهده همه محصولات</span>
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
         </Link>
@@ -202,29 +218,32 @@ export const PopularProductsSection: React.FC = () => {
 
       {/* Carousel Container with Left/Right Navigation Arrows */}
       <div className="relative group/carousel">
-        {/* Navigation Arrow: Right (اسکرول به راست) */}
+        {/* Navigation Arrow: Right (اسکرول به راست - بعد از اسکرول/کلیک به چپ ظاهر می‌شود) */}
         <button
           type="button"
-          onClick={() => scroll('right')}
-          className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
+          onClick={handleScrollRight}
+          className={`absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-slate-200/90 shadow-lg text-[#0A172F] hover:text-white hover:bg-[#F97316] hover:border-[#F97316] flex items-center justify-center transition-all duration-300 cursor-pointer group active:scale-95 ${
+            canScrollRight ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'
+          }`}
           aria-label="محصولات قبلی"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
         </button>
 
-        {/* Navigation Arrow: Left (اسکرول به چپ) */}
+        {/* Navigation Arrow: Left (اسکرول به چپ - برای حرکت به جلو در چیدمان راست‌چین) */}
         <button
           type="button"
-          onClick={() => scroll('left')}
-          className="hidden sm:flex absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:bg-orange-50 hover:border-orange-300 hover:text-[#F97316] text-slate-700 items-center justify-center transition-all cursor-pointer opacity-90 hover:opacity-100"
+          onClick={handleScrollLeft}
+          className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-slate-200/90 shadow-lg text-[#0A172F] hover:text-white hover:bg-[#F97316] hover:border-[#F97316] flex items-center justify-center transition-all duration-300 cursor-pointer group active:scale-95"
           aria-label="محصولات بعدی"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
         </button>
 
         {/* Scrollable Products Row */}
         <div
           ref={scrollContainerRef}
+          onScroll={checkScroll}
           className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none snap-x snap-mandatory"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
